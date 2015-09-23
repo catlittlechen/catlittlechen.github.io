@@ -3,17 +3,45 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CatChen</title>
+  <title>[译]solr boolean operators | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.github.io/index.html">
+  <meta name="description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
+
+译文原文：来自于Bill Dueber.
+
+结论：在Solr中一定要用括号去管理优先级！！！
+
+######搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
+a OR b AND C
+我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
+boolean运算符">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[译]solr boolean operators">
+<meta property="og:url" content="http://catlittlechen.github.io/2015/09/23/译-solr-boolean-operators/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
+
+译文原文：来自于Bill Dueber.
+
+结论：在Solr中一定要用括号去管理优先级！！！
+
+######搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
+a OR b AND C
+我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
+boolean运算符">
+<meta property="og:updated_time" content="2015-09-23T15:01:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="[译]solr boolean operators">
+<meta name="twitter:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
+
+译文原文：来自于Bill Dueber.
+
+结论：在Solr中一定要用括号去管理优先级！！！
+
+######搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
+a OR b AND C
+我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
+boolean运算符">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -63,9 +91,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="踩坑日记-译-solr-boolean-operators" class="article article-type-踩坑日记" itemscope itemprop="blogPost">
+        <section id="main"><article id="踩坑日记-译-solr-boolean-operators" class="article article-type-踩坑日记" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/23/译-solr-boolean-operators/" class="article-date">
   <time datetime="2015-09-23T13:24:58.000Z" itemprop="datePublished">2015-09-23</time>
@@ -78,8 +104,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/23/译-solr-boolean-operators/">[译]solr boolean operators</a>
+    <h1 class="article-title" itemprop="name">
+      [译]solr boolean operators
     </h1>
   
 
@@ -161,54 +187,20 @@ curly larry moe shemp
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="生活-第一篇博文" class="article article-type-生活" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/22/第一篇博文/" class="article-date">
-  <time datetime="2015-09-22T13:24:52.000Z" itemprop="datePublished">2015-09-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/22/第一篇博文/">第一篇博文</a>
-    </h1>
+    <a href="/2015/09/22/第一篇博文/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">第一篇博文</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>你好，世界</p>
-<hr>
-<p>今天是拿到mac的第二天，兑现我的承诺，开始写属于自己的文字。</p>
-<p>人类总是任性和懒惰，多么好的条件都不会造就一个人，也就是<strong>生于忧患，死于安乐</strong>吧。</p>
-<p>好好奋斗，人生才刚刚开始。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://catlittlechen.github.io/2015/09/22/第一篇博文/" data-id="ciewx6mcp0000jyzk5teup9c2" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/起点/">起点</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
 
-
-  
-  
 </section>
         
           <aside id="sidebar">
