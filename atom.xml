@@ -3,9 +3,9 @@
   <title><![CDATA[CatChen]]></title>
   <subtitle><![CDATA[猫的自由之地]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://catlittlechen.github.io/"/>
+  <link href="http://catlittlechen.com/"/>
   <updated>2015-09-23T23:39:29.000Z</updated>
-  <id>http://catlittlechen.github.io/</id>
+  <id>http://catlittlechen.com/</id>
   
   <author>
     <name><![CDATA[Chan Cat]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[[译]solr boolean operators]]></title>
-    <link href="http://catlittlechen.github.io/2015/09/23/%E8%AF%91-solr-boolean-operators/"/>
-    <id>http://catlittlechen.github.io/2015/09/23/译-solr-boolean-operators/</id>
+    <link href="http://catlittlechen.com/2015/09/23/%E8%AF%91-solr-boolean-operators/"/>
+    <id>http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/</id>
     <published>2015-09-23T13:24:58.000Z</published>
     <updated>2015-09-23T23:39:29.000Z</updated>
     <content type="html"><![CDATA[<h2 id="踩坑感言：">踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
@@ -89,18 +89,18 @@ curly larry moe shemp
 <h2 id="译文原文：">译文原文：</h2><p>来自于<a href="http://robotli]]>
     </summary>
     
-      <category term="solr" scheme="http://catlittlechen.github.io/tags/solr/"/>
+      <category term="solr" scheme="http://catlittlechen.com/tags/solr/"/>
     
-      <category term="翻译" scheme="http://catlittlechen.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
+      <category term="翻译" scheme="http://catlittlechen.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.github.io/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[第一篇博文]]></title>
-    <link href="http://catlittlechen.github.io/2015/09/22/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/"/>
-    <id>http://catlittlechen.github.io/2015/09/22/第一篇博文/</id>
+    <link href="http://catlittlechen.com/2015/09/22/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/"/>
+    <id>http://catlittlechen.com/2015/09/22/第一篇博文/</id>
     <published>2015-09-22T13:24:52.000Z</published>
     <updated>2015-09-22T14:34:03.000Z</updated>
     <content type="html"><![CDATA[<p>你好，世界</p>
@@ -117,9 +117,9 @@ curly larry moe shemp
 <p>好好奋斗，人生才刚刚开始。</p]]>
     </summary>
     
-      <category term="生活" scheme="http://catlittlechen.github.io/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
-      <category term="起点" scheme="http://catlittlechen.github.io/tags/%E8%B5%B7%E7%82%B9/"/>
+      <category term="起点" scheme="http://catlittlechen.com/tags/%E8%B5%B7%E7%82%B9/"/>
     
   </entry>
   
