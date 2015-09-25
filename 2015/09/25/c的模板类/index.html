@@ -3,17 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>CatChen</title>
+  <title>c的模板类 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.com/index.html">
+  <meta name="description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
+开始讲故事C++标准库的书中，曾经说过这么一句话
+唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
+为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
+template&amp;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c的模板类">
+<meta property="og:url" content="http://catlittlechen.com/2015/09/25/c的模板类/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
+开始讲故事C++标准库的书中，曾经说过这么一句话
+唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
+为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
+template&amp;l">
+<meta property="og:updated_time" content="2015-09-25T00:41:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="c的模板类">
+<meta name="twitter:description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
+开始讲故事C++标准库的书中，曾经说过这么一句话
+唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
+为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
+template&amp;l">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -63,9 +76,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-c的模板类" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-c的模板类" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/25/c的模板类/" class="article-date">
   <time datetime="2015-09-24T23:56:37.000Z" itemprop="datePublished">2015-09-25</time>
@@ -78,8 +89,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/25/c的模板类/">c的模板类</a>
+    <h1 class="article-title" itemprop="name">
+      c的模板类
     </h1>
   
 
@@ -152,157 +163,40 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="踩坑日记-译-solr-boolean-operators" class="article article-type-踩坑日记" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/23/译-solr-boolean-operators/" class="article-date">
-  <time datetime="2015-09-23T13:24:58.000Z" itemprop="datePublished">2015-09-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/23/译-solr-boolean-operators/">[译]solr boolean operators</a>
-    </h1>
+    <a href="/2015/09/23/译-solr-boolean-operators/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">[译]solr boolean operators</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="踩坑感言：">踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
-<hr>
-<h2 id="译文原文：">译文原文：</h2><p>来自于<a href="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/" target="_blank" rel="external">Bill Dueber</a>.</p>
-<hr>
-<h2 id="结论：">结论：</h2><p>在Solr中一定要用括号去管理优先级！！！</p>
-<hr>
-<p>######搞起搞起！<br>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
-<pre><code><span class="tag">a</span> OR <span class="tag">b</span> AND C
-</code></pre><p>我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。</p>
-<h3 id="boolean运算符的优先级">boolean运算符的优先级</h3><p>如果你曾经知道过boolean运算相关的知识，你坑定为知道一个严格意义上的顺序，那就是NOT&gt;AND&gt;OR，因此，可能就会使下面一种执行顺序：</p>
-<pre><code><span class="tag">a</span> OR (<span class="tag">b</span> AND c)
-</code></pre><p>这是猜想答案的一种，但是Solr不是这么做的。</p>
-<h3 id="从左到右？">从左到右？</h3><p>部分本地的学生，或者说也有至少一门编程语言，用的是简单的从左到右的执行方法，因此，就会有如下的一种执行顺序：</p>
-<pre><code>（<span class="literal">a</span> <span class="literal">OR</span> b) <span class="literal">AND</span> c
-</code></pre><p>不幸的是，这个还是错的。</p>
-<h3 id="那么还有什么答案呢？">那么还有什么答案呢？</h3><p>正确的执行顺序可以用如下的代码来表示，待会再通过lucene的查询分析来解释下：</p>
-<pre><code>（<span class="keyword">b </span><span class="keyword">AND </span>c）
-</code></pre><p>在这里，第一个判断被抛弃了！也就是说，第一个判断其实是可有可无的！</p>
-<p>###你还会让你的使用者将AND/OR/NOT放在他们的查询里么？<br>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
-<p>###更多的测试<br>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
-<p>我写了个脚本来跑这些情况，分别在lucene和edismax下，看看可以得到什么样的结果。所有的测试中，lucene的默认运算符是AND，edismax的mm参数设置为100%</p>
-<pre><code><span class="title">Lucene</span>                    EDismax
-</code></pre><hr>
-<ol>
-<li>curly AND larry</li>
-</ol>
-<pre><code><span class="title">curly</span> larry               curly larry
-curly larry moe           curly larry moe
-curly larry shemp         curly larry shemp
-curly larry moe shemp     curly larry moe shemp
-</code></pre><ol>
-<li>curly AND larry OR moe</li>
-</ol>
-<pre><code><span class="title">curly</span>                     curly larry
-curly larry               curly larry moe
-curly moe                 curly larry shemp
-curly shemp               curly larry moe shemp
-curly larry moe
-curly larry shemp
-curly moe shemp
-curly larry moe shemp
-</code></pre><ol>
-<li>curly OR larry AND moe</li>
-</ol>
-<pre><code><span class="title">larry</span> moe                 larry moe
-curly larry moe           curly larry moe
-larry moe shemp           larry moe shemp
-curly larry moe shemp     curly larry moe shemp
-</code></pre><ol>
-<li>curly AND larry OR moe AND shemp</li>
-</ol>
-<pre><code><span class="title">curly</span> moe shemp           curly larry moe shemp
-curly larry moe shemp
-</code></pre><ol>
-<li>moe AND shemp OR curly AND larry</li>
-</ol>
-<pre><code><span class="title">curly</span> larry moe           curly larry moe shemp
-curly larry moe shemp
-</code></pre><p>查询1的答案是在预想中的。查询2的答案中，明显的就发现在lucene查询器下只有有’curly’就可以了，而在edismax下就需要’curly AND larry’（查询3一样的是变成了’larry AND moe’）。查询4和查询5也是同样的道理。当然，你可以看下debug查询输出，来知道她们是什么样的运行结果，但是没有告诉我为什么。</p>
-<p>###启示<br>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
-<p>~~~</p>
-<p>还是老老实实的用上括号吧，以免再入坑！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cieyx2nf40001kwzk1zakeju7" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/solr/">solr</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
 
 
+<section id="comments">
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-category="$catid" data-thread-key="{id_encode("content_$catid",$id,$siteid)}" data-title="{new_addslashes($title)}"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"catlittlechen"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+  <!-- 多说公共JS代码 end -->
+</section>
 
-  
-    <article id="生活-第一篇博文" class="article article-type-生活" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/09/22/第一篇博文/" class="article-date">
-  <time datetime="2015-09-22T13:24:52.000Z" itemprop="datePublished">2015-09-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/22/第一篇博文/">第一篇博文</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>你好，世界</p>
-<hr>
-<p>今天是拿到mac的第二天，兑现我的承诺，开始写属于自己的文字。</p>
-<p>人类总是任性和懒惰，多么好的条件都不会造就一个人，也就是<strong>生于忧患，死于安乐</strong>吧。</p>
-<p>好好奋斗，人生才刚刚开始。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cieyx2nfg0008kwzk7vhr585q" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/起点/">起点</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-  
 </section>
         
           <aside id="sidebar">

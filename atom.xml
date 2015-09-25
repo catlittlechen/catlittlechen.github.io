@@ -4,7 +4,7 @@
   <subtitle><![CDATA[猫的自由之地]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2015-09-23T23:39:29.000Z</updated>
+  <updated>2015-09-25T00:41:19.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,76 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[c的模板类]]></title>
+    <link href="http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/"/>
+    <id>http://catlittlechen.com/2015/09/25/c的模板类/</id>
+    <published>2015-09-24T23:56:37.000Z</published>
+    <updated>2015-09-25T00:41:19.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="起因">起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
+<h2 id="开始讲故事">开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
+<pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
+</code></pre><h3 id="为什么呢？">为什么呢？</h3><p>对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：</p>
+<pre><code><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
+<span class="keyword">struct</span> Foo
+{
+        T bar;
+    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
+};
+
+<span class="comment">// somewhere in a .cpp</span>
+Foo&lt;<span class="keyword">int</span>&gt; f; 
+</code></pre><p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
+<pre><code><span class="keyword">struct</span> FooInt
+{
+       <span class="keyword">int</span> bar;
+    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
+}
+</code></pre><p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
+<hr>
+<h3 id="方法：">方法：</h3><p>当然，将函数的声明和实现放在多个文件中，有时候是非常有必要的，简洁，条理，或者强迫症。。。<br>一种简单的解决方案是在头文件中声明类的方法之后，把类的实现写在文件B中，然后再头文件中include文件B，如下所示：</p>
+<pre><code><span class="comment">// 在Foo.h中声明；</span>
+<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<span class="keyword">struct</span> Foo
+{
+        <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
+};
+<span class="comment">//include 实现的文件；</span>
+<span class="preprocessor">#<span class="keyword">include</span> <span class="string">"Foo.tpp"</span></span>
+
+<span class="comment">// 在Foo.tpp中实现函数；</span>
+<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<span class="keyword">void</span> Foo&lt;T&gt;::doSomething(T param)
+{
+    <span class="comment">//implementation</span>
+}
+</code></pre><p>哈哈，这是一种十分取巧的方法，不过也达到了目的，而且效果拔群。<br>还有一种方法，感觉上就不是很推荐了，但是更加正常一些。</p>
+<pre><code><span class="comment">// Foo.h</span>
+<span class="comment">// no implementation</span>
+<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct</span> Foo { ... };
+
+<span class="comment">// Foo.cpp</span>
+<span class="comment">// implementation of Foo's methods</span>
+<span class="comment">// explicit instantiations</span>
+<span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">int</span>&gt;;
+<span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">float</span>&gt;;
+</code></pre><p>这种方法就是在cpp文件中，实现的模板类的函数之后，在文件中同时将你想要使用的模板参数，明确的实例化出来。  </p>
+<p>本人还是比较喜欢第一种，毕竟  </p>
+<pre><code><span class="number">1.</span>我不喜欢一个模板类实现在一个文件里，过长的文件真得太受不了了。
+<span class="number">2.</span>第二种方法也就必须把所有的模板类函数实现在一个文件里！
+</code></pre><p>博文翻译于<a href="http://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file" target="_blank" rel="external">stackoverflow</a>.</p>
+<h4 id="TODO：">TODO：</h4><p>可以看下答主推荐的<a href="https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl" target="_blank" rel="external">文章</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="起因">起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Go]]>
+    </summary>
+    
+      <category term="c" scheme="http://catlittlechen.com/tags/c/"/>
+    
+      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[[译]solr boolean operators]]></title>
