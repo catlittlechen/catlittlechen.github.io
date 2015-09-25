@@ -4,7 +4,7 @@
   <subtitle><![CDATA[猫的自由之地]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2015-09-25T00:41:19.000Z</updated>
+  <updated>2015-09-25T02:02:33.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/"/>
     <id>http://catlittlechen.com/2015/09/25/c的模板类/</id>
     <published>2015-09-24T23:56:37.000Z</published>
-    <updated>2015-09-25T00:41:19.000Z</updated>
+    <updated>2015-09-25T02:02:33.000Z</updated>
     <content type="html"><![CDATA[<h2 id="起因">起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
 <h2 id="开始讲故事">开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
@@ -27,8 +27,8 @@
 <pre><code><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
 <span class="keyword">struct</span> Foo
 {
-        T bar;
-    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
+  T bar;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
 };
 
 <span class="comment">// somewhere in a .cpp</span>
@@ -36,8 +36,8 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
 </code></pre><p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
 <pre><code><span class="keyword">struct</span> FooInt
 {
-       <span class="keyword">int</span> bar;
-    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
+  <span class="keyword">int</span> bar;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
 }
 </code></pre><p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
 <hr>
@@ -46,7 +46,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
 <span class="keyword">struct</span> Foo
 {
-        <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
 };
 <span class="comment">//include 实现的文件；</span>
 <span class="preprocessor">#<span class="keyword">include</span> <span class="string">"Foo.tpp"</span></span>

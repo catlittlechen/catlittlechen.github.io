@@ -19,7 +19,7 @@ template&amp;l">
 唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
 template&amp;l">
-<meta property="og:updated_time" content="2015-09-25T00:41:19.000Z">
+<meta property="og:updated_time" content="2015-09-25T02:02:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c的模板类">
 <meta name="twitter:description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
@@ -105,8 +105,8 @@ template&amp;l">
 <pre><code><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
 <span class="keyword">struct</span> Foo
 {
-        T bar;
-    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
+  T bar;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
 };
 
 <span class="comment">// somewhere in a .cpp</span>
@@ -114,8 +114,8 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
 </code></pre><p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
 <pre><code><span class="keyword">struct</span> FooInt
 {
-       <span class="keyword">int</span> bar;
-    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
+  <span class="keyword">int</span> bar;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
 }
 </code></pre><p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
 <hr>
@@ -124,7 +124,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
 <span class="keyword">struct</span> Foo
 {
-        <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
+  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
 };
 <span class="comment">//include 实现的文件；</span>
 <span class="preprocessor">#<span class="keyword">include</span> <span class="string">"Foo.tpp"</span></span>
@@ -155,7 +155,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cieyy325v000dqszk2u4am1gf" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="ciez051ih000dinzkabaa29e5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
