@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title><![CDATA[CatChen]]></title>
-  <subtitle><![CDATA[猫的自由之地]]></subtitle>
+  <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
   <updated>2015-09-25T02:02:33.000Z</updated>
