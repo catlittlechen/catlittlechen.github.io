@@ -65,6 +65,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-虚拟化技术了解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/29/虚拟化技术了解/" class="article-date">
+  <time datetime="2015-09-29T12:05:17.000Z" itemprop="datePublished">2015-09-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/29/虚拟化技术了解/">虚拟化技术了解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="某一天，docker火了！">某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
+<h3 id="LXC:">LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
+<h3 id="KVM：">KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
+<h2 id="SO：">SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
+<p>目前，除了<a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>外，目前国内还有另外一个值得关注的项目<a href="https://hyper.sh/" target="_blank" rel="external">hyper</a>,是基于hypervisor与docker的项目。</p>
+<h3 id="TODO:">TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cif5gxwak00087bzkqw7x90o5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟化/">虚拟化</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-c的模板类" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/25/c的模板类/" class="article-date">
@@ -144,7 +189,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cif38ojg8000d1kzk6u8ptllx" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cif5gxwap000g7bzkmidw5pqs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -245,7 +290,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cif38ojft00011kzkxcf4d49k" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cif5gxwa700017bzkrk6f8py7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/solr/">solr</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -289,7 +334,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cif38ojg500081kzk22aoqfao" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cif5gxwan000b7bzk9bh05eqx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/起点/">起点</a></li></ul>
@@ -314,7 +359,7 @@ curly larry moe shemp
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solr/">solr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/起点/">起点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/踩坑日记/">踩坑日记</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solr/">solr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟化/">虚拟化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/起点/">起点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/踩坑日记/">踩坑日记</a><span class="tag-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -324,7 +369,7 @@ curly larry moe shemp
   <div class="widget-wrap">
     <h3 class="widget-title">文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -335,6 +380,10 @@ curly larry moe shemp
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/09/29/虚拟化技术了解/">虚拟化技术了解</a>
+          </li>
         
           <li>
             <a href="/2015/09/25/c的模板类/">c的模板类</a>
