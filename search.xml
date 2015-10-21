@@ -98,6 +98,7 @@
 <pre><code><span class="label">sudo</span> /etc/init.d/<span class="keyword">bind9 </span>restart
 </code></pre><p>效果如图所示：<br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/3.png" alt="结果图"></p>
 <p>嘻嘻。</p>
+<h2 id="备记：">备记：</h2><p>各类DNS服务器的[比较]<br>(<a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software)!" target="_blank" rel="external">https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software)!</a></p>
 ]]></content>
     </entry>
     
