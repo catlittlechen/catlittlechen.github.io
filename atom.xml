@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2015-10-21T00:35:15.000Z</updated>
+  <updated>2015-11-11T10:34:54.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,170 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[nagios和ganglia]]></title>
+    <link href="http://catlittlechen.com/2015/11/11/nagios%E5%92%8Cganglia/"/>
+    <id>http://catlittlechen.com/2015/11/11/nagios和ganglia/</id>
+    <published>2015-11-11T08:32:19.000Z</published>
+    <updated>2015-11-11T10:34:54.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="老生常谈–监控">老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
+<p>服务器是用了腾讯云的，裸机~~，系统是ubuntu的。<br>参考了<a href="http://idevit.nl/node/93" target="_blank" rel="external">idevit</a></p>
+<h2 id="INSTALL_NAGIOS">INSTALL NAGIOS</h2><p>这次的安装是源码安装，现在ubuntu的apt-get安装了nagios还是3版本的，所以还是多折腾，去下载源码咯。<br>先安装一些依赖的软件：</p>
+<pre><code>apt-<span class="built_in">get</span> install libperl-<span class="built_in">dev</span> libpng12-<span class="built_in">dev</span> libgd2-xpm-<span class="built_in">dev</span> build-essential php5-gd wget nginx spwan-fcgi fcgiwrap php5-fpm 
+</code></pre><p>本次的安装时4.1.1版本的。</p>
+<pre><code>wget <span class="symbol">https:</span>/<span class="regexp">/assets.nagios.com/downloads</span><span class="regexp">/nagioscore/releases</span><span class="regexp">/nagios-4.1.1.tar.gz
+wget http:/</span><span class="regexp">/www.nagios-plugins.org/download</span><span class="regexp">/nagios-plugins-2.1.1.tar.gz</span>
+</code></pre><p>下载解压到服务器之中~</p>
+<p>创建用户nagios和用户组nagcmd</p>
+<pre><code><span class="comment">adduser</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">system</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">no</span><span class="literal">-</span><span class="comment">create</span><span class="literal">-</span><span class="comment">home</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disabled</span><span class="literal">-</span><span class="comment">login</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">group</span> <span class="comment">nagios</span>
+<span class="comment">groupadd</span> <span class="comment">nagcmd</span>
+<span class="comment">usermod</span> <span class="literal">-</span><span class="comment">G</span> <span class="comment">nagcmd</span> <span class="comment">nagios</span>
+<span class="comment">usermod</span> <span class="literal">-</span><span class="comment">a</span> <span class="literal">-</span><span class="comment">G</span> <span class="comment">nagcmd</span> <span class="comment">www</span><span class="literal">-</span><span class="comment">data</span>
+</code></pre><p>配置nagios源码安装：</p>
+<pre><code><span class="keyword">cd</span> nagios-<span class="number">4.1</span>.<span class="number">1</span>
+./configure --prefix /usr/local/nagios --sysconfdir=/etc/nagios --with-<span class="keyword">command</span>-user=nagios --with-<span class="keyword">command</span>-group=nagcmd
+#这里会检测所需的环境~
+<span class="keyword">make</span> <span class="keyword">all</span>
+<span class="keyword">make</span> install
+<span class="keyword">make</span> install-init
+<span class="keyword">make</span> install-config
+<span class="keyword">make</span> install-commandmode
+#这里是将开始编译，安装到指定目录，分发配置文件和配置了命令
+</code></pre><p>安装完毕之后,这时候你可以把安装包里面的插件cp过来</p>
+<pre><code>cp -rvf contrib<span class="regexp">/eventhandlers/</span> <span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec/
+chown -R <span class="string">nagios:</span>nagios <span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec/eventhandlers
+</code></pre><p>nagios需要验证用户的权限，由于本次安装不想使用apache，选用了nginx，所以这次是通过以下的命令来生产用户验证的文件的。</p>
+<pre><code>wget http:<span class="comment">//trac.edgewall.org/export/10791/trunk/contrib/htpasswd.py</span>
+chmod +x htpasswd<span class="class">.py</span>
+htpasswd<span class="class">.py</span> -c -<span class="tag">b</span> /etc/nagios/htpasswd<span class="class">.users</span> nagiosadmin password
+</code></pre><p>这里的nagiosadmin是用户名，而password是密码，如果想要重新修改用户名的话，需要在/etc/nagios/cfg.cfg文件中加入权限。<br>比如用户名是catlittlechen的话，可以修改成下面这样子</p>
+<pre><code>authorized_<span class="keyword">for</span>_system_information=nagiosadmin,catlittlechen
+</code></pre><p>安装下nagios官方提供的插件</p>
+<pre><code>cd nagios-plugins-<span class="number">2.1</span>.<span class="number">1</span>
+./configure --<span class="keyword">with</span>-nagios-user=nagios --<span class="keyword">with</span>-nagios-<span class="keyword">group</span>=nagios
+make
+make install
+</code></pre><p>之后可以通过执行下面的指令来验证下是否成功的配置了nagios</p>
+<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>bin<span class="regexp">/nagios -v /</span>etc<span class="regexp">/nagios/</span>nagio.cfg
+</code></pre><p>启动的时候，这边的找了下，发现在/etc/rc.d/下，有一个nagios的敏力脚本，就链接过来了/etc/init.d/nagios,然后就可以执行下面的命令启动来。</p>
+<pre><code>service nagios <span class="built_in">start</span>
+</code></pre><p>弱弱的说，nginx配置在最下面~</p>
+<h3 id="INSTALL_GANGLIA">INSTALL GANGLIA</h3><p>安装ganglia只是为了便捷的弥补下nagios只有定时检测的特性，当然，你可以尝试安装怕你pnp4nagios来完成这个功能，但是ganglia更加的强大一些，而且真得简单啊。<br>命令：</p>
+<pre><code>apt-<span class="keyword">get</span> install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
+</code></pre><p>这时候需要修改两个地方的配置文件</p>
+<pre><code>vim /etc/ganglia/gmetad.conf
+<span class="preprocessor">#data_source <span class="string">"my cluster"</span> localhost</span>
+data_source <span class="string">"cat chen"</span> localhost
+vim /etc/ganglia/gmond.conf
+cluster {
+    <span class="preprocessor">#name = <span class="string">"unspecified"</span></span>
+    name = <span class="string">"cat chen"</span>
+    owner = <span class="string">"unspecified"</span>
+    latlong = <span class="string">"unspecified"</span>
+    url = <span class="string">"unspecified"</span>
+}
+udp_send_channel  {
+    <span class="preprocessor">#mcast_join = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
+    host = localhost
+    port = <span class="number">8649</span>
+    ttl = <span class="number">1</span>
+}
+udp_recv_channel {
+    <span class="preprocessor">#mcast_join = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
+    port = <span class="number">8649</span>
+    <span class="preprocessor">#bind = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
+}
+</code></pre><p>然后执行下面的语句重启下服务</p>
+<pre><code><span class="title">service</span> ganglia-monitor restart &amp;&amp; service gmetad restart
+</code></pre><p>刚刚的，ganglia就这么搞定了~</p>
+<h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
+<pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ganglia/monitor-core/
+<span class="keyword">cp</span> monitor-core/contrib/check_ganglia.<span class="keyword">py</span> /usr/local/nagios/libexec
+chown nagio<span class="variable">s:nagios</span> check_ganglia.<span class="keyword">py</span>
+chmod +<span class="keyword">x</span> check_ganglia.<span class="keyword">py</span>
+</code></pre><p>为了让nagios可以使用这个插件，需要在command配置中加入以下的配置</p>
+<pre><code>vim /etc/nagios/objects/commands.cfg
+define command {
+    command_name check_ganglia
+    command_line <span class="variable">$USER1</span>$/check_ganglia.py -h <span class="variable">$HOSTNAME</span>$ -m <span class="variable">$ARG1</span>$ -w <span class="variable">$ARG2</span>$ -c <span class="variable">$ARG3</span>$
+}
+</code></pre><p>然后就可以在配置项目里面配置相应的监控目标，比如我简答的配置如下</p>
+<pre><code><span class="function_or_atom">vim</span> /<span class="function_or_atom">etc</span>/<span class="function_or_atom">nagios</span>/<span class="function_or_atom">objects</span>/<span class="function_or_atom">localhost</span>.<span class="function_or_atom">cfg</span>
+<span class="function_or_atom">define</span> <span class="function_or_atom">service</span> {
+    <span class="function_or_atom">use</span>     <span class="function_or_atom">local</span>-<span class="function_or_atom">service</span>
+    <span class="function_or_atom">host_name</span>       <span class="function_or_atom">localhost</span>
+    <span class="function_or_atom">service_description</span>     <span class="variable">Ganglia</span> <span class="variable">Bytes</span> <span class="variable">Out</span>
+    <span class="function_or_atom">check_command</span>   <span class="function_or_atom">check_ganglia</span><span class="exclamation_mark">!</span><span class="function_or_atom">bytes_out</span><span class="exclamation_mark">!</span><span class="number">80000</span><span class="exclamation_mark">!</span><span class="number">100000</span>
+}
+
+<span class="function_or_atom">define</span> <span class="function_or_atom">service</span> {
+    <span class="function_or_atom">use</span>     <span class="function_or_atom">local</span>-<span class="function_or_atom">service</span>
+    <span class="function_or_atom">host_name</span>       <span class="function_or_atom">localhost</span>
+    <span class="function_or_atom">service_description</span>     <span class="variable">Ganglia</span> <span class="variable">Disk</span> <span class="variable">Free</span>
+    <span class="function_or_atom">check_command</span>   <span class="function_or_atom">check_ganglia</span><span class="exclamation_mark">!</span><span class="function_or_atom">disk_free</span><span class="exclamation_mark">!</span><span class="number">20</span><span class="exclamation_mark">!</span><span class="number">10</span>
+}
+</code></pre><p>更加详细的配置，好书推荐，可以参考下<a href="http://nagios-cn.sourceforge.net/nagios-cn/configuration.html" target="_blank" rel="external">nagios_cn</a><br>nginx配置：</p>
+<pre><code><span class="xml">server </span><span class="expression">{
+    <span class="variable">listen</span> 10086
+    <span class="variable">server</span>_<span class="variable">name</span> <span class="variable">nagios.catlittlechen.com</span>;
+    <span class="variable">access</span>_<span class="variable">log</span>  <span class="end-block">/var</span><span class="end-block">/log</span><span class="end-block">/nginx</span><span class="end-block">/nagios.access.log</span>;
+    <span class="variable">error</span>_<span class="variable">log</span>   <span class="end-block">/var</span><span class="end-block">/log</span><span class="end-block">/nginx</span><span class="end-block">/nagios.error.log</span>;
+
+      <span class="variable">auth</span>_<span class="variable">basic</span>            <span class="string">"Restricted Nagios Area!"</span>;
+      <span class="variable">auth</span>_<span class="variable">basic</span>_<span class="variable">user</span>_<span class="variable">file</span>  <span class="end-block">/etc</span><span class="end-block">/nagios</span><span class="end-block">/htpasswd.users</span>;
+
+    <span class="variable">root</span>    <span class="end-block">/var</span><span class="end-block">/www</span>;
+    <span class="variable">index</span>   <span class="variable">index.php</span> <span class="variable">index.html</span>;
+
+    <span class="variable">location</span> <span class="end-block">/nagios </span>{
+        <span class="variable">index</span> <span class="variable">index.php</span>;
+        <span class="variable">alias</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/share</span>/;
+    }</span><span class="xml">
+
+    location /ganglia </span><span class="expression">{
+        <span class="variable">index</span> <span class="variable">index.php</span> <span class="variable">index.html</span> <span class="variable">index.htm</span>;
+    }</span><span class="xml">
+
+    location ~ ^/nagios/(.*\.php)$ </span><span class="expression">{
+        <span class="variable">alias</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/share</span>/$1;
+        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
+        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/php</span>5<span class="variable">-fpm.sock</span>;
+    }</span><span class="xml">
+
+    location ~ \.cgi$ </span><span class="expression">{
+        <span class="variable">root</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/sbin</span>/;
+        <span class="variable">rewrite</span> ^<span class="end-block">/nagios</span><span class="end-block">/cgi-bin</span>/(<span class="variable">.</span>*)\<span class="variable">.cgi</span> /$1<span class="variable">.cgi</span> <span class="variable">break</span>;
+        <span class="variable">fastcgi</span>_<span class="variable">param</span> <span class="variable">AUTH</span>_<span class="variable">USER</span> $<span class="variable">remote</span>_<span class="variable">user</span>;
+        <span class="variable">fastcgi</span>_<span class="variable">param</span> <span class="variable">REMOTE</span>_<span class="variable">USER</span> $<span class="variable">remote</span>_<span class="variable">user</span>;
+        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
+        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/fcgiwrap.socket</span>;
+    }</span><span class="xml">
+
+    location ~ \.php$ </span><span class="expression">{
+        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
+        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/php</span>5<span class="variable">-fpm.sock</span>;
+    }</span><span class="xml">
+
+    location ~ /\.ht </span><span class="expression">{
+            <span class="variable">deny</span> <span class="variable">all</span>;
+    }</span><span class="xml">
+}</span>
+</code></pre><p>晒图，别吐槽我的垃圾服务器</p>
+<p><img src="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png" alt="nagios"><br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png" alt="ganglia"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="老生常谈–监控">老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
+<p>服务器是用了腾讯云的，裸机~~，系统是ubuntu的。<br>参考了<a href="http://i]]>
+    </summary>
+    
+      <category term="ganglias" scheme="http://catlittlechen.com/tags/ganglias/"/>
+    
+      <category term="nagios" scheme="http://catlittlechen.com/tags/nagios/"/>
+    
+      <category term="监控" scheme="http://catlittlechen.com/tags/%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[自建DNS服务器]]></title>
