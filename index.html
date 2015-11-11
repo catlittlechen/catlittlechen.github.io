@@ -126,10 +126,10 @@ make
 make install
 </code></pre><p>之后可以通过执行下面的指令来验证下是否成功的配置了nagios</p>
 <pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>bin<span class="regexp">/nagios -v /</span>etc<span class="regexp">/nagios/</span>nagio.cfg
-</code></pre><p>启动的时候，这边的找了下，发现在/etc/rc.d/下，有一个nagios的敏力脚本，就链接过来了/etc/init.d/nagios,然后就可以执行下面的命令启动来。</p>
+</code></pre><p>启动的时候，这边的找了下，发现在/etc/rc.d/下，有一个nagios的脚本，就链接过来了/etc/init.d/nagios,然后就可以执行下面的命令启动来。</p>
 <pre><code>service nagios <span class="built_in">start</span>
 </code></pre><p>弱弱的说，nginx配置在最下面~</p>
-<h3 id="INSTALL_GANGLIA">INSTALL GANGLIA</h3><p>安装ganglia只是为了便捷的弥补下nagios只有定时检测的特性，当然，你可以尝试安装怕你pnp4nagios来完成这个功能，但是ganglia更加的强大一些，而且真得简单啊。<br>命令：</p>
+<h3 id="INSTALL_GANGLIA">INSTALL GANGLIA</h3><p>安装ganglia只是为了便捷的弥补下nagios只有定时检测的特性，当然，你可以尝试安装pnp4nagios来完成这个功能，但是ganglia更加的强大一些，而且真得简单啊。<br>命令：</p>
 <pre><code>apt-<span class="keyword">get</span> install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
 </code></pre><p>这时候需要修改两个地方的配置文件</p>
 <pre><code>vim /etc/ganglia/gmetad.conf
@@ -183,8 +183,8 @@ define command {
     <span class="function_or_atom">service_description</span>     <span class="variable">Ganglia</span> <span class="variable">Disk</span> <span class="variable">Free</span>
     <span class="function_or_atom">check_command</span>   <span class="function_or_atom">check_ganglia</span><span class="exclamation_mark">!</span><span class="function_or_atom">disk_free</span><span class="exclamation_mark">!</span><span class="number">20</span><span class="exclamation_mark">!</span><span class="number">10</span>
 }
-</code></pre><p>更加详细的配置，好书推荐，可以参考下<a href="http://nagios-cn.sourceforge.net/nagios-cn/configuration.html" target="_blank" rel="external">nagios_cn</a><br>nginx配置：</p>
-<pre><code><span class="xml">server </span><span class="expression">{
+</code></pre><p>更加详细的配置，好书推荐，可以参考下<a href="http://nagios-cn.sourceforge.net/nagios-cn/configuration.html" target="_blank" rel="external">nagios_cn</a></p>
+<h3 id="nginx配置：">nginx配置：</h3><pre><code><span class="xml">server </span><span class="expression">{
     <span class="variable">listen</span> 10086
     <span class="variable">server</span>_<span class="variable">name</span> <span class="variable">nagios.catlittlechen.com</span>;
     <span class="variable">access</span>_<span class="variable">log</span>  <span class="end-block">/var</span><span class="end-block">/log</span><span class="end-block">/nginx</span><span class="end-block">/nagios.access.log</span>;
@@ -235,7 +235,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="ciguoo51o000jh7zkmwygnyrd" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="cigutwaex000jllzkig7e4ndw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ganglias/">ganglias</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nagios/">nagios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>
@@ -366,7 +366,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/10/19/自建DNS服务器/" data-id="ciguoo51k000bh7zko7j1666z" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/10/19/自建DNS服务器/" data-id="cigutwaet000bllzk7eu5ae3t" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
@@ -411,7 +411,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="ciguoo51h0008h7zkaplkrt3y" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cigutwaer0008llzkma3e9u0c" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟化/">虚拟化</a></li></ul>
@@ -503,7 +503,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="ciguoo51r000qh7zkep75kxix" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cigutwaf0000qllzk169m3h72" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -604,7 +604,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="ciguoo51a0001h7zkejjy0yrg" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cigutwaek0001llzkhla5vvqo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/solr/">solr</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -648,7 +648,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="ciguoo51l000eh7zknt226qh5" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cigutwaev000ellzk47qvipy2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/起点/">起点</a></li></ul>
