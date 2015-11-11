@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2015-11-11T10:36:47.000Z</updated>
+  <updated>2015-11-11T10:45:33.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://catlittlechen.com/2015/11/11/nagios%E5%92%8Cganglia/"/>
     <id>http://catlittlechen.com/2015/11/11/nagios和ganglia/</id>
     <published>2015-11-11T08:32:19.000Z</published>
-    <updated>2015-11-11T10:36:47.000Z</updated>
+    <updated>2015-11-11T10:45:33.000Z</updated>
     <content type="html"><![CDATA[<h2 id="老生常谈–监控">老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
 <p>服务器是用了腾讯云的，裸机~~，系统是ubuntu的。<br>参考了<a href="http://idevit.nl/node/93" target="_blank" rel="external">idevit</a></p>
 <h2 id="INSTALL_NAGIOS">INSTALL NAGIOS</h2><p>这次的安装是源码安装，现在ubuntu的apt-get安装了nagios还是3版本的，所以还是多折腾，去下载源码咯。<br>先安装一些依赖的软件：</p>
@@ -163,7 +163,7 @@ define command {
     }</span><span class="xml">
 }</span>
 </code></pre><p>晒图，别吐槽我的垃圾服务器</p>
-<p><img src="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png" alt="nagios"><br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png" alt="ganglia"></p>
+<p><img src="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png" alt="ganglia"><br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png" alt="naginx"></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="老生常谈–监控">老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
