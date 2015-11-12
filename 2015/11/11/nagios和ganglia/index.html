@@ -19,7 +19,7 @@ INSTALL NAGIOS这次的安装是源码安装，现在ubuntu的apt-get安装了na
 apt-get install libper">
 <meta property="og:image" content="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png">
 <meta property="og:image" content="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png">
-<meta property="og:updated_time" content="2015-11-11T13:14:27.000Z">
+<meta property="og:updated_time" content="2015-11-12T07:33:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nagios和ganglia">
 <meta name="twitter:description" content="老生常谈–监控很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  
@@ -166,8 +166,10 @@ udp_recv_channel {
 }
 </code></pre><p>然后执行下面的语句重启下服务</p>
 <pre><code><span class="title">service</span> ganglia-monitor restart &amp;&amp; service gmetad restart
-</code></pre><p>刚刚的，ganglia就这么搞定了~</p>
-<h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
+</code></pre><p>杠杠的，ganglia就这么搞定了~<br>这里为了习惯问题，我还执行了以下的命令</p>
+<pre><code>cp -r <span class="regexp">/usr/</span>share<span class="regexp">/ganglia-webfrontend/</span>  <span class="regexp">/var/</span>www/
+mv <span class="regexp">/var/</span>www<span class="regexp">/ganglia-webfrontend /</span>var<span class="regexp">/www/</span>ganglia
+</code></pre><h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
 <pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ganglia/monitor-core/
 <span class="keyword">cp</span> monitor-core/contrib/check_ganglia.<span class="keyword">py</span> /usr/local/nagios/libexec
 chown nagio<span class="variable">s:nagios</span> check_ganglia.<span class="keyword">py</span>
@@ -245,7 +247,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="cigutwaex000jllzkig7e4ndw" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="cigvvzvef000j5vzkor1h9qn1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ganglias/">ganglias</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nagios/">nagios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>

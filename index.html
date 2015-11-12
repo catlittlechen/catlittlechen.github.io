@@ -156,8 +156,10 @@ udp_recv_channel {
 }
 </code></pre><p>然后执行下面的语句重启下服务</p>
 <pre><code><span class="title">service</span> ganglia-monitor restart &amp;&amp; service gmetad restart
-</code></pre><p>刚刚的，ganglia就这么搞定了~</p>
-<h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
+</code></pre><p>杠杠的，ganglia就这么搞定了~<br>这里为了习惯问题，我还执行了以下的命令</p>
+<pre><code>cp -r <span class="regexp">/usr/</span>share<span class="regexp">/ganglia-webfrontend/</span>  <span class="regexp">/var/</span>www/
+mv <span class="regexp">/var/</span>www<span class="regexp">/ganglia-webfrontend /</span>var<span class="regexp">/www/</span>ganglia
+</code></pre><h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
 <pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ganglia/monitor-core/
 <span class="keyword">cp</span> monitor-core/contrib/check_ganglia.<span class="keyword">py</span> /usr/local/nagios/libexec
 chown nagio<span class="variable">s:nagios</span> check_ganglia.<span class="keyword">py</span>
@@ -235,7 +237,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="cigutwaex000jllzkig7e4ndw" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/11/11/nagios和ganglia/" data-id="cigvvzvef000j5vzkor1h9qn1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ganglias/">ganglias</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nagios/">nagios</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/监控/">监控</a></li></ul>
@@ -366,7 +368,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/10/19/自建DNS服务器/" data-id="cigutwaet000bllzk7eu5ae3t" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/10/19/自建DNS服务器/" data-id="cigvvzvea000b5vzkhrwkg1tz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
@@ -411,7 +413,7 @@ define command {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cigutwaer0008llzkma3e9u0c" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cigvvzve700085vzk8ly093id" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟化/">虚拟化</a></li></ul>
@@ -503,7 +505,7 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cigutwaf0000qllzk169m3h72" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cigvvzvei000q5vzk2ay3l298" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -604,7 +606,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cigutwaek0001llzkhla5vvqo" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/" data-id="cigvvzvdu00015vzk96lcbqip" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/solr/">solr</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/翻译/">翻译</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -648,7 +650,7 @@ curly larry moe shemp
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cigutwaev000ellzk47qvipy2" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/22/第一篇博文/" data-id="cigvvzvec000e5vzk4d8dvgcx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/生活/">生活</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/起点/">起点</a></li></ul>
