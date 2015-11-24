@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2015-11-13T13:45:25.000Z</updated>
+  <updated>2015-11-20T03:57:00.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,19 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[记一次debug的坑]]></title>
+    <link href="http://catlittlechen.com/2015/11/20/%E8%AE%B0%E4%B8%80%E6%AC%A1debug%E7%9A%84%E5%9D%91/"/>
+    <id>http://catlittlechen.com/2015/11/20/记一次debug的坑/</id>
+    <published>2015-11-20T03:57:00.000Z</published>
+    <updated>2015-11-20T03:57:00.000Z</updated>
+    <content type="html"></content>
+    <summary type="html">
+    
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[仅仅]]></title>
@@ -419,14 +432,14 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
     <link href="http://catlittlechen.com/2015/09/23/%E8%AF%91-solr-boolean-operators/"/>
     <id>http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/</id>
     <published>2015-09-23T13:24:58.000Z</published>
-    <updated>2015-09-23T23:39:29.000Z</updated>
+    <updated>2015-11-24T08:58:28.000Z</updated>
     <content type="html"><![CDATA[<h2 id="踩坑感言：">踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
 <hr>
 <h2 id="译文原文：">译文原文：</h2><p>来自于<a href="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/" target="_blank" rel="external">Bill Dueber</a>.</p>
 <hr>
 <h2 id="结论：">结论：</h2><p>在Solr中一定要用括号去管理优先级！！！</p>
 <hr>
-<p>######搞起搞起！<br>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
+<h6 id="搞起搞起！">搞起搞起！</h6><p>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
 <pre><code><span class="tag">a</span> OR <span class="tag">b</span> AND C
 </code></pre><p>我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。</p>
 <h3 id="boolean运算符的优先级">boolean运算符的优先级</h3><p>如果你曾经知道过boolean运算相关的知识，你坑定为知道一个严格意义上的顺序，那就是NOT&gt;AND&gt;OR，因此，可能就会使下面一种执行顺序：</p>
@@ -438,8 +451,8 @@ Foo&lt;<span class="keyword">int</span>&gt; f;
 <h3 id="那么还有什么答案呢？">那么还有什么答案呢？</h3><p>正确的执行顺序可以用如下的代码来表示，待会再通过lucene的查询分析来解释下：</p>
 <pre><code>（<span class="keyword">b </span><span class="keyword">AND </span>c）
 </code></pre><p>在这里，第一个判断被抛弃了！也就是说，第一个判断其实是可有可无的！</p>
-<p>###你还会让你的使用者将AND/OR/NOT放在他们的查询里么？<br>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
-<p>###更多的测试<br>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
+<h3 id="你还会让你的使用者将AND/OR/NOT放在他们的查询里么？">你还会让你的使用者将AND/OR/NOT放在他们的查询里么？</h3><p>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
+<h3 id="更多的测试">更多的测试</h3><p>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
 <p>我写了个脚本来跑这些情况，分别在lucene和edismax下，看看可以得到什么样的结果。所有的测试中，lucene的默认运算符是AND，edismax的mm参数设置为100%</p>
 <pre><code><span class="title">Lucene</span>                    EDismax
 </code></pre><hr>
@@ -479,7 +492,7 @@ curly larry moe shemp
 <pre><code><span class="title">curly</span> larry moe           curly larry moe shemp
 curly larry moe shemp
 </code></pre><p>查询1的答案是在预想中的。查询2的答案中，明显的就发现在lucene查询器下只有有’curly’就可以了，而在edismax下就需要’curly AND larry’（查询3一样的是变成了’larry AND moe’）。查询4和查询5也是同样的道理。当然，你可以看下debug查询输出，来知道她们是什么样的运行结果，但是没有告诉我为什么。</p>
-<p>###启示<br>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
+<h3 id="启示">启示</h3><p>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene-167cene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
 <p>~~~</p>
 <p>还是老老实实的用上括号吧，以免再入坑！</p>
 ]]></content>
