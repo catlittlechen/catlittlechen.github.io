@@ -5,16 +5,31 @@
   
   <title>记一次debug的坑 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="互联网行业的猫">
+  <meta name="description" content="感悟这个故事告诉我们，永远不要相信自己的眼睛。
+那天天气晴朗，阳光明媚~我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。
+由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。
+func readLines(path string) (lines []string, err error) {
+    var (
+            fil">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次debug的坑">
 <meta property="og:url" content="http://catlittlechen.com/2015/11/20/记一次debug的坑/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
-<meta property="og:updated_time" content="2015-11-20T03:57:00.000Z">
+<meta property="og:description" content="感悟这个故事告诉我们，永远不要相信自己的眼睛。
+那天天气晴朗，阳光明媚~我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。
+由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。
+func readLines(path string) (lines []string, err error) {
+    var (
+            fil">
+<meta property="og:updated_time" content="2015-11-25T12:03:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次debug的坑">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:description" content="感悟这个故事告诉我们，永远不要相信自己的眼睛。
+那天天气晴朗，阳光明媚~我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。
+由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。
+func readLines(path string) (lines []string, err error) {
+    var (
+            fil">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -86,13 +101,84 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="感悟">感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
+<h2 id="那天">那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
+<p>由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。</p>
+<pre><code>func readLines(path string) (lines []string, <span class="keyword">err</span> <span class="keyword">error</span>) {
+    <span class="keyword">var</span> (
+            <span class="keyword">file</span>   *os.<span class="keyword">File</span>
+            part   []byte
+            prefix bool
+    )
+
+    <span class="keyword">if</span> <span class="keyword">file</span>, <span class="keyword">err</span> = os.<span class="keyword">Open</span>(path); <span class="keyword">err</span> != nil {
+            <span class="literal">return</span>
+    }
+
+    reader := bufio.NewReader(<span class="keyword">file</span>)
+    buffer := bytes.NewBuffer(make([]byte, 1024))
+
+    <span class="keyword">for</span> {
+            <span class="keyword">if</span> part, prefix, <span class="keyword">err</span> = reader.ReadLine(); <span class="keyword">err</span> != nil {
+                    <span class="keyword">break</span>
+            }
+            buffer.Write(part)
+            <span class="keyword">if</span> !prefix {
+                    lines = <span class="keyword">append</span>(lines, buffer.<span class="literal">String</span>())
+                    buffer.Reset()
+            }
+    }
+    <span class="keyword">if</span> <span class="keyword">err</span> == io.EOF {
+            <span class="keyword">err</span> = nil 
+    }
+    <span class="literal">return</span>
+}
+</code></pre><p>调用的时候，我通过用了大概如下的代码：</p>
+<pre><code>lines， <span class="keyword">err</span> := readLines(userFile)
+<span class="keyword">if</span> <span class="keyword">err</span> != nil {
+    <span class="literal">return</span>
+}
+<span class="keyword">for</span> _, <span class="keyword">line</span> := <span class="keyword">range</span> lines {
+    sqlStr := rawSql % <span class="keyword">line</span>
+    _, <span class="keyword">err</span> = dbConn.Exec(sqlStr)
+    <span class="keyword">if</span> <span class="keyword">err</span> != nil {
+        <span class="literal">return</span>
+    }
+}
+</code></pre><p>当然它报错了！这样子的错误信息~</p>
+<pre><code>Error <span class="number">1064</span>: You have <span class="operator">an</span> error <span class="operator">in</span> your SQL syntax; check <span class="operator">the</span> manual that corresponds <span class="built_in">to</span> your MySQL server <span class="built_in">version</span> <span class="keyword">for</span> <span class="operator">the</span> <span class="constant">right</span> syntax <span class="built_in">to</span> use near <span class="string">''</span> <span class="keyword">at</span> <span class="built_in">line</span> <span class="number">1</span>
+</code></pre><p>通过查阅，我发现这个near ‘’，是的竟然是空的，不像一般的写错sql语句一样是会写明错误信息~<br>瞬间我就神经开始大条了。</p>
+<pre><code>难道我后面写漏了什么？  
+怎么可能！
+不，我得先去喝杯水，然后再来看看。
+水果到了，再吃个苹果。
+吃完洗个手-。-
+我觉得没错啊！
+F<span class="keyword">*</span><span class="keyword">*</span>k
+</code></pre><h2 id="结局">结局</h2><p>不玩了，之所以我会认为自己没错，是因为我将整个sql语句打印了出来，在肉眼确认没错之后，又去mysql得命令行中直接执行了语句，结果十分顺利。<br>最后，十分大条的将从文件中读取出来的lines用长度打印了出来，瞬间我就斯巴达了！  </p>
+<pre><code><span class="keyword">for</span> _, <span class="built_in">line</span> := range <span class="keyword">lines</span> {
+    fmt.Printf(<span class="string">"len[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(<span class="built_in">line</span>))
+    sqlStr := rawSql % <span class="built_in">line</span>
+    fmt.Printf(<span class="string">"sqlStr[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(sqlStr))
+}
+</code></pre><p>结果。。。</p>
+<pre><code>len[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1024!
+sqlStr[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1065!
+</code></pre><p>这就是为什么我执行失败的原因！sqlStr里面，存在着一段空白的buffer！却是打印不出来的~<br>最后我把代码改成了这样~</p>
+<pre><code>data, <span class="keyword">err</span> = ioutil.ReadAll(userFile)
+<span class="keyword">if</span> <span class="keyword">err</span> != nil {
+    <span class="literal">return</span>
+}
+lines := strings.<span class="keyword">Split</span>(<span class="literal">string</span>(data), <span class="string">"\n"</span>)
+</code></pre><h2 id="Done">Done</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/20/记一次debug的坑/" data-id="cihd5k7320008cizkb8ceusls" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/11/20/记一次debug的坑/" data-id="ciherheae0008shzk9jr7vpzi" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
+
     </footer>
   </div>
   
@@ -141,7 +227,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ganglias/">ganglias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nagios/">nagios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solr/">solr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/监控/">监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟化/">虚拟化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/起点/">起点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/踩坑日记/">踩坑日记</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/">c</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ganglias/">ganglias</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nagios/">nagios</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/solr/">solr</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/技术/">技术</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/生活/">生活</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/监控/">监控</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/虚拟化/">虚拟化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/起点/">起点</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/踩坑日记/">踩坑日记</a><span class="tag-list-count">3</span></li></ul>
     </div>
   </div>
 
