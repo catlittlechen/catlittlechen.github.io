@@ -89,17 +89,17 @@ LXC:lxc(Linux Containers)，是一种基于容器的操作系统层次的虚拟�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="某一天，docker火了！">某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
-<h3 id="LXC:">LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
-<h3 id="KVM：">KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
-<h2 id="SO：">SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
+        <h4 id="u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01"><a href="#u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01" class="headerlink" title="某一天，docker火了！"></a>某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
+<h3 id="LXC_3A"><a href="#LXC_3A" class="headerlink" title="LXC:"></a>LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
+<h3 id="KVM_uFF1A"><a href="#KVM_uFF1A" class="headerlink" title="KVM："></a>KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
+<h2 id="SO_uFF1A"><a href="#SO_uFF1A" class="headerlink" title="SO："></a>SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
 <p>目前，除了<a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>外，目前国内还有另外一个值得关注的项目<a href="https://hyper.sh/" target="_blank" rel="external">hyper</a>,是基于hypervisor与docker的项目。</p>
-<h3 id="TODO:">TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
+<h3 id="TODO_3A"><a href="#TODO_3A" class="headerlink" title="TODO:"></a>TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cijh1wgb4000ap5zkx6gr9g2x" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/09/29/虚拟化技术了解/" data-id="cijsmj5js000aeizkxxk5hw4e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/虚拟化/">虚拟化</a></li></ul>
@@ -141,7 +141,7 @@ LXC:lxc(Linux Containers)，是一种基于容器的操作系统层次的虚拟�
 (function() {
  var ds = document.createElement('script');
  ds.type = 'text/javascript';ds.async = true;
- ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.src = 'http://7xnn4y.com1.z0.glb.clouddn.com/embed_ua.js';
  ds.charset = 'UTF-8';
  (document.getElementsByTagName('head')[0] 
   || document.getElementsByTagName('body')[0]).appendChild(ds);

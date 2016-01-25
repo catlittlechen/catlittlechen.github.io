@@ -5,54 +5,53 @@
     
     <entry>
       <title><![CDATA[记一次debug的坑]]></title>
-      <link href="http://catlittlechen.com/2015/11/20/%E8%AE%B0%E4%B8%80%E6%AC%A1debug%E7%9A%84%E5%9D%91/"/>
       <url>http://catlittlechen.com/2015/11/20/%E8%AE%B0%E4%B8%80%E6%AC%A1debug%E7%9A%84%E5%9D%91/</url>
-      <content type="html"><![CDATA[<h2 id="感悟">感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
-<h2 id="那天">那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
+      <content type="html"><![CDATA[<h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
+<h2 id="u90A3_u5929"><a href="#u90A3_u5929" class="headerlink" title="那天"></a>那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
 <p>由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。</p>
-<pre><code>func readLines(path string) (lines []string, <span class="keyword">err</span> <span class="keyword">error</span>) {
-    <span class="keyword">var</span> (
-            <span class="keyword">file</span>   *os.<span class="keyword">File</span>
+<pre><code>func readLines(path string) (lines []string, err error) {
+    var (
+            file   *os.File
             part   []byte
             prefix bool
     )
 
-    <span class="keyword">if</span> <span class="keyword">file</span>, <span class="keyword">err</span> = os.<span class="keyword">Open</span>(path); <span class="keyword">err</span> != nil {
-            <span class="literal">return</span>
+    if file, err = os.Open(path); err != nil {
+            return
     }
 
-    reader := bufio.NewReader(<span class="keyword">file</span>)
+    reader := bufio.NewReader(file)
     buffer := bytes.NewBuffer(make([]byte, 1024))
 
-    <span class="keyword">for</span> {
-            <span class="keyword">if</span> part, prefix, <span class="keyword">err</span> = reader.ReadLine(); <span class="keyword">err</span> != nil {
-                    <span class="keyword">break</span>
+    for {
+            if part, prefix, err = reader.ReadLine(); err != nil {
+                    break
             }
             buffer.Write(part)
-            <span class="keyword">if</span> !prefix {
-                    lines = <span class="keyword">append</span>(lines, buffer.<span class="literal">String</span>())
+            if !prefix {
+                    lines = append(lines, buffer.String())
                     buffer.Reset()
             }
     }
-    <span class="keyword">if</span> <span class="keyword">err</span> == io.EOF {
-            <span class="keyword">err</span> = nil 
+    if err == io.EOF {
+            err = nil 
     }
-    <span class="literal">return</span>
+    return
 }
 </code></pre><p>调用的时候，我通过用了大概如下的代码：</p>
-<pre><code>lines， <span class="keyword">err</span> := readLines(userFile)
-<span class="keyword">if</span> <span class="keyword">err</span> != nil {
-    <span class="literal">return</span>
+<pre><code>lines， err := readLines(userFile)
+if err != nil {
+    return
 }
-<span class="keyword">for</span> _, <span class="keyword">line</span> := <span class="keyword">range</span> lines {
-    sqlStr := rawSql % <span class="keyword">line</span>
-    _, <span class="keyword">err</span> = dbConn.Exec(sqlStr)
-    <span class="keyword">if</span> <span class="keyword">err</span> != nil {
-        <span class="literal">return</span>
+for _, line := range lines {
+    sqlStr := rawSql % line
+    _, err = dbConn.Exec(sqlStr)
+    if err != nil {
+        return
     }
 }
 </code></pre><p>当然它报错了！这样子的错误信息~</p>
-<pre><code>Error <span class="number">1064</span>: You have <span class="operator">an</span> error <span class="operator">in</span> your SQL syntax; check <span class="operator">the</span> manual that corresponds <span class="built_in">to</span> your MySQL server <span class="built_in">version</span> <span class="keyword">for</span> <span class="operator">the</span> <span class="constant">right</span> syntax <span class="built_in">to</span> use near <span class="string">''</span> <span class="keyword">at</span> <span class="built_in">line</span> <span class="number">1</span>
+<pre><code>Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; at line 1
 </code></pre><p>通过查阅，我发现这个near ‘’，是的竟然是空的，不像一般的写错sql语句一样是会写明错误信息~<br>瞬间我就神经开始大条了。</p>
 <pre><code>难道我后面写漏了什么？  
 怎么可能！
@@ -60,28 +59,27 @@
 水果到了，再吃个苹果。
 吃完洗个手-。-
 我觉得没错啊！
-F<span class="keyword">*</span><span class="keyword">*</span>k
-</code></pre><h2 id="结局">结局</h2><p>不玩了，之所以我会认为自己没错，是因为我将整个sql语句打印了出来，在肉眼确认没错之后，又去mysql得命令行中直接执行了语句，结果十分顺利。<br>最后，十分大条的将从文件中读取出来的lines用长度打印了出来，瞬间我就斯巴达了！  </p>
-<pre><code><span class="keyword">for</span> _, <span class="built_in">line</span> := range <span class="keyword">lines</span> {
-    fmt.Printf(<span class="string">"len[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(<span class="built_in">line</span>))
-    sqlStr := rawSql % <span class="built_in">line</span>
-    fmt.Printf(<span class="string">"sqlStr[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(sqlStr))
+F**k
+</code></pre><h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>不玩了，之所以我会认为自己没错，是因为我将整个sql语句打印了出来，在肉眼确认没错之后，又去mysql得命令行中直接执行了语句，结果十分顺利。<br>最后，十分大条的将从文件中读取出来的lines用长度打印了出来，瞬间我就斯巴达了！  </p>
+<pre><code>for _, line := range lines {
+    fmt.Printf(&quot;len[%s] is %d&quot;, line, len(line))
+    sqlStr := rawSql % line
+    fmt.Printf(&quot;sqlStr[%s] is %d&quot;, line, len(sqlStr))
 }
 </code></pre><p>结果。。。</p>
-<pre><code>len[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1024!
-sqlStr[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1065!
+<pre><code>len[*****] is 1024!
+sqlStr[*****] is 1065!
 </code></pre><p>这就是为什么我执行失败的原因！sqlStr里面，存在着一段空白的buffer！却是打印不出来的~<br>最后我把代码改成了这样~</p>
-<pre><code>data, <span class="keyword">err</span> = ioutil.ReadAll(userFile)
-<span class="keyword">if</span> <span class="keyword">err</span> != nil {
-    <span class="literal">return</span>
+<pre><code>data, err = ioutil.ReadAll(userFile)
+if err != nil {
+    return
 }
-lines := strings.<span class="keyword">Split</span>(<span class="literal">string</span>(data), <span class="string">"\n"</span>)
-</code></pre><h2 id="Done">Done</h2>]]></content>
+lines := strings.Split(string(data), &quot;\n&quot;)
+</code></pre><h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[仅仅]]></title>
-      <link href="http://catlittlechen.com/2015/11/13/%E4%BB%85%E4%BB%85/"/>
       <url>http://catlittlechen.com/2015/11/13/%E4%BB%85%E4%BB%85/</url>
       <content type="html"><![CDATA[<p>独自一人<br>漫步入街头的咖啡厅<br>倚在窗边<br>约定的时刻已经过去<br>又该如何？<br>仅仅因为相信<br>仅仅等待五分钟。    </p>
 <p>厅外<br>一辆小吃车<br>一个小女孩站在小凳子上<br>忙碌地为客人做着各式的小吃<br>人来人往<br>钱来食往！</p>
@@ -105,152 +103,151 @@ lines := strings.<span class="keyword">Split</span>(<span class="literal">string
     
     <entry>
       <title><![CDATA[nagios和ganglia]]></title>
-      <link href="http://catlittlechen.com/2015/11/11/nagios%E5%92%8Cganglia/"/>
       <url>http://catlittlechen.com/2015/11/11/nagios%E5%92%8Cganglia/</url>
-      <content type="html"><![CDATA[<h2 id="老生常谈–监控">老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
+      <content type="html"><![CDATA[<h2 id="u8001_u751F_u5E38_u8C08_u2013_u76D1_u63A7"><a href="#u8001_u751F_u5E38_u8C08_u2013_u76D1_u63A7" class="headerlink" title="老生常谈–监控"></a>老生常谈–监控</h2><p>很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  </p>
 <p>服务器是用了腾讯云的，裸机~~，系统是ubuntu的。<br>参考了<a href="http://idevit.nl/node/93" target="_blank" rel="external">idevit</a></p>
-<h2 id="INSTALL_NAGIOS">INSTALL NAGIOS</h2><p>这次的安装是源码安装，现在ubuntu的apt-get安装了nagios还是3版本的，所以还是多折腾，去下载源码咯。<br>先安装一些依赖的软件：</p>
-<pre><code>apt-<span class="built_in">get</span> install libperl-<span class="built_in">dev</span> libpng12-<span class="built_in">dev</span> libgd2-xpm-<span class="built_in">dev</span> build-essential php5-gd wget nginx spwan-fcgi fcgiwrap php5-fpm 
+<h2 id="INSTALL_NAGIOS"><a href="#INSTALL_NAGIOS" class="headerlink" title="INSTALL NAGIOS"></a>INSTALL NAGIOS</h2><p>这次的安装是源码安装，现在ubuntu的apt-get安装了nagios还是3版本的，所以还是多折腾，去下载源码咯。<br>先安装一些依赖的软件：</p>
+<pre><code>apt-get install libperl-dev libpng12-dev libgd2-xpm-dev build-essential php5-gd wget nginx spwan-fcgi fcgiwrap php5-fpm 
 </code></pre><p>本次的安装时4.1.1版本的。</p>
-<pre><code>wget <span class="symbol">https:</span>/<span class="regexp">/assets.nagios.com/downloads</span><span class="regexp">/nagioscore/releases</span><span class="regexp">/nagios-4.1.1.tar.gz
-wget http:/</span><span class="regexp">/www.nagios-plugins.org/download</span><span class="regexp">/nagios-plugins-2.1.1.tar.gz</span>
+<pre><code>wget https://assets.nagios.com/downloads/nagioscore/releases/nagios-4.1.1.tar.gz
+wget http://www.nagios-plugins.org/download/nagios-plugins-2.1.1.tar.gz
 </code></pre><p>下载解压到服务器之中~</p>
 <p>创建用户nagios和用户组nagcmd</p>
-<pre><code><span class="comment">adduser</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">system</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">no</span><span class="literal">-</span><span class="comment">create</span><span class="literal">-</span><span class="comment">home</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">disabled</span><span class="literal">-</span><span class="comment">login</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">group</span> <span class="comment">nagios</span>
-<span class="comment">groupadd</span> <span class="comment">nagcmd</span>
-<span class="comment">usermod</span> <span class="literal">-</span><span class="comment">G</span> <span class="comment">nagcmd</span> <span class="comment">nagios</span>
-<span class="comment">usermod</span> <span class="literal">-</span><span class="comment">a</span> <span class="literal">-</span><span class="comment">G</span> <span class="comment">nagcmd</span> <span class="comment">www</span><span class="literal">-</span><span class="comment">data</span>
+<pre><code>adduser --system --no-create-home --disabled-login --group nagios
+groupadd nagcmd
+usermod -G nagcmd nagios
+usermod -a -G nagcmd www-data
 </code></pre><p>配置nagios源码安装：</p>
-<pre><code><span class="keyword">cd</span> nagios-<span class="number">4.1</span>.<span class="number">1</span>
-./configure --prefix /usr/local/nagios --sysconfdir=/etc/nagios --with-<span class="keyword">command</span>-user=nagios --with-<span class="keyword">command</span>-group=nagcmd
+<pre><code>cd nagios-4.1.1
+./configure --prefix /usr/local/nagios --sysconfdir=/etc/nagios --with-command-user=nagios --with-command-group=nagcmd
 #这里会检测所需的环境~
-<span class="keyword">make</span> <span class="keyword">all</span>
-<span class="keyword">make</span> install
-<span class="keyword">make</span> install-init
-<span class="keyword">make</span> install-config
-<span class="keyword">make</span> install-commandmode
+make all
+make install
+make install-init
+make install-config
+make install-commandmode
 #这里是将开始编译，安装到指定目录，分发配置文件和配置了命令
 </code></pre><p>安装完毕之后,这时候你可以把安装包里面的插件cp过来</p>
-<pre><code>cp -rvf contrib<span class="regexp">/eventhandlers/</span> <span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec/
-chown -R <span class="string">nagios:</span>nagios <span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>libexec/eventhandlers
+<pre><code>cp -rvf contrib/eventhandlers/ /usr/local/nagios/libexec/
+chown -R nagios:nagios /usr/local/nagios/libexec/eventhandlers
 </code></pre><p>nagios需要验证用户的权限，由于本次安装不想使用apache，选用了nginx，所以这次是通过以下的命令来生产用户验证的文件的。</p>
-<pre><code>wget http:<span class="comment">//trac.edgewall.org/export/10791/trunk/contrib/htpasswd.py</span>
-chmod +x htpasswd<span class="class">.py</span>
-htpasswd<span class="class">.py</span> -c -<span class="tag">b</span> /etc/nagios/htpasswd<span class="class">.users</span> nagiosadmin password
+<pre><code>wget http://trac.edgewall.org/export/10791/trunk/contrib/htpasswd.py
+chmod +x htpasswd.py
+htpasswd.py -c -b /etc/nagios/htpasswd.users nagiosadmin password
 </code></pre><p>这里的nagiosadmin是用户名，而password是密码，如果想要重新修改用户名的话，需要在/etc/nagios/cfg.cfg文件中加入权限。<br>比如用户名是catlittlechen的话，可以修改成下面这样子</p>
-<pre><code>authorized_<span class="keyword">for</span>_system_information=nagiosadmin,catlittlechen
+<pre><code>authorized_for_system_information=nagiosadmin,catlittlechen
 </code></pre><p>安装下nagios官方提供的插件</p>
-<pre><code>cd nagios-plugins-<span class="number">2.1</span>.<span class="number">1</span>
-./configure --<span class="keyword">with</span>-nagios-user=nagios --<span class="keyword">with</span>-nagios-<span class="keyword">group</span>=nagios
+<pre><code>cd nagios-plugins-2.1.1
+./configure --with-nagios-user=nagios --with-nagios-group=nagios
 make
 make install
 </code></pre><p>之后可以通过执行下面的指令来验证下是否成功的配置了nagios</p>
-<pre><code><span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>bin<span class="regexp">/nagios -v /</span>etc<span class="regexp">/nagios/</span>nagio.cfg
+<pre><code>/usr/local/nagios/bin/nagios -v /etc/nagios/nagio.cfg
 </code></pre><p>启动的时候，这边的找了下，发现在/etc/rc.d/下，有一个nagios的脚本，就链接过来了/etc/init.d/nagios,然后就可以执行下面的命令启动来。</p>
-<pre><code>service nagios <span class="built_in">start</span>
+<pre><code>service nagios start
 </code></pre><p>弱弱的说，nginx配置在最下面~</p>
-<h3 id="INSTALL_GANGLIA">INSTALL GANGLIA</h3><p>安装ganglia只是为了便捷的弥补下nagios只有定时检测的特性，当然，你可以尝试安装pnp4nagios来完成这个功能，但是ganglia更加的强大一些，而且真得简单啊。<br>命令：</p>
-<pre><code>apt-<span class="keyword">get</span> install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
+<h3 id="INSTALL_GANGLIA"><a href="#INSTALL_GANGLIA" class="headerlink" title="INSTALL GANGLIA"></a>INSTALL GANGLIA</h3><p>安装ganglia只是为了便捷的弥补下nagios只有定时检测的特性，当然，你可以尝试安装pnp4nagios来完成这个功能，但是ganglia更加的强大一些，而且真得简单啊。<br>命令：</p>
+<pre><code>apt-get install -y ganglia-monitor rrdtool gmetad ganglia-webfrontend
 </code></pre><p>这时候需要修改两个地方的配置文件</p>
 <pre><code>vim /etc/ganglia/gmetad.conf
-<span class="preprocessor">#data_source <span class="string">"my cluster"</span> localhost</span>
-data_source <span class="string">"cat chen"</span> localhost
+#data_source &quot;my cluster&quot; localhost
+data_source &quot;cat chen&quot; localhost
 vim /etc/ganglia/gmond.conf
 cluster {
-    <span class="preprocessor">#name = <span class="string">"unspecified"</span></span>
-    name = <span class="string">"cat chen"</span>
-    owner = <span class="string">"unspecified"</span>
-    latlong = <span class="string">"unspecified"</span>
-    url = <span class="string">"unspecified"</span>
+    #name = &quot;unspecified&quot;
+    name = &quot;cat chen&quot;
+    owner = &quot;unspecified&quot;
+    latlong = &quot;unspecified&quot;
+    url = &quot;unspecified&quot;
 }
 udp_send_channel  {
-    <span class="preprocessor">#mcast_join = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
+    #mcast_join = 239.2.11.71
     host = localhost
-    port = <span class="number">8649</span>
-    ttl = <span class="number">1</span>
+    port = 8649
+    ttl = 1
 }
 udp_recv_channel {
-    <span class="preprocessor">#mcast_join = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
-    port = <span class="number">8649</span>
-    <span class="preprocessor">#bind = <span class="number">239.2</span><span class="number">.11</span><span class="number">.71</span></span>
+    #mcast_join = 239.2.11.71
+    port = 8649
+    #bind = 239.2.11.71
 }
 </code></pre><p>然后执行下面的语句重启下服务</p>
-<pre><code><span class="title">service</span> ganglia-monitor restart &amp;&amp; service gmetad restart
+<pre><code>service ganglia-monitor restart &amp;&amp; service gmetad restart
 </code></pre><p>杠杠的，ganglia就这么搞定了~<br>这里为了习惯问题，我还执行了以下的命令</p>
-<pre><code>cp -r <span class="regexp">/usr/</span>share<span class="regexp">/ganglia-webfrontend/</span>  <span class="regexp">/var/</span>www/
-mv <span class="regexp">/var/</span>www<span class="regexp">/ganglia-webfrontend /</span>var<span class="regexp">/www/</span>ganglia
-</code></pre><h3 id="Nagios_&amp;&amp;_Ganglia">Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
-<pre><code>git clone http<span class="variable">s:</span>//github.<span class="keyword">com</span>/ganglia/monitor-core/
-<span class="keyword">cp</span> monitor-core/contrib/check_ganglia.<span class="keyword">py</span> /usr/local/nagios/libexec
-chown nagio<span class="variable">s:nagios</span> check_ganglia.<span class="keyword">py</span>
-chmod +<span class="keyword">x</span> check_ganglia.<span class="keyword">py</span>
+<pre><code>cp -r /usr/share/ganglia-webfrontend/  /var/www/
+mv /var/www/ganglia-webfrontend /var/www/ganglia
+</code></pre><h3 id="Nagios__26amp_3B_26amp_3B_Ganglia"><a href="#Nagios__26amp_3B_26amp_3B_Ganglia" class="headerlink" title="Nagios &amp;&amp; Ganglia"></a>Nagios &amp;&amp; Ganglia</h3><p>最后，当然是配合ganglia和nagios了。</p>
+<pre><code>git clone https://github.com/ganglia/monitor-core/
+cp monitor-core/contrib/check_ganglia.py /usr/local/nagios/libexec
+chown nagios:nagios check_ganglia.py
+chmod +x check_ganglia.py
 </code></pre><p>为了让nagios可以使用这个插件，需要在command配置中加入以下的配置</p>
 <pre><code>vim /etc/nagios/objects/commands.cfg
 define command {
     command_name check_ganglia
-    command_line <span class="variable">$USER1</span>$/check_ganglia.py -h <span class="variable">$HOSTNAME</span>$ -m <span class="variable">$ARG1</span>$ -w <span class="variable">$ARG2</span>$ -c <span class="variable">$ARG3</span>$
+    command_line $USER1$/check_ganglia.py -h $HOSTNAME$ -m $ARG1$ -w $ARG2$ -c $ARG3$
 }
 </code></pre><p>然后就可以在配置项目里面配置相应的监控目标，比如我简答的配置如下</p>
-<pre><code><span class="function_or_atom">vim</span> /<span class="function_or_atom">etc</span>/<span class="function_or_atom">nagios</span>/<span class="function_or_atom">objects</span>/<span class="function_or_atom">localhost</span>.<span class="function_or_atom">cfg</span>
-<span class="function_or_atom">define</span> <span class="function_or_atom">service</span> {
-    <span class="function_or_atom">use</span>     <span class="function_or_atom">local</span>-<span class="function_or_atom">service</span>
-    <span class="function_or_atom">host_name</span>       <span class="function_or_atom">localhost</span>
-    <span class="function_or_atom">service_description</span>     <span class="variable">Ganglia</span> <span class="variable">Bytes</span> <span class="variable">Out</span>
-    <span class="function_or_atom">check_command</span>   <span class="function_or_atom">check_ganglia</span><span class="exclamation_mark">!</span><span class="function_or_atom">bytes_out</span><span class="exclamation_mark">!</span><span class="number">80000</span><span class="exclamation_mark">!</span><span class="number">100000</span>
+<pre><code>vim /etc/nagios/objects/localhost.cfg
+define service {
+    use     local-service
+    host_name       localhost
+    service_description     Ganglia Bytes Out
+    check_command   check_ganglia!bytes_out!80000!100000
 }
 
-<span class="function_or_atom">define</span> <span class="function_or_atom">service</span> {
-    <span class="function_or_atom">use</span>     <span class="function_or_atom">local</span>-<span class="function_or_atom">service</span>
-    <span class="function_or_atom">host_name</span>       <span class="function_or_atom">localhost</span>
-    <span class="function_or_atom">service_description</span>     <span class="variable">Ganglia</span> <span class="variable">Disk</span> <span class="variable">Free</span>
-    <span class="function_or_atom">check_command</span>   <span class="function_or_atom">check_ganglia</span><span class="exclamation_mark">!</span><span class="function_or_atom">disk_free</span><span class="exclamation_mark">!</span><span class="number">20</span><span class="exclamation_mark">!</span><span class="number">10</span>
+define service {
+    use     local-service
+    host_name       localhost
+    service_description     Ganglia Disk Free
+    check_command   check_ganglia!disk_free!20!10
 }
 </code></pre><p>更加详细的配置，好书推荐，可以参考下<a href="http://nagios-cn.sourceforge.net/nagios-cn/configuration.html" target="_blank" rel="external">nagios_cn</a></p>
-<h3 id="nginx配置：">nginx配置：</h3><pre><code><span class="xml">server </span><span class="expression">{
-    <span class="variable">listen</span> 10086
-    <span class="variable">server</span>_<span class="variable">name</span> <span class="variable">nagios.catlittlechen.com</span>;
-    <span class="variable">access</span>_<span class="variable">log</span>  <span class="end-block">/var</span><span class="end-block">/log</span><span class="end-block">/nginx</span><span class="end-block">/nagios.access.log</span>;
-    <span class="variable">error</span>_<span class="variable">log</span>   <span class="end-block">/var</span><span class="end-block">/log</span><span class="end-block">/nginx</span><span class="end-block">/nagios.error.log</span>;
+<h3 id="nginx_u914D_u7F6E_uFF1A"><a href="#nginx_u914D_u7F6E_uFF1A" class="headerlink" title="nginx配置："></a>nginx配置：</h3><pre><code>server {
+    listen 10086
+    server_name nagios.catlittlechen.com;
+    access_log  /var/log/nginx/nagios.access.log;
+    error_log   /var/log/nginx/nagios.error.log;
 
-      <span class="variable">auth</span>_<span class="variable">basic</span>            <span class="string">"Restricted Nagios Area!"</span>;
-      <span class="variable">auth</span>_<span class="variable">basic</span>_<span class="variable">user</span>_<span class="variable">file</span>  <span class="end-block">/etc</span><span class="end-block">/nagios</span><span class="end-block">/htpasswd.users</span>;
+      auth_basic            &quot;Restricted Nagios Area!&quot;;
+      auth_basic_user_file  /etc/nagios/htpasswd.users;
 
-    <span class="variable">root</span>    <span class="end-block">/var</span><span class="end-block">/www</span>;
-    <span class="variable">index</span>   <span class="variable">index.php</span> <span class="variable">index.html</span>;
+    root    /var/www;
+    index   index.php index.html;
 
-    <span class="variable">location</span> <span class="end-block">/nagios </span>{
-        <span class="variable">index</span> <span class="variable">index.php</span>;
-        <span class="variable">alias</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/share</span>/;
-    }</span><span class="xml">
+    location /nagios {
+        index index.php;
+        alias /usr/local/nagios/share/;
+    }
 
-    location /ganglia </span><span class="expression">{
-        <span class="variable">index</span> <span class="variable">index.php</span> <span class="variable">index.html</span> <span class="variable">index.htm</span>;
-    }</span><span class="xml">
+    location /ganglia {
+        index index.php index.html index.htm;
+    }
 
-    location ~ ^/nagios/(.*\.php)$ </span><span class="expression">{
-        <span class="variable">alias</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/share</span>/$1;
-        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
-        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/php</span>5<span class="variable">-fpm.sock</span>;
-    }</span><span class="xml">
+    location ~ ^/nagios/(.*\.php)$ {
+        alias /usr/local/nagios/share/$1;
+        include /etc/nginx/fastcgi.conf;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
 
-    location ~ \.cgi$ </span><span class="expression">{
-        <span class="variable">root</span> <span class="end-block">/usr</span><span class="end-block">/local</span><span class="end-block">/nagios</span><span class="end-block">/sbin</span>/;
-        <span class="variable">rewrite</span> ^<span class="end-block">/nagios</span><span class="end-block">/cgi-bin</span>/(<span class="variable">.</span>*)\<span class="variable">.cgi</span> /$1<span class="variable">.cgi</span> <span class="variable">break</span>;
-        <span class="variable">fastcgi</span>_<span class="variable">param</span> <span class="variable">AUTH</span>_<span class="variable">USER</span> $<span class="variable">remote</span>_<span class="variable">user</span>;
-        <span class="variable">fastcgi</span>_<span class="variable">param</span> <span class="variable">REMOTE</span>_<span class="variable">USER</span> $<span class="variable">remote</span>_<span class="variable">user</span>;
-        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
-        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/fcgiwrap.socket</span>;
-    }</span><span class="xml">
+    location ~ \.cgi$ {
+        root /usr/local/nagios/sbin/;
+        rewrite ^/nagios/cgi-bin/(.*)\.cgi /$1.cgi break;
+        fastcgi_param AUTH_USER $remote_user;
+        fastcgi_param REMOTE_USER $remote_user;
+        include /etc/nginx/fastcgi.conf;
+        fastcgi_pass unix:/var/run/fcgiwrap.socket;
+    }
 
-    location ~ \.php$ </span><span class="expression">{
-        <span class="variable">include</span> <span class="end-block">/etc</span><span class="end-block">/nginx</span><span class="end-block">/fastcgi.conf</span>;
-        <span class="variable">fastcgi</span>_<span class="variable">pass</span> <span class="variable">unix</span>:<span class="end-block">/var</span><span class="end-block">/run</span><span class="end-block">/php</span>5<span class="variable">-fpm.sock</span>;
-    }</span><span class="xml">
+    location ~ \.php$ {
+        include /etc/nginx/fastcgi.conf;
+        fastcgi_pass unix:/var/run/php5-fpm.sock;
+    }
 
-    location ~ /\.ht </span><span class="expression">{
-            <span class="variable">deny</span> <span class="variable">all</span>;
-    }</span><span class="xml">
-}</span>
+    location ~ /\.ht {
+            deny all;
+    }
+}
 </code></pre><p>晒图，别吐槽我的垃圾服务器</p>
 <p><img src="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png" alt="ganglia"><br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png" alt="nagios"></p>
 ]]></content>
@@ -258,20 +255,19 @@ define command {
     
     <entry>
       <title><![CDATA[自建DNS服务器]]></title>
-      <link href="http://catlittlechen.com/2015/10/19/%E8%87%AA%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
       <url>http://catlittlechen.com/2015/10/19/%E8%87%AA%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/</url>
       <content type="html"><![CDATA[<p>今天有时间，我想看下自己建立DNS服务器，是怎么样的流程。<br>结果发现是如此的简单。</p>
 <p>以下是基于ubuntu的。</p>
-<h2 id="DNS">DNS</h2><p>域名管理系统DNS(Domain Name System)，是通过域名来解析到IP的一种网络服务，自建DNS服务器，可以在内网中，自己设定特定的域名解析，达到内网机器可以无需配置host，达到访问内网服务的作用。</p>
-<h3 id="DNS记录(备忘)：">DNS记录(备忘)：</h3><ul>
+<h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>域名管理系统DNS(Domain Name System)，是通过域名来解析到IP的一种网络服务，自建DNS服务器，可以在内网中，自己设定特定的域名解析，达到内网机器可以无需配置host，达到访问内网服务的作用。</p>
+<h3 id="DNS_u8BB0_u5F55_28_u5907_u5FD8_29_uFF1A"><a href="#DNS_u8BB0_u5F55_28_u5907_u5FD8_29_uFF1A" class="headerlink" title="DNS记录(备忘)："></a>DNS记录(备忘)：</h3><ul>
 <li>A记录：        主机名或者域名 –&gt; 相应的IP地址；</li>
 <li>NS记录：        记录域名有哪些DNS服务器来解析；</li>
 <li>CNAME记录：    将域名的解析转到另外一个域名上去；</li>
 <li>MX记录：        一个网络里面的电子邮件服务引导到特定服务器；</li>
 <li>TXT记录：        提供了域名的文本信息；</li>
 </ul>
-<h2 id="Bind9">Bind9</h2><p>bind(berkeley Internet Name Daemon)<br>建立DNS服务器，在ubuntu下只需要安装bind9就可以了。<br>    <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install bind9</span><br></pre></td></tr></table></figure></p>
-<h3 id="服务器">服务器</h3><p>bind9可以配置多种DNS服务器:</p>
+<h2 id="Bind9"><a href="#Bind9" class="headerlink" title="Bind9"></a>Bind9</h2><p>bind(berkeley Internet Name Daemon)<br>建立DNS服务器，在ubuntu下只需要安装bind9就可以了。<br>    <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="keyword">get</span> install bind9</span><br></pre></td></tr></table></figure></p>
+<h3 id="u670D_u52A1_u5668"><a href="#u670D_u52A1_u5668" class="headerlink" title="服务器"></a>服务器</h3><p>bind9可以配置多种DNS服务器:</p>
 <ol>
 <li>缓冲服务器，用于缓存DNS服务，减少带宽使用；</li>
 <li>主服务器，用于记录DNS服务信息；</li>
@@ -279,9 +275,9 @@ define command {
 <li>混合服务器，多种服务器合并的累心；</li>
 <li>私用的主从服务器；</li>
 </ol>
-<h3 id="主要配置">主要配置</h3><pre><code><span class="built_in">cd</span> /etc/<span class="built_in">bind</span>/
+<h3 id="u4E3B_u8981_u914D_u7F6E"><a href="#u4E3B_u8981_u914D_u7F6E" class="headerlink" title="主要配置"></a>主要配置</h3><pre><code>cd /etc/bind/
 </code></pre><p>可以看出在目录下面有多个name.conf*的文件，为配置文件；db.*的文件为DNS记录文件；*.keys文件是Bind在交互过程中用于检验的秘钥。    </p>
-<h4 id="name-conf-options">name.conf.options</h4><ul>
+<h4 id="name-conf-options"><a href="#name-conf-options" class="headerlink" title="name.conf.options"></a>name.conf.options</h4><ul>
 <li>forwarders: 选择现有的DNS提供商，以’;’分割，如果不写的话，这个地方会被默认为root名称服务器来解析，速度会特别慢；</li>
 <li>directory “filename”: 用于存放该区域数据的文件；</li>
 <li>forward first: 在尝试通过root服务器解析DNS请求先，对DNS请求进行转发(forward only 不进行转发)；</li>
@@ -296,19 +292,19 @@ define command {
 <li>notify no: 在区域数据改动或者重启服务时，是否通知其他服务器；</li>
 <li>dump-file “filename”: 执行rndc dumpdb时，存放的路径；</li>
 </ul>
-<h4 id="name-conf_logging">name.conf logging</h4><pre><code> <span class="tag">logging</span> {
-       <span class="attr_selector">[ channel channel_name {
+<h4 id="name-conf_logging"><a href="#name-conf_logging" class="headerlink" title="name.conf logging"></a>name.conf logging</h4><pre><code> logging {
+       [ channel channel_name {
          ( file path_name
-         [ versions ( number | unlimited ) ]</span>
-         <span class="attr_selector">[ size size_spec ]</span>
-         <span class="attr_selector">[ syslog (syslog_facility） | stderr | null)]</span>;
-         <span class="attr_selector">[ severity (critical | error | warning | notice | info | debug [ level ]</span> | <span class="tag">dynamic</span> ); ]
-         <span class="attr_selector">[ print-category yes | no; ]</span>
-         <span class="attr_selector">[ print-severity yes | no; ]</span>
-         <span class="attr_selector">[ print-time yes | no; ]</span>
+         [ versions ( number | unlimited ) ]
+         [ size size_spec ]
+         [ syslog (syslog_facility） | stderr | null)];
+         [ severity (critical | error | warning | notice | info | debug [ level ] | dynamic ); ]
+         [ print-category yes | no; ]
+         [ print-severity yes | no; ]
+         [ print-time yes | no; ]
        }; ]
-       <span class="attr_selector">[ category category_name {
-         channel_name ; [ channel_name ; ... ]</span>
+       [ category category_name {
+         channel_name ; [ channel_name ; ... ]
        }; ]
        ...
 };
@@ -323,11 +319,11 @@ define command {
 <li>syslog, stderr, null: 三个参数填写出其中的一个，syslog会将输出的信息输出到系统日志中，详细的配置可以看下syslog，stderr将通道的输出信息重定向到标准错误流中，null则是忽略信息；</li>
 <li>category: 这一部分的信息其实是将特定的输出内容写入指定的通道之中；具体有哪些种类的输出内容可以看下官方的介绍，种类太多也就不想列了。</li>
 </ul>
-<h4 id="name-conf_zone">name.conf zone</h4><p>在配置文件中，有name.conf.defaul-zones文件，已经默认的添加了部分DNS记录，而自建dns服务器，达到内网解析的关键，也就是配置这部分的文件。  </p>
+<h4 id="name-conf_zone"><a href="#name-conf_zone" class="headerlink" title="name.conf zone"></a>name.conf zone</h4><p>在配置文件中，有name.conf.defaul-zones文件，已经默认的添加了部分DNS记录，而自建dns服务器，达到内网解析的关键，也就是配置这部分的文件。  </p>
 <p>zone的配置模板目下所示：</p>
-<pre><code><span class="title">zone</span> “catchenii.com” <span class="keyword">in</span> {
-    <span class="typedef"><span class="keyword">type</span> master;</span>
-    file <span class="string">"/etc/bind/db.catchenii.com"</span>
+<pre><code>zone “catchenii.com” in {
+    type master;
+    file &quot;/etc/bind/db.catchenii.com&quot;
 }
 </code></pre><ul>
 <li>type: 指DNS服务器的类型，分别为master(主服务器)，slave(从服务器)，hint(区域服务器)；</li>
@@ -336,7 +332,7 @@ define command {
 <li>allow-update{!*;}: 是否允许外部创建DNS数据文件，默认是禁止的。(这一项就决定着有可能可以动态更新内网的DNS信息)  </li>
 </ul>
 <p>而对应的<strong>/etc/bind/db.catchenii.com</strong>区域数据文件则如图所示：<br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/2.png" alt="db.catchenii.com"><br>区域文件有两种，一种是IP-&gt;域名，另外一种是域名-&gt;IP,上图当然是域名到IP得数据文件，两份记录的格式也是基本一致：</p>
-<pre><code><span class="variable">'.</span><span class="variable">'在区域文件中是由重要的含义的，如果域名没有在末尾加入</span><span class="variable">'.</span><span class="variable">'，则会追加域名在后面，完整的域名必须在末尾加</span><span class="variable">'.</span><span class="variable">'。</span>
+<pre><code>&apos;.&apos;在区域文件中是由重要的含义的，如果域名没有在末尾加入&apos;.&apos;，则会追加域名在后面，完整的域名必须在末尾加&apos;.&apos;。
 </code></pre><ul>
 <li>$TTL: 默认的存活时间；</li>
 <li>SOA: Start Of Authority 控制记录开始的位置。IN SOA后面是作为该区域的主服务器的名称。</li>
@@ -347,125 +343,122 @@ define command {
 <li>Negative Cache TTL: 解析失败的记录的缓存时间；  </li>
 </ul>
 <p>接下来的数据为DNS的解析记录啦！</p>
-<h3 id="结果">结果</h3><p>修改好文件之后，可以重启下服务：</p>
-<pre><code><span class="label">sudo</span> /etc/init.d/<span class="keyword">bind9 </span>restart
+<h3 id="u7ED3_u679C"><a href="#u7ED3_u679C" class="headerlink" title="结果"></a>结果</h3><p>修改好文件之后，可以重启下服务：</p>
+<pre><code>sudo /etc/init.d/bind9 restart
 </code></pre><p>效果如图所示：<br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/3.png" alt="结果图"></p>
 <p>嘻嘻。</p>
-<h2 id="备记：">备记：</h2><p>各类DNS服务器的<a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software" target="_blank" rel="external">比较</a>!</p>
+<h2 id="u5907_u8BB0_uFF1A"><a href="#u5907_u8BB0_uFF1A" class="headerlink" title="备记："></a>备记：</h2><p>各类DNS服务器的<a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software" target="_blank" rel="external">比较</a>!</p>
 ]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[虚拟化技术了解]]></title>
-      <link href="http://catlittlechen.com/2015/09/29/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BA%86%E8%A7%A3/"/>
       <url>http://catlittlechen.com/2015/09/29/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BA%86%E8%A7%A3/</url>
-      <content type="html"><![CDATA[<h4 id="某一天，docker火了！">某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
-<h3 id="LXC:">LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
-<h3 id="KVM：">KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
-<h2 id="SO：">SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
+      <content type="html"><![CDATA[<h4 id="u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01"><a href="#u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01" class="headerlink" title="某一天，docker火了！"></a>某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
+<h3 id="LXC_3A"><a href="#LXC_3A" class="headerlink" title="LXC:"></a>LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
+<h3 id="KVM_uFF1A"><a href="#KVM_uFF1A" class="headerlink" title="KVM："></a>KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
+<h2 id="SO_uFF1A"><a href="#SO_uFF1A" class="headerlink" title="SO："></a>SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
 <p>目前，除了<a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>外，目前国内还有另外一个值得关注的项目<a href="https://hyper.sh/" target="_blank" rel="external">hyper</a>,是基于hypervisor与docker的项目。</p>
-<h3 id="TODO:">TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
+<h3 id="TODO_3A"><a href="#TODO_3A" class="headerlink" title="TODO:"></a>TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
 ]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[c的模板类]]></title>
-      <link href="http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/"/>
       <url>http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/</url>
-      <content type="html"><![CDATA[<h2 id="起因">起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
-<h2 id="开始讲故事">开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
+      <content type="html"><![CDATA[<h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
+<h2 id="u5F00_u59CB_u8BB2_u6545_u4E8B"><a href="#u5F00_u59CB_u8BB2_u6545_u4E8B" class="headerlink" title="开始讲故事"></a>开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
-</code></pre><h3 id="为什么呢？">为什么呢？</h3><p>对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：</p>
-<pre><code><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
-<span class="keyword">struct</span> Foo
+</code></pre><h3 id="u4E3A_u4EC0_u4E48_u5462_uFF1F"><a href="#u4E3A_u4EC0_u4E48_u5462_uFF1F" class="headerlink" title="为什么呢？"></a>为什么呢？</h3><p>对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：</p>
+<pre><code>template&lt;typename T&gt;
+struct Foo
 {
   T bar;
-  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>{}
+  void doSomething(T param) {}
 };
 
-<span class="comment">// somewhere in a .cpp</span>
-Foo&lt;<span class="keyword">int</span>&gt; f; 
+// somewhere in a .cpp
+Foo&lt;int&gt; f; 
 </code></pre><p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
-<pre><code><span class="keyword">struct</span> FooInt
+<pre><code>struct FooInt
 {
-  <span class="keyword">int</span> bar;
-  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>{}
+  int bar;
+  void doSomething(int param) {}
 }
 </code></pre><p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
 <hr>
-<h3 id="方法：">方法：</h3><p>当然，将函数的声明和实现放在多个文件中，有时候是非常有必要的，简洁，条理，或者强迫症。。。<br>一种简单的解决方案是在头文件中声明类的方法之后，把类的实现写在文件B中，然后再头文件中include文件B，如下所示：</p>
-<pre><code><span class="comment">// 在Foo.h中声明；</span>
-<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<span class="keyword">struct</span> Foo
+<h3 id="u65B9_u6CD5_uFF1A"><a href="#u65B9_u6CD5_uFF1A" class="headerlink" title="方法："></a>方法：</h3><p>当然，将函数的声明和实现放在多个文件中，有时候是非常有必要的，简洁，条理，或者强迫症。。。<br>一种简单的解决方案是在头文件中声明类的方法之后，把类的实现写在文件B中，然后再头文件中include文件B，如下所示：</p>
+<pre><code>// 在Foo.h中声明；
+template &lt;typename T&gt;
+struct Foo
 {
-  <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;
+  void doSomething(T param);
 };
-<span class="comment">//include 实现的文件；</span>
-<span class="preprocessor">#<span class="keyword">include</span> <span class="string">"Foo.tpp"</span></span>
+//include 实现的文件；
+#include &quot;Foo.tpp&quot;
 
-<span class="comment">// 在Foo.tpp中实现函数；</span>
-<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<span class="keyword">void</span> Foo&lt;T&gt;::doSomething(T param)
+// 在Foo.tpp中实现函数；
+template &lt;typename T&gt;
+void Foo&lt;T&gt;::doSomething(T param)
 {
-    <span class="comment">//implementation</span>
+    //implementation
 }
 </code></pre><p>哈哈，这是一种十分取巧的方法，不过也达到了目的，而且效果拔群。<br>还有一种方法，感觉上就不是很推荐了，但是更加正常一些。</p>
-<pre><code><span class="comment">// Foo.h</span>
-<span class="comment">// no implementation</span>
-<span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct</span> Foo { ... };
+<pre><code>// Foo.h
+// no implementation
+template &lt;typename T&gt; struct Foo { ... };
 
-<span class="comment">// Foo.cpp</span>
-<span class="comment">// implementation of Foo's methods</span>
-<span class="comment">// explicit instantiations</span>
-<span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">int</span>&gt;;
-<span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">float</span>&gt;;
+// Foo.cpp
+// implementation of Foo&apos;s methods
+// explicit instantiations
+template class Foo&lt;int&gt;;
+template class Foo&lt;float&gt;;
 </code></pre><p>这种方法就是在cpp文件中，实现的模板类的函数之后，在文件中同时将你想要使用的模板参数，明确的实例化出来。  </p>
 <p>本人还是比较喜欢第一种，毕竟  </p>
-<pre><code><span class="number">1.</span>我不喜欢一个模板类实现在一个文件里，过长的文件真得太受不了了。
-<span class="number">2.</span>第二种方法也就必须把所有的模板类函数实现在一个文件里！
+<pre><code>1.我不喜欢一个模板类实现在一个文件里，过长的文件真得太受不了了。
+2.第二种方法也就必须把所有的模板类函数实现在一个文件里！
 </code></pre><p>博文翻译于<a href="http://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file" target="_blank" rel="external">stackoverflow</a>.</p>
-<h4 id="TODO：">TODO：</h4><p>可以看下答主推荐的<a href="https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl" target="_blank" rel="external">文章</a></p>
+<h4 id="TODO_uFF1A"><a href="#TODO_uFF1A" class="headerlink" title="TODO："></a>TODO：</h4><p>可以看下答主推荐的<a href="https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl" target="_blank" rel="external">文章</a></p>
 ]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[[译]solr boolean operators]]></title>
-      <link href="http://catlittlechen.com/2015/09/23/%E8%AF%91-solr-boolean-operators/"/>
       <url>http://catlittlechen.com/2015/09/23/%E8%AF%91-solr-boolean-operators/</url>
-      <content type="html"><![CDATA[<h2 id="踩坑感言：">踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
+      <content type="html"><![CDATA[<h2 id="u8E29_u5751_u611F_u8A00_uFF1A"><a href="#u8E29_u5751_u611F_u8A00_uFF1A" class="headerlink" title="踩坑感言："></a>踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
 <hr>
-<h2 id="译文原文：">译文原文：</h2><p>来自于<a href="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/" target="_blank" rel="external">Bill Dueber</a>.</p>
+<h2 id="u8BD1_u6587_u539F_u6587_uFF1A"><a href="#u8BD1_u6587_u539F_u6587_uFF1A" class="headerlink" title="译文原文："></a>译文原文：</h2><p>来自于<a href="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/" target="_blank" rel="external">Bill Dueber</a>.</p>
 <hr>
-<h2 id="结论：">结论：</h2><p>在Solr中一定要用括号去管理优先级！！！</p>
+<h2 id="u7ED3_u8BBA_uFF1A"><a href="#u7ED3_u8BBA_uFF1A" class="headerlink" title="结论："></a>结论：</h2><p>在Solr中一定要用括号去管理优先级！！！</p>
 <hr>
-<h6 id="搞起搞起！">搞起搞起！</h6><p>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
-<pre><code><span class="tag">a</span> OR <span class="tag">b</span> AND C
+<h6 id="u641E_u8D77_u641E_u8D77_uFF01"><a href="#u641E_u8D77_u641E_u8D77_uFF01" class="headerlink" title="搞起搞起！"></a>搞起搞起！</h6><p>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
+<pre><code>a OR b AND C
 </code></pre><p>我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。</p>
-<h3 id="boolean运算符的优先级">boolean运算符的优先级</h3><p>如果你曾经知道过boolean运算相关的知识，你坑定为知道一个严格意义上的顺序，那就是NOT&gt;AND&gt;OR，因此，可能就会使下面一种执行顺序：</p>
-<pre><code><span class="tag">a</span> OR (<span class="tag">b</span> AND c)
+<h3 id="boolean_u8FD0_u7B97_u7B26_u7684_u4F18_u5148_u7EA7"><a href="#boolean_u8FD0_u7B97_u7B26_u7684_u4F18_u5148_u7EA7" class="headerlink" title="boolean运算符的优先级"></a>boolean运算符的优先级</h3><p>如果你曾经知道过boolean运算相关的知识，你坑定为知道一个严格意义上的顺序，那就是NOT&gt;AND&gt;OR，因此，可能就会使下面一种执行顺序：</p>
+<pre><code>a OR (b AND c)
 </code></pre><p>这是猜想答案的一种，但是Solr不是这么做的。</p>
-<h3 id="从左到右？">从左到右？</h3><p>部分本地的学生，或者说也有至少一门编程语言，用的是简单的从左到右的执行方法，因此，就会有如下的一种执行顺序：</p>
-<pre><code>（<span class="literal">a</span> <span class="literal">OR</span> b) <span class="literal">AND</span> c
+<h3 id="u4ECE_u5DE6_u5230_u53F3_uFF1F"><a href="#u4ECE_u5DE6_u5230_u53F3_uFF1F" class="headerlink" title="从左到右？"></a>从左到右？</h3><p>部分本地的学生，或者说也有至少一门编程语言，用的是简单的从左到右的执行方法，因此，就会有如下的一种执行顺序：</p>
+<pre><code>（a OR b) AND c
 </code></pre><p>不幸的是，这个还是错的。</p>
-<h3 id="那么还有什么答案呢？">那么还有什么答案呢？</h3><p>正确的执行顺序可以用如下的代码来表示，待会再通过lucene的查询分析来解释下：</p>
-<pre><code>（<span class="keyword">b </span><span class="keyword">AND </span>c）
+<h3 id="u90A3_u4E48_u8FD8_u6709_u4EC0_u4E48_u7B54_u6848_u5462_uFF1F"><a href="#u90A3_u4E48_u8FD8_u6709_u4EC0_u4E48_u7B54_u6848_u5462_uFF1F" class="headerlink" title="那么还有什么答案呢？"></a>那么还有什么答案呢？</h3><p>正确的执行顺序可以用如下的代码来表示，待会再通过lucene的查询分析来解释下：</p>
+<pre><code>（b AND c）
 </code></pre><p>在这里，第一个判断被抛弃了！也就是说，第一个判断其实是可有可无的！</p>
-<h3 id="你还会让你的使用者将AND/OR/NOT放在他们的查询里么？">你还会让你的使用者将AND/OR/NOT放在他们的查询里么？</h3><p>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
-<h3 id="更多的测试">更多的测试</h3><p>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
+<h3 id="u4F60_u8FD8_u4F1A_u8BA9_u4F60_u7684_u4F7F_u7528_u8005_u5C06AND/OR/NOT_u653E_u5728_u4ED6_u4EEC_u7684_u67E5_u8BE2_u91CC_u4E48_uFF1F"><a href="#u4F60_u8FD8_u4F1A_u8BA9_u4F60_u7684_u4F7F_u7528_u8005_u5C06AND/OR/NOT_u653E_u5728_u4ED6_u4EEC_u7684_u67E5_u8BE2_u91CC_u4E48_uFF1F" class="headerlink" title="你还会让你的使用者将AND/OR/NOT放在他们的查询里么？"></a>你还会让你的使用者将AND/OR/NOT放在他们的查询里么？</h3><p>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
+<h3 id="u66F4_u591A_u7684_u6D4B_u8BD5"><a href="#u66F4_u591A_u7684_u6D4B_u8BD5" class="headerlink" title="更多的测试"></a>更多的测试</h3><p>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
 <p>我写了个脚本来跑这些情况，分别在lucene和edismax下，看看可以得到什么样的结果。所有的测试中，lucene的默认运算符是AND，edismax的mm参数设置为100%</p>
-<pre><code><span class="title">Lucene</span>                    EDismax
+<pre><code>Lucene                    EDismax
 </code></pre><hr>
 <ol>
 <li>curly AND larry</li>
 </ol>
-<pre><code><span class="title">curly</span> larry               curly larry
+<pre><code>curly larry               curly larry
 curly larry moe           curly larry moe
 curly larry shemp         curly larry shemp
 curly larry moe shemp     curly larry moe shemp
 </code></pre><ol>
 <li>curly AND larry OR moe</li>
 </ol>
-<pre><code><span class="title">curly</span>                     curly larry
+<pre><code>curly                     curly larry
 curly larry               curly larry moe
 curly moe                 curly larry shemp
 curly shemp               curly larry moe shemp
@@ -476,22 +469,22 @@ curly larry moe shemp
 </code></pre><ol>
 <li>curly OR larry AND moe</li>
 </ol>
-<pre><code><span class="title">larry</span> moe                 larry moe
+<pre><code>larry moe                 larry moe
 curly larry moe           curly larry moe
 larry moe shemp           larry moe shemp
 curly larry moe shemp     curly larry moe shemp
 </code></pre><ol>
 <li>curly AND larry OR moe AND shemp</li>
 </ol>
-<pre><code><span class="title">curly</span> moe shemp           curly larry moe shemp
+<pre><code>curly moe shemp           curly larry moe shemp
 curly larry moe shemp
 </code></pre><ol>
 <li>moe AND shemp OR curly AND larry</li>
 </ol>
-<pre><code><span class="title">curly</span> larry moe           curly larry moe shemp
+<pre><code>curly larry moe           curly larry moe shemp
 curly larry moe shemp
 </code></pre><p>查询1的答案是在预想中的。查询2的答案中，明显的就发现在lucene查询器下只有有’curly’就可以了，而在edismax下就需要’curly AND larry’（查询3一样的是变成了’larry AND moe’）。查询4和查询5也是同样的道理。当然，你可以看下debug查询输出，来知道她们是什么样的运行结果，但是没有告诉我为什么。</p>
-<h3 id="启示">启示</h3><p>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene-167cene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
+<h3 id="u542F_u793A"><a href="#u542F_u793A" class="headerlink" title="启示"></a>启示</h3><p>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene-167cene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
 <p>~~~</p>
 <p>还是老老实实的用上括号吧，以免再入坑！</p>
 ]]></content>
@@ -499,7 +492,6 @@ curly larry moe shemp
     
     <entry>
       <title><![CDATA[第一篇博文]]></title>
-      <link href="http://catlittlechen.com/2015/09/22/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/"/>
       <url>http://catlittlechen.com/2015/09/22/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/</url>
       <content type="html"><![CDATA[<p>你好，世界</p>
 <hr>

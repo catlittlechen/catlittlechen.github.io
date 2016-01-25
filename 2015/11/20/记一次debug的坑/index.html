@@ -101,52 +101,52 @@ func readLines(path string) (lines []string, err error) {
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="感悟">感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
-<h2 id="那天">那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
+        <h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
+<h2 id="u90A3_u5929"><a href="#u90A3_u5929" class="headerlink" title="那天"></a>那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
 <p>由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。</p>
-<pre><code>func readLines(path string) (lines []string, <span class="keyword">err</span> <span class="keyword">error</span>) {
-    <span class="keyword">var</span> (
-            <span class="keyword">file</span>   *os.<span class="keyword">File</span>
+<pre><code>func readLines(path string) (lines []string, err error) {
+    var (
+            file   *os.File
             part   []byte
             prefix bool
     )
 
-    <span class="keyword">if</span> <span class="keyword">file</span>, <span class="keyword">err</span> = os.<span class="keyword">Open</span>(path); <span class="keyword">err</span> != nil {
-            <span class="literal">return</span>
+    if file, err = os.Open(path); err != nil {
+            return
     }
 
-    reader := bufio.NewReader(<span class="keyword">file</span>)
+    reader := bufio.NewReader(file)
     buffer := bytes.NewBuffer(make([]byte, 1024))
 
-    <span class="keyword">for</span> {
-            <span class="keyword">if</span> part, prefix, <span class="keyword">err</span> = reader.ReadLine(); <span class="keyword">err</span> != nil {
-                    <span class="keyword">break</span>
+    for {
+            if part, prefix, err = reader.ReadLine(); err != nil {
+                    break
             }
             buffer.Write(part)
-            <span class="keyword">if</span> !prefix {
-                    lines = <span class="keyword">append</span>(lines, buffer.<span class="literal">String</span>())
+            if !prefix {
+                    lines = append(lines, buffer.String())
                     buffer.Reset()
             }
     }
-    <span class="keyword">if</span> <span class="keyword">err</span> == io.EOF {
-            <span class="keyword">err</span> = nil 
+    if err == io.EOF {
+            err = nil 
     }
-    <span class="literal">return</span>
+    return
 }
 </code></pre><p>调用的时候，我通过用了大概如下的代码：</p>
-<pre><code>lines， <span class="keyword">err</span> := readLines(userFile)
-<span class="keyword">if</span> <span class="keyword">err</span> != nil {
-    <span class="literal">return</span>
+<pre><code>lines， err := readLines(userFile)
+if err != nil {
+    return
 }
-<span class="keyword">for</span> _, <span class="keyword">line</span> := <span class="keyword">range</span> lines {
-    sqlStr := rawSql % <span class="keyword">line</span>
-    _, <span class="keyword">err</span> = dbConn.Exec(sqlStr)
-    <span class="keyword">if</span> <span class="keyword">err</span> != nil {
-        <span class="literal">return</span>
+for _, line := range lines {
+    sqlStr := rawSql % line
+    _, err = dbConn.Exec(sqlStr)
+    if err != nil {
+        return
     }
 }
 </code></pre><p>当然它报错了！这样子的错误信息~</p>
-<pre><code>Error <span class="number">1064</span>: You have <span class="operator">an</span> error <span class="operator">in</span> your SQL syntax; check <span class="operator">the</span> manual that corresponds <span class="built_in">to</span> your MySQL server <span class="built_in">version</span> <span class="keyword">for</span> <span class="operator">the</span> <span class="constant">right</span> syntax <span class="built_in">to</span> use near <span class="string">''</span> <span class="keyword">at</span> <span class="built_in">line</span> <span class="number">1</span>
+<pre><code>Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; at line 1
 </code></pre><p>通过查阅，我发现这个near ‘’，是的竟然是空的，不像一般的写错sql语句一样是会写明错误信息~<br>瞬间我就神经开始大条了。</p>
 <pre><code>难道我后面写漏了什么？  
 怎么可能！
@@ -154,27 +154,27 @@ func readLines(path string) (lines []string, err error) {
 水果到了，再吃个苹果。
 吃完洗个手-。-
 我觉得没错啊！
-F<span class="keyword">*</span><span class="keyword">*</span>k
-</code></pre><h2 id="结局">结局</h2><p>不玩了，之所以我会认为自己没错，是因为我将整个sql语句打印了出来，在肉眼确认没错之后，又去mysql得命令行中直接执行了语句，结果十分顺利。<br>最后，十分大条的将从文件中读取出来的lines用长度打印了出来，瞬间我就斯巴达了！  </p>
-<pre><code><span class="keyword">for</span> _, <span class="built_in">line</span> := range <span class="keyword">lines</span> {
-    fmt.Printf(<span class="string">"len[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(<span class="built_in">line</span>))
-    sqlStr := rawSql % <span class="built_in">line</span>
-    fmt.Printf(<span class="string">"sqlStr[%s] is %d"</span>, <span class="built_in">line</span>, <span class="built_in">len</span>(sqlStr))
+F**k
+</code></pre><h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>不玩了，之所以我会认为自己没错，是因为我将整个sql语句打印了出来，在肉眼确认没错之后，又去mysql得命令行中直接执行了语句，结果十分顺利。<br>最后，十分大条的将从文件中读取出来的lines用长度打印了出来，瞬间我就斯巴达了！  </p>
+<pre><code>for _, line := range lines {
+    fmt.Printf(&quot;len[%s] is %d&quot;, line, len(line))
+    sqlStr := rawSql % line
+    fmt.Printf(&quot;sqlStr[%s] is %d&quot;, line, len(sqlStr))
 }
 </code></pre><p>结果。。。</p>
-<pre><code>len[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1024!
-sqlStr[<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>] is 1065!
+<pre><code>len[*****] is 1024!
+sqlStr[*****] is 1065!
 </code></pre><p>这就是为什么我执行失败的原因！sqlStr里面，存在着一段空白的buffer！却是打印不出来的~<br>最后我把代码改成了这样~</p>
-<pre><code>data, <span class="keyword">err</span> = ioutil.ReadAll(userFile)
-<span class="keyword">if</span> <span class="keyword">err</span> != nil {
-    <span class="literal">return</span>
+<pre><code>data, err = ioutil.ReadAll(userFile)
+if err != nil {
+    return
 }
-lines := strings.<span class="keyword">Split</span>(<span class="literal">string</span>(data), <span class="string">"\n"</span>)
-</code></pre><h2 id="Done">Done</h2>
+lines := strings.Split(string(data), &quot;\n&quot;)
+</code></pre><h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/20/记一次debug的坑/" data-id="cijh1wgb10008p5zkz8h74eim" class="article-share-link">Share</a>
+      <a data-url="http://catlittlechen.com/2015/11/20/记一次debug的坑/" data-id="cijsmj5jp0008eizkj82iwvy7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
@@ -207,7 +207,7 @@ lines := strings.<span class="keyword">Split</span>(<span class="literal">string
 (function() {
  var ds = document.createElement('script');
  ds.type = 'text/javascript';ds.async = true;
- ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+ ds.src = 'http://7xnn4y.com1.z0.glb.clouddn.com/embed_ua.js';
  ds.charset = 'UTF-8';
  (document.getElementsByTagName('head')[0] 
   || document.getElementsByTagName('body')[0]).appendChild(ds);
