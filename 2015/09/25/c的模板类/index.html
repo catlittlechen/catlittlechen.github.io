@@ -5,6 +5,7 @@
   
   <title>c的模板类 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
   <meta name="description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
 开始讲故事C++标准库的书中，曾经说过这么一句话
 唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
@@ -38,6 +39,7 @@ template&amp;l">
   
 
 </head>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -95,10 +97,12 @@ template&amp;l">
   
 
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
 <h2 id="u5F00_u59CB_u8BB2_u6545_u4E8B"><a href="#u5F00_u59CB_u8BB2_u6545_u4E8B" class="headerlink" title="开始讲故事"></a>开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 </code></pre><h3 id="u4E3A_u4EC0_u4E48_u5462_uFF1F"><a href="#u4E3A_u4EC0_u4E48_u5462_uFF1F" class="headerlink" title="为什么呢？"></a>为什么呢？</h3><p>对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：</p>
@@ -152,11 +156,10 @@ template class Foo&lt;float&gt;;
 </code></pre><p>博文翻译于<a href="http://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file" target="_blank" rel="external">stackoverflow</a>.</p>
 <h4 id="TODO_uFF1A"><a href="#TODO_uFF1A" class="headerlink" title="TODO："></a>TODO：</h4><p>可以看下答主推荐的<a href="https://isocpp.org/wiki/faq/templates#templates-defn-vs-decl" target="_blank" rel="external">文章</a></p>
 
-      
-    </div>
+             
+            
+          </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/09/25/c的模板类/" data-id="cijuo2ydw000uyazk0drw4hvy" class="article-share-link">Share</a>
-      
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
 

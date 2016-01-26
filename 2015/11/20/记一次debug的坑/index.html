@@ -5,6 +5,7 @@
   
   <title>记一次debug的坑 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
   <meta name="description" content="感悟这个故事告诉我们，永远不要相信自己的眼睛。
 那天天气晴朗，阳光明媚~我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。
 由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。
@@ -41,6 +42,7 @@ func readLines(path string) (lines []string, err error) {
   
 
 </head>
+
 <body>
   <div id="container">
     <div id="wrap">
@@ -98,10 +100,12 @@ func readLines(path string) (lines []string, err error) {
   
 
       </header>
-    
-    <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>这个故事告诉我们，永远不要相信自己的眼睛。</p>
 <h2 id="u90A3_u5929"><a href="#u90A3_u5929" class="headerlink" title="那天"></a>那天</h2><p>天气晴朗，阳光明媚~<br>我用Go写了一段程序，程序中需要通过从文件中读取一段文字，然后拼入sql中，然后在数据库中执行。</p>
 <p>由于我需要从文件中一行一行的读出数据，我用了这样子的方式读取。</p>
 <pre><code>func readLines(path string) (lines []string, err error) {
@@ -171,11 +175,10 @@ if err != nil {
 }
 lines := strings.Split(string(data), &quot;\n&quot;)
 </code></pre><h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>
-      
-    </div>
+             
+            
+          </div>
     <footer class="article-footer">
-      <a data-url="http://catlittlechen.com/2015/11/20/记一次debug的坑/" data-id="cijuo2yd80008yazkgan0j4kx" class="article-share-link">Share</a>
-      
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/踩坑日记/">踩坑日记</a></li></ul>
 
