@@ -3,18 +3,34 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/10 | CatChen</title>
+  <title>golang的debug方式 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.com/archives/2015/10/index.html">
+  <meta name="description" content="协程协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。
+这就意味着go func() {
+    for {
+    }
+}()
+这种函数被调用之后，这个goroutine会长期霸占着线程，而其它gorou">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang的debug方式">
+<meta property="og:url" content="http://catlittlechen.com/2016/01/27/golang的debug方式/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="协程协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。
+这就意味着go func() {
+    for {
+    }
+}()
+这种函数被调用之后，这个goroutine会长期霸占着线程，而其它gorou">
+<meta property="og:updated_time" content="2016-01-27T13:02:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="golang的debug方式">
+<meta name="twitter:description" content="协程协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。
+这就意味着go func() {
+    for {
+    }
+}()
+这种函数被调用之后，这个goroutine会长期霸占着线程，而其它gorou">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -65,39 +81,88 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/10/19/自建DNS服务器/" class="archive-article-date">
-  <time datetime="2015-10-19T11:41:33.000Z" itemprop="datePublished">10月 19</time>
+        <section id="main"><article id="post-golang的debug方式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/golang的debug方式/" class="article-date">
+  <time datetime="2016-01-27T12:11:03.000Z" itemprop="datePublished">2016-01-27</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/golang/">golang</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/19/自建DNS服务器/">自建DNS服务器</a>
+    <h1 class="article-title" itemprop="name">
+      golang的debug方式
     </h1>
   
 
-    </header>
+      </header>
+      
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <h2 id="u534F_u7A0B"><a href="#u534F_u7A0B" class="headerlink" title="协程"></a>协程</h2><p>协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。</p>
+<h3 id="u8FD9_u5C31_u610F_u5473_u7740"><a href="#u8FD9_u5C31_u610F_u5473_u7740" class="headerlink" title="这就意味着"></a>这就意味着</h3><pre><code>go func() {
+    for {
+    }
+}()
+</code></pre><p>这种函数被调用之后，这个goroutine会长期霸占着线程，而其它goroutine就只能饿死在内存中。<br>这种情况下，通过strace -f去跟踪系统调用的debug方式，是无法获取正确的信息。</p>
+<h3 id="kill_u5927_u6CD5"><a href="#kill_u5927_u6CD5" class="headerlink" title="kill大法"></a>kill大法</h3><p>Go程序在默认的信号处理中，如果收到了<em>SIGQUIT</em>的信号时，会将正在运行时的goroutine的调用栈输出。即：</p>
+<pre><code>kill -3 ***
+</code></pre><p>然后知道，自己是怎么坑自己的！</p>
+
+             
+            
+          </div>
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/11/20/记一次debug的坑/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">记一次debug的坑</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div id="ds-thread" class="ds-thread" data-thread-key="2016/01/27/golang的debug方式/" data-title="golang的debug方式" data-url="http://catlittlechen.com/2016/01/27/golang的debug方式/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"catlittlechen"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = '//7xnn4y.com1.z0.glb.clouddn.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+  <!-- 多说公共JS代码 end -->
+</section>
+
 </section>
         
           <aside id="sidebar">

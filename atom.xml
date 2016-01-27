@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2016-01-27T11:56:08.000Z</updated>
+  <updated>2016-01-27T13:02:13.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[golang的debug方式]]></title>
+    <link href="http://catlittlechen.com/2016/01/27/golang%E7%9A%84debug%E6%96%B9%E5%BC%8F/"/>
+    <id>http://catlittlechen.com/2016/01/27/golang的debug方式/</id>
+    <published>2016-01-27T12:11:03.000Z</published>
+    <updated>2016-01-27T13:02:13.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="u534F_u7A0B"><a href="#u534F_u7A0B" class="headerlink" title="协程"></a>协程</h2><p>协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。</p>
+<h3 id="u8FD9_u5C31_u610F_u5473_u7740"><a href="#u8FD9_u5C31_u610F_u5473_u7740" class="headerlink" title="这就意味着"></a>这就意味着</h3><pre><code>go func() {
+    for {
+    }
+}()
+</code></pre><p>这种函数被调用之后，这个goroutine会长期霸占着线程，而其它goroutine就只能饿死在内存中。<br>这种情况下，通过strace -f去跟踪系统调用的debug方式，是无法获取正确的信息。</p>
+<h3 id="kill_u5927_u6CD5"><a href="#kill_u5927_u6CD5" class="headerlink" title="kill大法"></a>kill大法</h3><p>Go程序在默认的信号处理中，如果收到了<em>SIGQUIT</em>的信号时，会将正在运行时的goroutine的调用栈输出。即：</p>
+<pre><code>kill -3 ***
+</code></pre><p>然后知道，自己是怎么坑自己的！</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="u534F_u7A0B"><a href="#u534F_u7A0B" class="headerlink" title="协程"></a>协程</h2><p>协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过]]>
+    </summary>
+    
+      <category term="golang" scheme="http://catlittlechen.com/tags/golang/"/>
+    
+      <category term="golang" scheme="http://catlittlechen.com/categories/golang/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[记一次debug的坑]]></title>
@@ -440,11 +466,11 @@ define service {
   </entry>
   
   <entry>
-    <title><![CDATA[c的模板类]]></title>
+    <title><![CDATA[c++的模板类]]></title>
     <link href="http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/"/>
     <id>http://catlittlechen.com/2015/09/25/c的模板类/</id>
     <published>2015-09-24T23:56:37.000Z</published>
-    <updated>2016-01-27T11:33:28.000Z</updated>
+    <updated>2016-01-27T12:50:11.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
 <h2 id="u5F00_u59CB_u8BB2_u6545_u4E8B"><a href="#u5F00_u59CB_u8BB2_u6545_u4E8B" class="headerlink" title="开始讲故事"></a>开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
@@ -503,11 +529,11 @@ template class Foo&lt;float&gt;;
     <![CDATA[<h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a h]]>
     </summary>
     
-      <category term="c" scheme="http://catlittlechen.com/tags/c/"/>
+      <category term="c++" scheme="http://catlittlechen.com/tags/c/"/>
     
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="c" scheme="http://catlittlechen.com/categories/c/"/>
+      <category term="c++" scheme="http://catlittlechen.com/categories/c/"/>
     
   </entry>
   
