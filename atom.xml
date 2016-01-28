@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2016-01-27T13:02:13.000Z</updated>
+  <updated>2016-01-27T13:03:45.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://catlittlechen.com/2016/01/27/golang%E7%9A%84debug%E6%96%B9%E5%BC%8F/"/>
     <id>http://catlittlechen.com/2016/01/27/golang的debug方式/</id>
     <published>2016-01-27T12:11:03.000Z</published>
-    <updated>2016-01-27T13:02:13.000Z</updated>
+    <updated>2016-01-27T13:03:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u534F_u7A0B"><a href="#u534F_u7A0B" class="headerlink" title="协程"></a>协程</h2><p>协程是轻量级的线程，在Go语言中对应着goroutine，由Go Runtime管理。由于Go在运行的过程中，如果多个goroutine在同时运行，当且仅当运行这个goroutine的线程被阻塞的时候，调度器也才会运行另外的goroutine。</p>
 <h3 id="u8FD9_u5C31_u610F_u5473_u7740"><a href="#u8FD9_u5C31_u610F_u5473_u7740" class="headerlink" title="这就意味着"></a>这就意味着</h3><pre><code>go func() {
     for {
