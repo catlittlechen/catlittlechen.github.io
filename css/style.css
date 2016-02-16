@@ -445,6 +445,10 @@ body {
 #nav-search-btn:before {
   content: "\f002";
 }
+#nav-weibo-btn {
+  float: center;
+  background: url("/img/weibo.png") center no-repeat;
+}
 #search-form-wrap {
   position: absolute;
   top: 15px;
