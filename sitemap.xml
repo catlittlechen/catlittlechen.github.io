@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://catlittlechen.com/2016/06/20/multinet/</loc>
+    <lastmod>2016-06-24T07:37:29.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://catlittlechen.com/2016/06/23/%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2016-06-23T07:01:36.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://catlittlechen.com/2016/01/27/golang%E7%9A%84debug%E6%96%B9%E5%BC%8F/</loc>
     <lastmod>2016-01-27T13:03:45.000Z</lastmod>
   </url>

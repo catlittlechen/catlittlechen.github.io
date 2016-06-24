@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>http://catlittlechen.com/2016/06/20/multinet/</loc>
+    <lastmod>2016-06-24T07:37:29.000Z</lastmod>
+    <data>
+        <display>
+        <title>multinet</title>
+        <pubTime>2016-06-20T06:07:22.000Z</pubTime>
+        
+        <tag>golang</tag>
+         
+         
+           
+             
+              <breadCrumb title="golang" url="http://catlittlechen.com/categories/golang/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://catlittlechen.com/2016/06/23/%E6%80%9D%E8%80%83/</loc>
+    <lastmod>2016-06-23T07:01:36.000Z</lastmod>
+    <data>
+        <display>
+        <title>思考</title>
+        <pubTime>2016-06-23T02:24:20.000Z</pubTime>
+        
+        <tag>生活</tag>
+         
+         
+           
+             
+              <breadCrumb title="活着" url="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://catlittlechen.com/2016/01/27/golang%E7%9A%84debug%E6%96%B9%E5%BC%8F/</loc>
     <lastmod>2016-01-27T13:03:45.000Z</lastmod>
     <data>
