@@ -41,10 +41,10 @@
   
   <entry>
     <title><![CDATA[multinet]]></title>
-    <link href="http://catlittlechen.com/2016/06/20/multinet/"/>
-    <id>http://catlittlechen.com/2016/06/20/multinet/</id>
-    <published>2016-06-20T06:07:22.000Z</published>
-    <updated>2016-06-24T07:37:29.000Z</updated>
+    <link href="http://catlittlechen.com/2016/05/20/multinet/"/>
+    <id>http://catlittlechen.com/2016/05/20/multinet/</id>
+    <published>2016-05-20T06:07:22.000Z</published>
+    <updated>2016-07-02T16:17:30.000Z</updated>
     <content type="html"><![CDATA[<h4 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h4><p>之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。</p>
 <h4 id="u7ECF_u8FC7"><a href="#u7ECF_u8FC7" class="headerlink" title="经过"></a>经过</h4><p>在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。最后使用了最简单的模式，通过添加head的方式，达到得知传输的data的长度，进而解决了黏包的问题，而且效率上的影响可以忽略不计。</p>
 <p>在解决了黏包的问题之后，我也通过控制代理的模式，发现在高并发的情况下，也许服务端同时需要多次创建or关闭TCP连接，来达到通讯的目的。而实际TCP的使用中，或许大部分时间内，会有TCP连接处于空闲的阶段，那是否可以复用呢？</p>
