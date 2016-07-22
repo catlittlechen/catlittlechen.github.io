@@ -3,18 +3,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Category: 折腾 | CatChen</title>
+  <title>docker-swarm | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.com/categories/折腾/index.html">
+  <meta name="description" content="前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~
+所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~
+创建docker-machinedocker-machine create --driver">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker-swarm">
+<meta property="og:url" content="http://catlittlechen.com/2016/07/22/docker-swarm/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~
+所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~
+创建docker-machinedocker-machine create --driver">
+<meta property="og:updated_time" content="2016-07-22T14:59:15.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="docker-swarm">
+<meta name="twitter:description" content="前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~
+所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~
+创建docker-machinedocker-machine create --driver">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -68,58 +75,113 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/11/11/nagios和ganglia/" class="archive-article-date">
-  <time datetime="2015-11-11T08:32:19.000Z" itemprop="datePublished">11月 11</time>
+        <section id="main"><article id="post-docker-swarm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/22/docker-swarm/" class="article-date">
+  <time datetime="2016-07-22T14:51:48.000Z" itemprop="datePublished">2016-07-22</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/11/11/nagios和ganglia/">nagios和ganglia</a>
+    <h1 class="article-title" itemprop="name">
+      docker-swarm
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/10/19/自建DNS服务器/" class="archive-article-date">
-  <time datetime="2015-10-19T11:41:33.000Z" itemprop="datePublished">10月 19</time>
-</a>
+      </header>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/10/19/自建DNS服务器/">自建DNS服务器</a>
-    </h1>
-  
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <p>前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~</p>
+<p>所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~</p>
+<h4 id="u521B_u5EFAdocker-machine"><a href="#u521B_u5EFAdocker-machine" class="headerlink" title="创建docker-machine"></a>创建docker-machine</h4><pre><code>docker-machine create --driver virtualbox consul
+docker-machine create --driver virtualbox manager1
+docker-machine create --driver virtualbox manager2
+docker-machine create --driver virtualbox node1
+docker-machine create --driver virtualbox node2
+</code></pre><h4 id="u914D_u7F6Econsul"><a href="#u914D_u7F6Econsul" class="headerlink" title="配置consul"></a>配置consul</h4><p>切换到consul虚机里面：</p>
+<pre><code>eval $(docker-machine env consul)
+</code></pre><p>启动consul服务：</p>
+<pre><code>docker run -d -p 8500:8500 --name=consul progrium/consul -server -bootstrap
+</code></pre><h4 id="u914D_u7F6Emanager_u8282_u70B9"><a href="#u914D_u7F6Emanager_u8282_u70B9" class="headerlink" title="配置manager节点"></a>配置manager节点</h4><p>配置manager1节点：</p>
+<pre><code>eval $(docker-machine env manager1)
+docker run -d -p 4000:4000 -v /var/lib/boot2docker:/certs:ro swarm manage -H :4000 --tlsverify --tlscacert=/certs/ca.pem --tlscert=/certs/server.pem --tlskey=/certs/server-key.pem --replication --advertise $(docker-machine ip manager1):4000 consul://$(docker-machine ip consul):8500
+</code></pre><p>配置manager2节点：</p>
+<pre><code>eval $(docker-machine env manager2)
+docker run -d -p 4000:4000 -v /var/lib/boot2docker:/certs:ro swarm manage -H :4000 --tlsverify --tlscacert=/certs/ca.pem --tlscert=/certs/server.pem --tlskey=/certs/server-key.pem --replication --advertise $(docker-machine ip manager2):4000 consul://$(docker-machine ip consul):8500
+</code></pre><h4 id="u914D_u7F6Enode_u8282_u70B9"><a href="#u914D_u7F6Enode_u8282_u70B9" class="headerlink" title="配置node节点"></a>配置node节点</h4><p>配置node1节点</p>
+<pre><code>eval $(docker-machine env node1)
+docker run -d swarm join --advertise=$(docker-machine ip node1):2376 consul://$(docker-machine ip consul):8500
+</code></pre><p>配置node2节点</p>
+<pre><code>eval $(docker-machine env node2)
+docker run -d swarm join --advertise=$(docker-machine ip node2):2376 consul://$(docker-machine ip consul):8500
+</code></pre><h3 id="u6D4B_u8BD5"><a href="#u6D4B_u8BD5" class="headerlink" title="测试"></a>测试</h3><pre><code>docker -H :4000 --tlsverify --tlscacert=/var/lib/boot2docker/ca.pem --tlscert=/var/lib/boot2docker/server.pem --tlskey=/var/lib/boot2docker/server-key.pem run hello-world
+</code></pre>
+             
+            
+          </div>
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/06/23/思考/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">思考</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+<!-- 多说评论框 start -->
+<div id="ds-thread" class="ds-thread" data-thread-key="2016/07/22/docker-swarm/" data-title="docker-swarm" data-url="http://catlittlechen.com/2016/07/22/docker-swarm/"></div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"catlittlechen"};
+(function() {
+ var ds = document.createElement('script');
+ ds.type = 'text/javascript';ds.async = true;
+ ds.src = '//7xnn4y.com1.z0.glb.clouddn.com/embed.js';
+ ds.charset = 'UTF-8';
+ (document.getElementsByTagName('head')[0] 
+  || document.getElementsByTagName('body')[0]).appendChild(ds);
+ })();
+</script>
+  <!-- 多说公共JS代码 end -->
+</section>
+
+
+<script>
+(function(){
+      var bp = document.createElement('script');
+          bp.src = '//push.zhanzhang.baidu.com/push.js';
+              var s = document.getElementsByTagName("script")[0];
+                  s.parentNode.insertBefore(bp, s);
+
+})();
+</script>
 </section>
         
           <aside id="sidebar">

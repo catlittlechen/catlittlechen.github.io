@@ -4,6 +4,36 @@
   
     
     <entry>
+      <title><![CDATA[docker-swarm]]></title>
+      <url>http://catlittlechen.com/2016/07/22/docker-swarm/</url>
+      <content type="html"><![CDATA[<p>前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~</p>
+<p>所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~</p>
+<h4 id="u521B_u5EFAdocker-machine"><a href="#u521B_u5EFAdocker-machine" class="headerlink" title="创建docker-machine"></a>创建docker-machine</h4><pre><code>docker-machine create --driver virtualbox consul
+docker-machine create --driver virtualbox manager1
+docker-machine create --driver virtualbox manager2
+docker-machine create --driver virtualbox node1
+docker-machine create --driver virtualbox node2
+</code></pre><h4 id="u914D_u7F6Econsul"><a href="#u914D_u7F6Econsul" class="headerlink" title="配置consul"></a>配置consul</h4><p>切换到consul虚机里面：</p>
+<pre><code>eval $(docker-machine env consul)
+</code></pre><p>启动consul服务：</p>
+<pre><code>docker run -d -p 8500:8500 --name=consul progrium/consul -server -bootstrap
+</code></pre><h4 id="u914D_u7F6Emanager_u8282_u70B9"><a href="#u914D_u7F6Emanager_u8282_u70B9" class="headerlink" title="配置manager节点"></a>配置manager节点</h4><p>配置manager1节点：</p>
+<pre><code>eval $(docker-machine env manager1)
+docker run -d -p 4000:4000 -v /var/lib/boot2docker:/certs:ro swarm manage -H :4000 --tlsverify --tlscacert=/certs/ca.pem --tlscert=/certs/server.pem --tlskey=/certs/server-key.pem --replication --advertise $(docker-machine ip manager1):4000 consul://$(docker-machine ip consul):8500
+</code></pre><p>配置manager2节点：</p>
+<pre><code>eval $(docker-machine env manager2)
+docker run -d -p 4000:4000 -v /var/lib/boot2docker:/certs:ro swarm manage -H :4000 --tlsverify --tlscacert=/certs/ca.pem --tlscert=/certs/server.pem --tlskey=/certs/server-key.pem --replication --advertise $(docker-machine ip manager2):4000 consul://$(docker-machine ip consul):8500
+</code></pre><h4 id="u914D_u7F6Enode_u8282_u70B9"><a href="#u914D_u7F6Enode_u8282_u70B9" class="headerlink" title="配置node节点"></a>配置node节点</h4><p>配置node1节点</p>
+<pre><code>eval $(docker-machine env node1)
+docker run -d swarm join --advertise=$(docker-machine ip node1):2376 consul://$(docker-machine ip consul):8500
+</code></pre><p>配置node2节点</p>
+<pre><code>eval $(docker-machine env node2)
+docker run -d swarm join --advertise=$(docker-machine ip node2):2376 consul://$(docker-machine ip consul):8500
+</code></pre><h3 id="u6D4B_u8BD5"><a href="#u6D4B_u8BD5" class="headerlink" title="测试"></a>测试</h3><pre><code>docker -H :4000 --tlsverify --tlscacert=/var/lib/boot2docker/ca.pem --tlscert=/var/lib/boot2docker/server.pem --tlskey=/var/lib/boot2docker/server-key.pem run hello-world
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[思考]]></title>
       <url>http://catlittlechen.com/2016/06/23/%E6%80%9D%E8%80%83/</url>
       <content type="html"><![CDATA[<p>从06-09开始，准备写这一篇文章，那天是端午节，在宿舍里面看G3，期待詹姆斯可以赢得这一场比赛，避免被横扫的命运。从那天起，在上班的时候，总是偷偷地看着NBA的文字直播，见证了41-41的G5，爆发的G6，到最后的G7时，我偷偷地带上了耳机，在mac上听起了直播，听完了G7和最后的发布会。也许竞技体育的魅力就在与此，一切皆有可能。06-20，骑士和勇士创造了很多历史，不过是成功夺冠的骑士，还是73胜的勇士，都是一样的伟大。</p>

@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://catlittlechen.com/2016/07/22/docker-swarm/</loc>
+    <lastmod>2016-07-22T14:59:15.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://catlittlechen.com/2016/05/20/multinet/</loc>
     <lastmod>2016-07-02T16:17:30.000Z</lastmod>
   </url>
