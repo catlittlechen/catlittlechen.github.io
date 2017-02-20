@@ -4,6 +4,352 @@
   
     
     <entry>
+      <title><![CDATA[向2016致敬]]></title>
+      <url>http://catlittlechen.com/2017/01/25/%E5%90%912016%E8%87%B4%E6%95%AC/</url>
+      <content type="html"><![CDATA[<p>  2016年的我，你好，我是2017年的你。拖了很久，我才开始写这一封信给你，来告诉你，这一年的故事。先给你的2016年打一个分吧，87分，满分100分。</p>
+<p>  2016年，在历经3年的努力下，你终于将自己多年的积蓄给父母买了一个房子，过年回家的时候，看到父母忙忙碌碌地整理房子，心情十分复杂。十几年来，当第一次懂事的时候，你就知道父母一直希望拥有这么一个属于自己的房子，只是一直没有能力。感谢2016年的你，在外包和工作等压力下，完成了这个心愿，过去3年，至少这件心愿，你完成了。不过，2016年的你，已经把所有的积蓄都花完了，苦了2017年的我了。你还记得你曾经答应嘻嘻给她在广州一个家么？我知道你一直都还记得，只是说，你已经尽力了。算了，那就让2017年的我好好努力吧。</p>
+<p>  说到赚钱这一方面，2016年的你，很感谢你守住了另外一份承诺。没有在你身边的大环境的情况下，你做类似夺宝之类的产品。虽然2016年的你也没有推出个人作品，不管是CleverKid还是Say，就等2017年的我来完成吧。我知道努力坚持自己是有多难，感谢你坚持下来了。2017年的我也会好好坚持本心的。</p>
+<p>  你是一个喜欢数学的理科生，但是这一年里面的工作其实大部分都和数学的相关性不大，其实你也没能够发挥出自己的特长。这也和你现在所在的工作岗位有关系吧。不过没关系，自己好好学习吧。现在大数据和人工智能这两方面都是比较热门的，也是十分适合你的工作，希望你可以好好珍惜。</p>
+<p>  2017年的我，比起你而言，确实是长大了。我知道，也许选择比努力更加重要，你创造的多少价值，才能得到多少报酬。因此，希望我们可以创造自己的价值。想想2016年的年初，你还在抱怨年终太少之类的话，现在想想自己还是太幼稚了，你啊，确实是没有创造足够的价值，对吧？没事，我们这种人就是天生的骄傲型，相信天赋，过去努力积累的实例和未来的自己。纵使我们徘徊在现实和梦想之间，我们也会去看看梦想的世界，如果就这么屈服于现实，怎么知道世界的美好呢？</p>
+<p>  不过，2016年的时候，你还是有几点是做得不够好的。首先，你发脾气了，虽然发脾气不是一件什么大不了的事情，但是事实上，在某些时候你不应该发脾气，比如对待嘻嘻的时候。人嘛，往往会宽容那些不熟的人，却无法容忍自己人的错误。这点希望以后可以改改。第二点不好的地方，话说，你学习swift做ios也好，机器学习也罢，要学习深一些，你现在两门的基础都没有打好，2016年反而觉得有点浪费了。后端没深入学习，反而学了两个兴趣方面，现在3个方面都没有好的发展。这样子不是很好。2017年的时候要好好选择一种，然后制定计划，好好学习。第三点，2016年，你从游戏转到了广告，恭喜你，先走出了一个温床，进入了另外一个温床~~告诉你哦，你还是得好好努力的。</p>
+<p>  2016年的我，我知道你丢失了很多美好，我会在2017年，帮你找回来的。我相信你的骄傲，会有一天可以看到你的美好笑容和幸福。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(六)  索引]]></title>
+      <url>http://catlittlechen.com/2016/08/21/es6/</url>
+      <content type="html"><![CDATA[<h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><pre><code>PUT /my_index
+{
+    &quot;settings&quot; {}
+    &quot;mappings&quot;: {
+        &quot;type_one&quot;:{},
+        &quot;type_two&quot;:{},
+    }
+}
+</code></pre><h4 id="u5220_u9664_u7D22_u5F15"><a href="#u5220_u9664_u7D22_u5F15" class="headerlink" title="删除索引"></a>删除索引</h4><pre><code>DELETE /my_index
+</code></pre><h4 id="settings_3A"><a href="#settings_3A" class="headerlink" title="settings:"></a>settings:</h4><pre><code>number_of_shards    主索引的个数
+number_of_replicas 复制分片的个数
+</code></pre><p>分析器,这个很重要，合理的使用分析器，可以让你的es拥有合理的性能</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(五) 结构化查询]]></title>
+      <url>http://catlittlechen.com/2016/08/12/es5/</url>
+      <content type="html"><![CDATA[<h4 id="u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL"><a href="#u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL" class="headerlink" title="结构化查询Query DSL"></a>结构化查询Query DSL</h4><pre><code>GET /_search
+    {
+        &quot;query&quot;: {
+            QUERY_NAME: {
+                FIELD_NAME: {
+                    ARGUMENT: VALUE,
+                    ARGUMENT: VALUE,
+                }
+            }
+        }
+    }
+</code></pre><h4 id="u8FC7_u6EE4_u67E5_u8BE2Filter_DSL"><a href="#u8FC7_u6EE4_u67E5_u8BE2Filter_DSL" class="headerlink" title="过滤查询Filter DSL"></a>过滤查询Filter DSL</h4><h4 id="term__u8FC7_u6EE4"><a href="#term__u8FC7_u6EE4" class="headerlink" title="term 过滤"></a>term 过滤</h4><pre><code>{
+    &quot;term&quot;: {
+        &quot;{field}&quot;: {value} 
+    }
+}
+</code></pre><h4 id="terms__u8FC7_u6EE4"><a href="#terms__u8FC7_u6EE4" class="headerlink" title="terms 过滤"></a>terms 过滤</h4><pre><code>{
+    &quot;terms&quot;: {
+        &quot;{field}&quot;: [ {value1}, {value2} ]
+    }
+}
+</code></pre><h4 id="range_u8FC7_u6EE4"><a href="#range_u8FC7_u6EE4" class="headerlink" title="range过滤"></a>range过滤</h4><pre><code>{
+    &quot;range&quot;: {
+        &quot;{field}&quot;: {
+            &quot;gte&quot;: 20, //gt gte, lt lte
+        }
+    }
+}
+</code></pre><h4 id="exits_2C_missing_u8FC7_u6EE4"><a href="#exits_2C_missing_u8FC7_u6EE4" class="headerlink" title="exits, missing过滤"></a>exits, missing过滤</h4><pre><code>{
+    &quot;exists&quot;: {
+        &quot;field&quot;: &quot;{field}&quot;,//存在这个类型
+    }
+}
+</code></pre><h4 id="u8FC7_u6EE4"><a href="#u8FC7_u6EE4" class="headerlink" title="过滤"></a>过滤</h4><pre><code>{
+    &quot;bool&quot;: {
+        &quot;must&quot;: {},//必须符合
+        &quot;must_not&quot;: {},//必须不符合
+        &quot;should&quot;: {},//必须符合其中一个条件
+    }
+}
+</code></pre><h4 id="match_all"><a href="#match_all" class="headerlink" title="match_all"></a>match_all</h4><h4 id="match"><a href="#match" class="headerlink" title="match"></a>match</h4><h4 id="multi_match"><a href="#multi_match" class="headerlink" title="multi_match"></a>multi_match</h4><h4 id="u67E5_u8BE2_u6BD4_u8FC7_u6EE4_u591A_u4E86_u76F8_u5173_u6027_u8BA1_u7B97"><a href="#u67E5_u8BE2_u6BD4_u8FC7_u6EE4_u591A_u4E86_u76F8_u5173_u6027_u8BA1_u7B97" class="headerlink" title="查询比过滤多了相关性计算"></a>查询比过滤多了相关性计算</h4><h4 id="u590D_u5408_u67E5_u8BE2"><a href="#u590D_u5408_u67E5_u8BE2" class="headerlink" title="复合查询"></a>复合查询</h4><pre><code>{
+    &quot;filtered&quot;: {
+        &quot;query&quot;:  { &quot;match&quot;: { &quot;email&quot;: &quot;business opportunity&quot; }},
+        &quot;filter&quot;: { &quot;term&quot;:  { &quot;folder&quot;: &quot;inbox&quot; }}
+    }
+}
+</code></pre><h4 id="u9A8C_u8BC1_u67E5_u8BE2_uFF0C_u89E3_u91CA_u9519_u8BEF"><a href="#u9A8C_u8BC1_u67E5_u8BE2_uFF0C_u89E3_u91CA_u9519_u8BEF" class="headerlink" title="验证查询，解释错误"></a>验证查询，解释错误</h4><pre><code>GET /gb/tweet/_validate/query?explain
+    {
+        &quot;query&quot;: {
+            *********
+        }
+    }
+</code></pre><h4 id="u6392_u5E8F_uFF0C_u5728query_u4E4B_u540E"><a href="#u6392_u5E8F_uFF0C_u5728query_u4E4B_u540E" class="headerlink" title="排序，在query之后"></a>排序，在query之后</h4><pre><code>GET /_search
+{
+    &quot;query&quot;: {
+    },
+    &quot;sort&quot;: {
+        &quot;{field}&quot;:{
+            &quot;order&quot;: &quot;desc&quot;
+        },
+        &quot;{field}&quot;:{
+            &quot;order&quot;: &quot;asc&quot;,
+            &quot;mode&quot;: &quot;min&quot; //field为多个值时
+        }
+    }
+}
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(四) 搜索]]></title>
+      <url>http://catlittlechen.com/2016/08/09/es4/</url>
+      <content type="html"><![CDATA[<h4 id="u8DEF_u7531_u6587_u6863_u5230_u5206_u7247"><a href="#u8DEF_u7531_u6587_u6863_u5230_u5206_u7247" class="headerlink" title="路由文档到分片"></a>路由文档到分片</h4><pre><code>shard = hash(routing) % number_of_primary_shards
+</code></pre><h4 id="replication"><a href="#replication" class="headerlink" title="replication"></a>replication</h4><pre><code>请求是否需要等待复制分区的成功响应，默认为sync等待，async异步不等待。 
+</code></pre><h4 id="consistency"><a href="#consistency" class="headerlink" title="consistency"></a>consistency</h4><pre><code>文档在写入的时候，需要规定一定的分区更新成功之后，才会返回客户端成功，如果节点不够，则不能删除或者索引任何文件
+
+int((primary + number_of_replicas) / 2) + 1
+</code></pre><h4 id="u7A7A_u641C_u7D22"><a href="#u7A7A_u641C_u7D22" class="headerlink" title="空搜索"></a>空搜索</h4><pre><code>GET /_search
+    hits:
+        total 总文档数
+        hits 匹配到的数量
+        max_score 最大相关性
+    took：请求时间
+    _shards: 用到的分片大小和类型
+GET /_search?size={size}&amp;from={from}
+    从from开始最多size个内容返回
+</code></pre><h4 id="u7B80_u6613_u641C_u7D22"><a href="#u7B80_u6613_u641C_u7D22" class="headerlink" title="简易搜索"></a>简易搜索</h4><pre><code>GET /_all/{type}/_search?q={field}:{key}
+GET /_all/{type}/_search?q=`urlencode(+{field}:{key}-{field}:{key})` +条件满足 -条件不满足
+GET /_all/{type}/_search?q={value} 查询包含value的文档
+</code></pre><h4 id="u65B0_u5EFA_u7D22_u5F15_uFF0C_u8BBE_u7F6E_u5206_u6790_u5668"><a href="#u65B0_u5EFA_u7D22_u5F15_uFF0C_u8BBE_u7F6E_u5206_u6790_u5668" class="headerlink" title="新建索引，设置分析器"></a>新建索引，设置分析器</h4><pre><code>PUT /{index}
+{
+    &quot;mappings&quot;: {
+        &quot;{type}&quot;: {
+            &quot;properties&quot;: {
+                &quot;field&quot;: {
+                    &quot;type&quot;: &quot;&quot;, //string, date, long, object(嵌套)
+                    &quot;index&quot;: &quot;&quot;, // analyzed, not_analyzed, no
+                    &quot;analyzer&quot;: &quot;&quot;, // english, space
+                }
+            }
+        }
+    }
+}
+</code></pre><h4 id="u6D4B_u8BD5_u5206_u6790_u5668"><a href="#u6D4B_u8BD5_u5206_u6790_u5668" class="headerlink" title="测试分析器"></a>测试分析器</h4><pre><code>GET /{index}/_analyze?field={field}&amp;text={value}
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(三) 基本API]]></title>
+      <url>http://catlittlechen.com/2016/08/04/es3/</url>
+      <content type="html"><![CDATA[<h4 id="u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID"><a href="#u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID" class="headerlink" title="添加文档,自定义ID"></a>添加文档,自定义ID</h4><pre><code>PUT /{index}/{type}/{id}
+{
+    &quot;field&quot;: &quot;value&quot;,
+}
+</code></pre><h4 id="u6DFB_u52A0_u6587_u6863_uFF0C_u8FD9_u65F6_u5019_u7684ID_u662FES_u81EA_u52A8_u751F_u6210_uFF0C_u4E3A22_u4F4D_u7684UUIDS"><a href="#u6DFB_u52A0_u6587_u6863_uFF0C_u8FD9_u65F6_u5019_u7684ID_u662FES_u81EA_u52A8_u751F_u6210_uFF0C_u4E3A22_u4F4D_u7684UUIDS" class="headerlink" title="添加文档，这时候的ID是ES自动生成，为22位的UUIDS"></a>添加文档，这时候的ID是ES自动生成，为22位的UUIDS</h4><pre><code>POST /{index}/{type}/
+{
+    &quot;field&quot;: &quot;value&quot;,
+}
+</code></pre><h4 id="u83B7_u5F97_u6587_u6863"><a href="#u83B7_u5F97_u6587_u6863" class="headerlink" title="获得文档"></a>获得文档</h4><pre><code>GET /{index}/{type}/{id}?pretty
+{
+    &quot;_index&quot; :   &quot;{index}&quot;,
+    &quot;_type&quot; :    &quot;{type}&quot;,
+    &quot;_id&quot; :      &quot;{id}&quot;,
+    &quot;_version&quot; : 1,
+    &quot;found&quot; :    true, //是否找到，404同步返回
+    &quot;_source&quot; :  {
+        &quot;field&quot;: &quot;value&quot;,
+    }
+}
+</code></pre><h4 id="u83B7_u5F97_u6587_u6863_u7684_u7279_u5B9A_u5C5E_u6027"><a href="#u83B7_u5F97_u6587_u6863_u7684_u7279_u5B9A_u5C5E_u6027" class="headerlink" title="获得文档的特定属性"></a>获得文档的特定属性</h4><pre><code>GET /{index}/{type}/{id}/{key}?pretty
+{
+    &quot;{key}&quot;: &quot;value&quot;
+}
+key 为上面json的值
+</code></pre><h4 id="u83B7_u5F97_u6587_u6863_u7684_u7279_u5B9A_u503C"><a href="#u83B7_u5F97_u6587_u6863_u7684_u7279_u5B9A_u503C" class="headerlink" title="获得文档的特定值"></a>获得文档的特定值</h4><pre><code>GET /{index}/{type}/{id}?pretty&amp;_source={field1},{field2}
+{
+    &quot;_index&quot; :   &quot;{index}&quot;,
+    &quot;_type&quot; :    &quot;{type}&quot;,
+    &quot;_id&quot; :      &quot;{id}&quot;,
+    &quot;_version&quot; : 1,
+    &quot;found&quot; :    true, //是否找到，404同步返回
+    &quot;_source&quot; :  {
+        &quot;field1&quot;: &quot;value&quot;,
+        &quot;field2&quot;: &quot;value&quot;,
+    }
+}
+</code></pre><h4 id="u68C0_u67E5_u6587_u6863_u662F_u5426_u5B58_u5728"><a href="#u68C0_u67E5_u6587_u6863_u662F_u5426_u5B58_u5728" class="headerlink" title="检查文档是否存在"></a>检查文档是否存在</h4><pre><code>HEAD /{index}/{type}/{id}
+</code></pre><h4 id="u66F4_u65B0_u6587_u6863_u7684_u65F6_u5019_uFF0C_u5199_u6CD5_u548C_u63D2_u5165_u65F6_u76F8_u540C"><a href="#u66F4_u65B0_u6587_u6863_u7684_u65F6_u5019_uFF0C_u5199_u6CD5_u548C_u63D2_u5165_u65F6_u76F8_u540C" class="headerlink" title="更新文档的时候，写法和插入时相同"></a>更新文档的时候，写法和插入时相同</h4><pre><code>_version会递增
+</code></pre><h4 id="u521B_u5EFA_u6587_u6863_uFF0C_u6210_u529F_u521B_u5EFA_u7684_u65F6_u5019_uFF0C_u8FD4_u56DE201_uFF0C_u5931_u8D25_u8FD4_u56DE409"><a href="#u521B_u5EFA_u6587_u6863_uFF0C_u6210_u529F_u521B_u5EFA_u7684_u65F6_u5019_uFF0C_u8FD4_u56DE201_uFF0C_u5931_u8D25_u8FD4_u56DE409" class="headerlink" title="创建文档，成功创建的时候，返回201，失败返回409"></a>创建文档，成功创建的时候，返回201，失败返回409</h4><pre><code>PUT /{index}/{type}/{id}?op_type=create
+PUT /{index}/{type}/{id}/_create
+</code></pre><h4 id="u5220_u9664_u6587_u6863_uFF0C_u5931_u8D25_u8FD4_u56DE404"><a href="#u5220_u9664_u6587_u6863_uFF0C_u5931_u8D25_u8FD4_u56DE404" class="headerlink" title="删除文档，失败返回404"></a>删除文档，失败返回404</h4><pre><code>DELETE /{index}/{type}/{id}
+</code></pre><h4 id="u66F4_u65B0_u67D0_u4E2A_u7279_u5B9A_u7248_u672C_u7684_u6587_u6863_uFF0C_u7528_u4E8E_u63A7_u5236_u5E76_u53D1_u9519_u8BEF_uFF0Cversion_type_u8BBE_u7F6E_u4E86_u7528_u6B64_u65F6_u7684version_u6765_u8BBE_u7F6E_u6587_u6863_u7684version"><a href="#u66F4_u65B0_u67D0_u4E2A_u7279_u5B9A_u7248_u672C_u7684_u6587_u6863_uFF0C_u7528_u4E8E_u63A7_u5236_u5E76_u53D1_u9519_u8BEF_uFF0Cversion_type_u8BBE_u7F6E_u4E86_u7528_u6B64_u65F6_u7684version_u6765_u8BBE_u7F6E_u6587_u6863_u7684version" class="headerlink" title="更新某个特定版本的文档，用于控制并发错误，version_type设置了用此时的version来设置文档的version"></a>更新某个特定版本的文档，用于控制并发错误，version_type设置了用此时的version来设置文档的version</h4><pre><code>PUT /{index}/{type}/{id}?version={version}
+PUT /{index}/{type}/{id}?version={version}&amp;version_type=external
+</code></pre><h4 id="u66F4_u65B0_u6587_u6863_u7684_u90E8_u5206_u5185_u5BB9_uFF0C_u5408_u5E76_u6587_u6863"><a href="#u66F4_u65B0_u6587_u6863_u7684_u90E8_u5206_u5185_u5BB9_uFF0C_u5408_u5E76_u6587_u6863" class="headerlink" title="更新文档的部分内容，合并文档"></a>更新文档的部分内容，合并文档</h4><pre><code>POST /{index}/{type}/{id}/_update
+</code></pre><h4 id="u811A_u672C_u662F_u4E00_u4E9B_u5947_u602A_u7684_u903B_u8F91_uFF0C_u4E0D_u8FC7_u86EE_u597D_u73A9_u7684_u3002"><a href="#u811A_u672C_u662F_u4E00_u4E9B_u5947_u602A_u7684_u903B_u8F91_uFF0C_u4E0D_u8FC7_u86EE_u597D_u73A9_u7684_u3002" class="headerlink" title="脚本是一些奇怪的逻辑，不过蛮好玩的。"></a>脚本是一些奇怪的逻辑，不过蛮好玩的。</h4><h4 id="u68C0_u7D22_u591A_u4E2A_u6587_u6863"><a href="#u68C0_u7D22_u591A_u4E2A_u6587_u6863" class="headerlink" title="检索多个文档"></a>检索多个文档</h4><pre><code>POST /_mget
+{
+    &quot;docs&quot;: [
+        {
+            *******
+        }
+    ]
+}
+</code></pre><h4 id="u6279_u91CF_u64CD_u4F5C_uFF0C_u4EE5_u6362_u884C_u7B26_u6765_u5224_u65AD_uFF0C_u9632_u6B62_u4E0D_u5FC5_u8981_u7684json_u89E3_u6790_u7B49_u6570_u636E_u62F7_u8D1D_u3002"><a href="#u6279_u91CF_u64CD_u4F5C_uFF0C_u4EE5_u6362_u884C_u7B26_u6765_u5224_u65AD_uFF0C_u9632_u6B62_u4E0D_u5FC5_u8981_u7684json_u89E3_u6790_u7B49_u6570_u636E_u62F7_u8D1D_u3002" class="headerlink" title="批量操作，以换行符来判断，防止不必要的json解析等数据拷贝。"></a>批量操作，以换行符来判断，防止不必要的json解析等数据拷贝。</h4><pre><code>POST /_bulk
+{ action: {metadata }} \n
+{ request body } \n
+{ action: {metadata }} \n
+{ request body } \n
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(二) 集群安装]]></title>
+      <url>http://catlittlechen.com/2016/08/02/es2/</url>
+      <content type="html"><![CDATA[<h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><pre><code>docker run -ti --name es1 elasticsearch /bin/bash
+docker run -ti --name es2 elasticsearch /bin/bash
+</code></pre><h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><pre><code>in es1
+vim /etc/elasticsearch/elasticsearch.yml
+   cluster.name: elasticsearch-cluster-centos
+   node.name: &quot;es-node1&quot;
+   bootstrap.mlockall: true
+   network.host: 172.17.0.2
+   network.publish_host: 172.17.0.2
+   discovery.zen.ping.unicast.hosts: [&quot;172.17.0.3&quot;]
+
+in es2
+   cluster.name: elasticsearch-cluster-centos
+   node.name: &quot;es-node2&quot;
+   bootstrap.mlockall: true
+   network.host: 172.17.0.3
+   network.publish_host: 172.17.0.3
+   discovery.zen.ping.unicast.hosts: [&quot;172.17.0.2&quot;]
+</code></pre><h3 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h3><pre><code>/etc/init.d/elasticsearch restart
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[elasticsearch系列笔记(一) 基础知识]]></title>
+      <url>http://catlittlechen.com/2016/08/01/es1/</url>
+      <content type="html"><![CDATA[<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><pre><code>启动docker
+docker run -ti --name es -p 9200:9200 ubuntu:14.04 /bin/bash
+
+更新系统
+apt-get update
+apt-get upgrade
+apt-get install software-properties-common
+
+安装java
+add-apt-repository ppa:webupd8team/java
+apt-get update
+apt-get install oracle-java8-installer
+
+安装es
+wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; &gt;&gt; /etc/apt/sources.list
+apt-get update &amp;&amp; apt-get install elasticsearch
+update-rc.d elasticsearch defaults 95 10
+/etc/init.d/elasticsearch start
+</code></pre><h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><pre><code>curl -X GET &apos;http://172.17.0.2:9200&apos;
+</code></pre><h3 id="install_marvel"><a href="#install_marvel" class="headerlink" title="install marvel"></a>install marvel</h3><pre><code>/usr/share/elasticsearch/bin/plugin -i elasticsearch/marvel/latest
+/etc/init.d/elasticsearch restart
+</code></pre><h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><pre><code>curl -X&lt;VERB&gt; &apos;&lt;PROTOCOL&gt;://&lt;HOST&gt;:&lt;PORT&gt;/&lt;PATH&gt;?&lt;QUERY_STRING&gt;&apos; -d &apos;&lt;BODY&gt;&apos;
+example :
+    curl -XGET &apos;http://172.17.0.2:9200/_count?pretty&apos; -d &apos;
+        {
+            &quot;query&quot;: {
+                &quot;match_all&quot;: {}
+            }
+        }
+    &apos;
+    curl -XPUT &apos;http://172.17.0.2:9200/megacorp/employee/1?pretty&apos; -d &apos;
+        {
+            &quot;first_name&quot; : &quot;John&quot;,
+            &quot;last_name&quot; :  &quot;Smith&quot;,
+            &quot;age&quot; :        25,
+            &quot;about&quot; :      &quot;I love to go rock climbing&quot;,
+            &quot;interests&quot;: [ &quot;sports&quot;, &quot;music&quot; ]
+        }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/1?pretty&apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&amp;q=last_name:Smith&apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;query&quot;: {
+                &quot;match&quot;: {
+                    &quot;last_name&quot;: &quot;Smith&quot;
+                    }
+                }
+            }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;query&quot;: {
+                &quot;filtered&quot;: {
+                    &quot;filter&quot;: {
+                        &quot;range&quot;: {
+                            &quot;age&quot;: { &quot;gt&quot;: 20 }
+                        }
+                    },
+                    &quot;query&quot;: {
+                        &quot;match&quot;: {
+                            &quot;last_name&quot;: &quot;Smith&quot;
+                        }
+                    }
+                }
+            }
+        }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;query&quot; : {
+                &quot;match&quot; : {
+                    &quot;about&quot; : &quot;rock climbing&quot;
+                }
+            }
+        }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;query&quot; : {
+                &quot;match_phrase&quot; : {
+                    &quot;about&quot; : &quot;rock climbing&quot;
+                }
+            }
+        }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;query&quot; : {
+                &quot;match_phrase&quot; : {
+                    &quot;about&quot; : &quot;rock climbing&quot;
+                }
+            },
+            &quot;highlight&quot;: {
+                &quot;fields&quot;: {
+                    &quot;about&quot;: {}
+                }
+            }
+        }
+    &apos;
+    curl -XGET &apos;http://172.17.0.2:9200/megacorp/employee/_search?pretty&apos; -d &apos;
+        {
+            &quot;aggs&quot;: {
+                &quot;all_interests&quot;: {
+                    &quot;terms&quot;: { &quot;field&quot;: &quot;interests&quot; }
+                }
+            }
+        }
+    &apos;
+</code></pre>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[docker-swarm]]></title>
       <url>http://catlittlechen.com/2016/07/22/docker-swarm/</url>
       <content type="html"><![CDATA[<p>前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~</p>
