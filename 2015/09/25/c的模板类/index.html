@@ -10,7 +10,7 @@
 开始讲故事C++标准库的书中，曾经说过这么一句话
 唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
-template&amp;l">
+123456789t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++的模板类">
 <meta property="og:url" content="http://catlittlechen.com/2015/09/25/c的模板类/index.html">
@@ -19,15 +19,15 @@ template&amp;l">
 开始讲故事C++标准库的书中，曾经说过这么一句话
 唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
-template&amp;l">
-<meta property="og:updated_time" content="2016-01-27T12:50:11.000Z">
+123456789t">
+<meta property="og:updated_time" content="2017-03-25T13:54:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++的模板类">
 <meta name="twitter:description" content="起因昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的Google，让我从stackoverflow中找到了答案。
 开始讲故事C++标准库的书中，曾经说过这么一句话
 唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 为什么呢？对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：
-template&amp;l">
+123456789t">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -113,50 +113,16 @@ template&amp;l">
 <h2 id="u5F00_u59CB_u8BB2_u6545_u4E8B"><a href="#u5F00_u59CB_u8BB2_u6545_u4E8B" class="headerlink" title="开始讲故事"></a>开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
 </code></pre><h3 id="u4E3A_u4EC0_u4E48_u5462_uFF1F"><a href="#u4E3A_u4EC0_u4E48_u5462_uFF1F" class="headerlink" title="为什么呢？"></a>为什么呢？</h3><p>对于一个模板类，编译器在实例化的时候，通过模板类的参数，会创建一个新的类，举个例子：</p>
-<pre><code>template&lt;typename T&gt;
-struct Foo
-{
-  T bar;
-  void doSomething(T param) {}
-};
-
-// somewhere in a .cpp
-Foo&lt;int&gt; f; 
-</code></pre><p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
-<pre><code>struct FooInt
-{
-  int bar;
-  void doSomething(int param) {}
-}
-</code></pre><p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> Foo</span><br><span class="line">&#123;</span><br><span class="line">     T bar;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// somewhere in a .cpp</span></span><br><span class="line">Foo&lt;<span class="keyword">int</span>&gt; f;</span><br></pre></td></tr></table></figure>
+<p>当编译器读到下面这一行的时候，就会创建一个新的类，我们可以把它叫做FooInt，这个类的实现等价于下面这种模式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> FooInt</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">int</span> bar;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(<span class="keyword">int</span> param)</span> </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，编译器开始需要去实现里面类的方法，自然是通过模板的参数来实现它们。如果这些实现不在头文件里面，编译器就无法获取到这些模板，自然就无法实现模板类的方法了。</p>
 <hr>
 <h3 id="u65B9_u6CD5_uFF1A"><a href="#u65B9_u6CD5_uFF1A" class="headerlink" title="方法："></a>方法：</h3><p>当然，将函数的声明和实现放在多个文件中，有时候是非常有必要的，简洁，条理，或者强迫症。。。<br>一种简单的解决方案是在头文件中声明类的方法之后，把类的实现写在文件B中，然后再头文件中include文件B，如下所示：</p>
-<pre><code>// 在Foo.h中声明；
-template &lt;typename T&gt;
-struct Foo
-{
-  void doSomething(T param);
-};
-//include 实现的文件；
-#include &quot;Foo.tpp&quot;
-
-// 在Foo.tpp中实现函数；
-template &lt;typename T&gt;
-void Foo&lt;T&gt;::doSomething(T param)
-{
-    //implementation
-}
-</code></pre><p>哈哈，这是一种十分取巧的方法，不过也达到了目的，而且效果拔群。<br>还有一种方法，感觉上就不是很推荐了，但是更加正常一些。</p>
-<pre><code>// Foo.h
-// no implementation
-template &lt;typename T&gt; struct Foo { ... };
-
-// Foo.cpp
-// implementation of Foo&apos;s methods
-// explicit instantiations
-template class Foo&lt;int&gt;;
-template class Foo&lt;float&gt;;
-</code></pre><p>这种方法就是在cpp文件中，实现的模板类的函数之后，在文件中同时将你想要使用的模板参数，明确的实例化出来。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在Foo.h中声明；</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">struct</span> Foo</span><br><span class="line">&#123;</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(T param)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//include 实现的文件；</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">"Foo.tpp"</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 在Foo.tpp中实现函数；</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">void</span> Foo&lt;T&gt;::doSomething(T param)</span><br><span class="line">&#123;</span><br><span class="line">   	<span class="comment">//implementation</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哈哈，这是一种十分取巧的方法，不过也达到了目的，而且效果拔群。<br>还有一种方法，感觉上就不是很推荐了，但是更加正常一些。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Foo.h</span></span><br><span class="line"><span class="comment">// no implementation</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="keyword">struct</span> Foo &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Foo.cpp</span></span><br><span class="line"><span class="comment">// implementation of Foo's methods</span></span><br><span class="line"><span class="comment">// explicit instantiations</span></span><br><span class="line"><span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">int</span>&gt;;</span><br><span class="line"><span class="keyword">template</span> <span class="keyword">class</span> Foo&lt;<span class="keyword">float</span>&gt;;</span><br></pre></td></tr></table></figure>
+<p>这种方法就是在cpp文件中，实现的模板类的函数之后，在文件中同时将你想要使用的模板参数，明确的实例化出来。  </p>
 <p>本人还是比较喜欢第一种，毕竟  </p>
 <pre><code>1.我不喜欢一个模板类实现在一个文件里，过长的文件真得太受不了了。
 2.第二种方法也就必须把所有的模板类函数实现在一个文件里！
@@ -232,7 +198,7 @@ template class Foo&lt;float&gt;;
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/ganglias/" style="font-size: 10px;">ganglias</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 13.33px;">踩坑日记</a>
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 10px;">ganglia</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 13.33px;">踩坑日记</a>
     </div>
   </div>
 

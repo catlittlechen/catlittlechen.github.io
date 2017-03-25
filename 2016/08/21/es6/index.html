@@ -6,43 +6,22 @@
   <title>elasticsearch系列笔记(六)  索引 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="创建索引PUT /my_index
-{
-    &amp;quot;settings&amp;quot; {}
-    &amp;quot;mappings&amp;quot;: {
-        &amp;quot;type_one&amp;quot;:{},
-        &amp;quot;type_two&amp;quot;:{},
-    }
-}
-删除索引DELETE /my_index
-settings:number_of_shards">
+  <meta name="description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
+删除索引1DELETE /my_index
+settings:12number">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elasticsearch系列笔记(六)  索引">
 <meta property="og:url" content="http://catlittlechen.com/2016/08/21/es6/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="创建索引PUT /my_index
-{
-    &amp;quot;settings&amp;quot; {}
-    &amp;quot;mappings&amp;quot;: {
-        &amp;quot;type_one&amp;quot;:{},
-        &amp;quot;type_two&amp;quot;:{},
-    }
-}
-删除索引DELETE /my_index
-settings:number_of_shards">
-<meta property="og:updated_time" content="2017-02-20T13:28:39.000Z">
+<meta property="og:description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
+删除索引1DELETE /my_index
+settings:12number">
+<meta property="og:updated_time" content="2017-03-25T14:12:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch系列笔记(六)  索引">
-<meta name="twitter:description" content="创建索引PUT /my_index
-{
-    &amp;quot;settings&amp;quot; {}
-    &amp;quot;mappings&amp;quot;: {
-        &amp;quot;type_one&amp;quot;:{},
-        &amp;quot;type_two&amp;quot;:{},
-    }
-}
-删除索引DELETE /my_index
-settings:number_of_shards">
+<meta name="twitter:description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
+删除索引1DELETE /my_index
+settings:12number">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -124,18 +103,10 @@ settings:number_of_shards">
       
            
              
-               <h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><pre><code>PUT /my_index
-{
-    &quot;settings&quot; {}
-    &quot;mappings&quot;: {
-        &quot;type_one&quot;:{},
-        &quot;type_two&quot;:{},
-    }
-}
-</code></pre><h4 id="u5220_u9664_u7D22_u5F15"><a href="#u5220_u9664_u7D22_u5F15" class="headerlink" title="删除索引"></a>删除索引</h4><pre><code>DELETE /my_index
-</code></pre><h4 id="settings_3A"><a href="#settings_3A" class="headerlink" title="settings:"></a>settings:</h4><pre><code>number_of_shards    主索引的个数
-number_of_replicas 复制分片的个数
-</code></pre><p>分析器,这个很重要，合理的使用分析器，可以让你的es拥有合理的性能</p>
+               <h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /my_index</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"settings"</span> &#123;&#125;</span><br><span class="line">    <span class="string">"mappings"</span>: &#123;</span><br><span class="line">        <span class="string">"type_one"</span>:&#123;&#125;,</span><br><span class="line">        <span class="string">"type_two"</span>:&#123;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="u5220_u9664_u7D22_u5F15"><a href="#u5220_u9664_u7D22_u5F15" class="headerlink" title="删除索引"></a>删除索引</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="regexp">/my_index</span></span><br></pre></td></tr></table></figure>
+<h4 id="settings_3A"><a href="#settings_3A" class="headerlink" title="settings:"></a>settings:</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">number<span class="number">_</span><span class="keyword">of</span><span class="number">_</span>shards    主索引的个数</span><br><span class="line">number<span class="number">_</span><span class="keyword">of</span><span class="number">_</span>replicas 复制分片的个数</span><br></pre></td></tr></table></figure>
+<p>分析器,这个很重要，合理的使用分析器，可以让你的es拥有合理的性能</p>
 
              
             
@@ -206,7 +177,7 @@ number_of_replicas 复制分片的个数
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/ganglias/" style="font-size: 10px;">ganglias</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 13.33px;">踩坑日记</a>
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 20px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 10px;">ganglia</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 13.33px;">踩坑日记</a>
     </div>
   </div>
 
