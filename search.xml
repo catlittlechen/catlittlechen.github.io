@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title><![CDATA[那些年不懂的spark]]></title>
+      <url>http://catlittlechen.com/2017/03/19/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark/</url>
+      <content type="html"><![CDATA[<h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。</p>
+<h2 id="jsc"><a href="#jsc" class="headerlink" title="_jsc"></a>_jsc</h2><p>我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~</p>
+<p>最后发现python的<code>SparkContext</code>里，有一个参数是<code>_jsc</code>,其代表的恰恰就是java里面的 <code>SparkContext</code>。运行时可以通过这个对象，来实现参数的设置。</p>
+<h2 id="parquet-enable-summary-metadata"><a href="#parquet-enable-summary-metadata" class="headerlink" title="parquet.enable.summary-metadata"></a>parquet.enable.summary-metadata</h2><p>上面提到的参数设置，其实就是这个参数了。由于我所使用的spark的版本是1.6.1，因此这个参数默认的值是true，2.0以后默认为false。详细可见 <a href="https://issues.apache.org/jira/browse/SPARK-15719" target="_blank" rel="external">issue</a></p>
+<p>大概意思如下，spark在生成parquet文件的过程中，最后会扫描文件夹下的所有文件，并将文件的大致的详细汇总到文件夹目录的metadata文件，完成这个过程之后，在下次直接匹配这个文件夹的时候，spark会读取metadata，加快扫描的速度。</p>
+<p>问题是生成这个metadata的文件是需要扫描所有文件的！而我生成paruqet的时候，是以追加的形式加入，频率还是蛮高的情况下，这就意味着我的spark程序会花费大量的时间在汇总这部分数据。并且汇总数据的过程是不会分布到多台机器上运行的。这就大大的降低了集群的利用率，其实也毫无必要。</p>
+<p>因此spark生成parquet的过程中，可以选择关闭这个特性~</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sparkContext._jsc<span class="class">.hadoopConfiguration</span><span class="class">.set</span>(<span class="string">'parquet.enable.summary-metadata'</span>, <span class="string">'false'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="partitionBy"><a href="#partitionBy" class="headerlink" title="partitionBy"></a>partitionBy</h2><p>一开始我一直纠结了很多问题，output的分类就是其中一个。而<code>partitonBy</code>完美地解决了我的需求。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上的代码中，<code>df</code>为一个dataFrame的数据集。</p>
+<p>这段代码可以根据index1, index2, index3这几个columns来分类，将数据自动分为如下的目录结构保存.</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">some/path/i<span class="label">ndex1</span>=&#123;i<span class="label">ndex1</span>&#125;/i<span class="label">ndex2</span>=&#123;i<span class="label">ndex2</span>&#125;/i<span class="label">ndex3</span>=&#123;i<span class="label">ndex3</span>&#125;/part-****.parquet</span><br></pre></td></tr></table></figure>
+<p>之前还傻乎乎地groupBy数据，然后用了collect这个算子，因而需要读取所有文件，就有内存问题等存在。</p>
+<h2 id="binaryFiles"><a href="#binaryFiles" class="headerlink" title="binaryFiles"></a>binaryFiles</h2><p>这个不算坑，只是自己没有注意到而已。</p>
+<p>之前都是使用<code>textFile</code>的格式读取文本文件，这个过程中，没有指定<code>minPartition</code>，而<code>minPartition</code>的值也基本默认为文本文件的个数。但是<code>binaryFiles</code>不是。程序在默认读取大量二进制文件之后，并没有选择分开，而是<code>minPartition</code>为1，因此这里需要手动指定。</p>
+<h2 id="parquet__26amp_3B_26amp_3B_sparkSQL"><a href="#parquet__26amp_3B_26amp_3B_sparkSQL" class="headerlink" title="parquet &amp;&amp; sparkSQL"></a>parquet &amp;&amp; sparkSQL</h2><p>sparkSQL太杀手级了~</p>
+<p>parquet是列存储数据模式，可以大大的减少存储的文件大小，减少扫描过程中的大小。效率惊人~</p>
+<p>sparkSQL在读取文件夹目录下所有文件的过程中，存在一个特定<code>partition auto-discovery</code>的特性。在spark的文档中有详细的记载。大概如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = sqlContext<span class="class">.read</span><span class="class">.parquet</span>(/some/path)</span><br></pre></td></tr></table></figure>
+<p>如果<code>/some/path</code>下有目录如下<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/some/path</span></span><br><span class="line">	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f2/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f2/</span></span><br></pre></td></tr></table></figure></p>
+<p>则最后生成的sparkSQL的table里面，将会自动的加入index1, index2的column，当你使用index1来查询时，即</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.<span class="function"><span class="title">registerTempTable</span><span class="params">(<span class="string">"log"</span>)</span></span></span><br><span class="line">sqlContext.<span class="function"><span class="title">sql</span><span class="params">(<span class="string">"SELECT * FROM log WHERE index1 = h1"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>这个过程中，会自动的只扫描index1=h1的目录下的文件。<br>缺点是我喜欢使用通配符的形式来读取，结果通配的列就不存在了~<br>sad~</p>
+<h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>未完待续~</p>
+<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[向2016致敬]]></title>
       <url>http://catlittlechen.com/2017/01/25/%E5%90%912016%E8%87%B4%E6%95%AC/</url>
       <content type="html"><![CDATA[<p>  2016年的我，你好，我是2017年的你。拖了很久，我才开始写这一封信给你，来告诉你，这一年的故事。先给你的2016年打一个分吧，87分，满分100分。</p>

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-02-20T13:14:33.000Z</updated>
+  <updated>2017-03-26T01:30:34.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[那些年不懂的spark]]></title>
+    <link href="http://catlittlechen.com/2017/03/19/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark/"/>
+    <id>http://catlittlechen.com/2017/03/19/那些年不懂的spark/</id>
+    <published>2017-03-19T02:31:34.000Z</published>
+    <updated>2017-03-26T01:30:34.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。</p>
+<h2 id="jsc"><a href="#jsc" class="headerlink" title="_jsc"></a>_jsc</h2><p>我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~</p>
+<p>最后发现python的<code>SparkContext</code>里，有一个参数是<code>_jsc</code>,其代表的恰恰就是java里面的 <code>SparkContext</code>。运行时可以通过这个对象，来实现参数的设置。</p>
+<h2 id="parquet-enable-summary-metadata"><a href="#parquet-enable-summary-metadata" class="headerlink" title="parquet.enable.summary-metadata"></a>parquet.enable.summary-metadata</h2><p>上面提到的参数设置，其实就是这个参数了。由于我所使用的spark的版本是1.6.1，因此这个参数默认的值是true，2.0以后默认为false。详细可见 <a href="https://issues.apache.org/jira/browse/SPARK-15719" target="_blank" rel="external">issue</a></p>
+<p>大概意思如下，spark在生成parquet文件的过程中，最后会扫描文件夹下的所有文件，并将文件的大致的详细汇总到文件夹目录的metadata文件，完成这个过程之后，在下次直接匹配这个文件夹的时候，spark会读取metadata，加快扫描的速度。</p>
+<p>问题是生成这个metadata的文件是需要扫描所有文件的！而我生成paruqet的时候，是以追加的形式加入，频率还是蛮高的情况下，这就意味着我的spark程序会花费大量的时间在汇总这部分数据。并且汇总数据的过程是不会分布到多台机器上运行的。这就大大的降低了集群的利用率，其实也毫无必要。</p>
+<p>因此spark生成parquet的过程中，可以选择关闭这个特性~</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sparkContext._jsc<span class="class">.hadoopConfiguration</span><span class="class">.set</span>(<span class="string">'parquet.enable.summary-metadata'</span>, <span class="string">'false'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="partitionBy"><a href="#partitionBy" class="headerlink" title="partitionBy"></a>partitionBy</h2><p>一开始我一直纠结了很多问题，output的分类就是其中一个。而<code>partitonBy</code>完美地解决了我的需求。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>以上的代码中，<code>df</code>为一个dataFrame的数据集。</p>
+<p>这段代码可以根据index1, index2, index3这几个columns来分类，将数据自动分为如下的目录结构保存.</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">some/path/i<span class="label">ndex1</span>=&#123;i<span class="label">ndex1</span>&#125;/i<span class="label">ndex2</span>=&#123;i<span class="label">ndex2</span>&#125;/i<span class="label">ndex3</span>=&#123;i<span class="label">ndex3</span>&#125;/part-****.parquet</span><br></pre></td></tr></table></figure>
+<p>之前还傻乎乎地groupBy数据，然后用了collect这个算子，因而需要读取所有文件，就有内存问题等存在。</p>
+<h2 id="binaryFiles"><a href="#binaryFiles" class="headerlink" title="binaryFiles"></a>binaryFiles</h2><p>这个不算坑，只是自己没有注意到而已。</p>
+<p>之前都是使用<code>textFile</code>的格式读取文本文件，这个过程中，没有指定<code>minPartition</code>，而<code>minPartition</code>的值也基本默认为文本文件的个数。但是<code>binaryFiles</code>不是。程序在默认读取大量二进制文件之后，并没有选择分开，而是<code>minPartition</code>为1，因此这里需要手动指定。</p>
+<h2 id="parquet__26amp_3B_26amp_3B_sparkSQL"><a href="#parquet__26amp_3B_26amp_3B_sparkSQL" class="headerlink" title="parquet &amp;&amp; sparkSQL"></a>parquet &amp;&amp; sparkSQL</h2><p>sparkSQL太杀手级了~</p>
+<p>parquet是列存储数据模式，可以大大的减少存储的文件大小，减少扫描过程中的大小。效率惊人~</p>
+<p>sparkSQL在读取文件夹目录下所有文件的过程中，存在一个特定<code>partition auto-discovery</code>的特性。在spark的文档中有详细的记载。大概如下：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = sqlContext<span class="class">.read</span><span class="class">.parquet</span>(/some/path)</span><br></pre></td></tr></table></figure>
+<p>如果<code>/some/path</code>下有目录如下<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/some/path</span></span><br><span class="line">	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f2/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f2/</span></span><br></pre></td></tr></table></figure></p>
+<p>则最后生成的sparkSQL的table里面，将会自动的加入index1, index2的column，当你使用index1来查询时，即</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.<span class="function"><span class="title">registerTempTable</span><span class="params">(<span class="string">"log"</span>)</span></span></span><br><span class="line">sqlContext.<span class="function"><span class="title">sql</span><span class="params">(<span class="string">"SELECT * FROM log WHERE index1 = h1"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>这个过程中，会自动的只扫描index1=h1的目录下的文件。<br>缺点是我喜欢使用通配符的形式来读取，结果通配的列就不存在了~<br>sad~</p>
+<h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>未完待续~</p>
+<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="u611F_u609F"><a href="#u611F_u609F" class="headerlink" title="感悟"></a>感悟</h2><p>spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使]]>
+    </summary>
+    
+      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+    
+      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    
+      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[向2016致敬]]></title>
@@ -123,7 +167,7 @@ int((primary + number_of_replicas) / 2) + 1
     <link href="http://catlittlechen.com/2016/08/04/es3/"/>
     <id>http://catlittlechen.com/2016/08/04/es3/</id>
     <published>2016-08-04T12:11:51.000Z</published>
-    <updated>2017-03-25T14:04:38.000Z</updated>
+    <updated>2017-03-25T14:05:23.000Z</updated>
     <content type="html"><![CDATA[<h4 id="u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID"><a href="#u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID" class="headerlink" title="添加文档,自定义ID"></a>添加文档,自定义ID</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PUT /&#123;index&#125;/&#123;type&#125;/&#123;id&#125;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"field"</span>: <span class="string">"value"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="u6DFB_u52A0_u6587_u6863_uFF0C_u8FD9_u65F6_u5019_u7684ID_u662FES_u81EA_u52A8_u751F_u6210_uFF0C_u4E3A22_u4F4D_u7684UUIDS"><a href="#u6DFB_u52A0_u6587_u6863_uFF0C_u8FD9_u65F6_u5019_u7684ID_u662FES_u81EA_u52A8_u751F_u6210_uFF0C_u4E3A22_u4F4D_u7684UUIDS" class="headerlink" title="添加文档，这时候的ID是ES自动生成，为22位的UUIDS"></a>添加文档，这时候的ID是ES自动生成，为22位的UUIDS</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST /&#123;index&#125;/&#123;type&#125;/</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"field"</span>: <span class="string">"value"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="u83B7_u5F97_u6587_u6863"><a href="#u83B7_u5F97_u6587_u6863" class="headerlink" title="获得文档"></a>获得文档</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET /&#123;index&#125;/&#123;type&#125;/&#123;id&#125;?pretty</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"_index"</span> :   <span class="string">"&#123;index&#125;"</span>,</span><br><span class="line">    <span class="string">"_type"</span> :    <span class="string">"&#123;type&#125;"</span>,</span><br><span class="line">    <span class="string">"_id"</span> :      <span class="string">"&#123;id&#125;"</span>,</span><br><span class="line">    <span class="string">"_version"</span> : <span class="number">1</span>,</span><br><span class="line">    <span class="string">"found"</span> :    true, //是否找到，<span class="number">404</span>同步返回</span><br><span class="line">    <span class="string">"_source"</span> :  &#123;</span><br><span class="line">        <span class="string">"field"</span>: <span class="string">"value"</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -155,7 +199,7 @@ int((primary + number_of_replicas) / 2) + 1
     <link href="http://catlittlechen.com/2016/08/02/es2/"/>
     <id>http://catlittlechen.com/2016/08/02/es2/</id>
     <published>2016-08-02T12:06:33.000Z</published>
-    <updated>2017-03-25T14:00:31.000Z</updated>
+    <updated>2017-03-25T14:01:12.000Z</updated>
     <content type="html"><![CDATA[<h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es1 elasticsearch /bin/bash</span></span><br><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es2 elasticsearch /bin/bash</span></span><br></pre></td></tr></table></figure>
 <h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><h4 id="in_es1"><a href="#in_es1" class="headerlink" title="in es1"></a>in es1</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/elasticsearch/elasticsearch<span class="class">.yml</span></span><br><span class="line">   cluster<span class="class">.name</span>: elasticsearch-cluster-centos</span><br><span class="line">   node<span class="class">.name</span>: <span class="string">"es-node1"</span></span><br><span class="line">   bootstrap<span class="class">.mlockall</span>: true</span><br><span class="line">   network<span class="class">.host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></span><br><span class="line">   network<span class="class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></span><br><span class="line">   discovery<span class="class">.zen</span><span class="class">.ping</span><span class="class">.unicast</span><span class="class">.hosts</span>: [<span class="string">"172.17.0.3"</span>]</span><br></pre></td></tr></table></figure>
 <h4 id="in_es2"><a href="#in_es2" class="headerlink" title="in es2"></a>in es2</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cluster<span class="class">.name</span>: elasticsearch-cluster-centos</span><br><span class="line">node<span class="class">.name</span>: <span class="string">"es-node2"</span></span><br><span class="line">bootstrap<span class="class">.mlockall</span>: true</span><br><span class="line">network<span class="class">.host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></span><br><span class="line">network<span class="class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></span><br><span class="line">discovery<span class="class">.zen</span><span class="class">.ping</span><span class="class">.unicast</span><span class="class">.hosts</span>: [<span class="string">"172.17.0.2"</span>]</span><br></pre></td></tr></table></figure>
@@ -178,7 +222,7 @@ int((primary + number_of_replicas) / 2) + 1
     <link href="http://catlittlechen.com/2016/08/01/es1/"/>
     <id>http://catlittlechen.com/2016/08/01/es1/</id>
     <published>2016-08-01T11:26:21.000Z</published>
-    <updated>2017-03-25T13:50:47.000Z</updated>
+    <updated>2017-03-25T14:03:15.000Z</updated>
     <content type="html"><![CDATA[<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">启动docker</span><br><span class="line">docker run -ti <span class="comment">--name es -p 9200:9200 ubuntu:14.04 /bin/bash</span></span><br><span class="line"></span><br><span class="line">更新系统</span><br><span class="line">apt-get <span class="operator"><span class="keyword">update</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">upgrade</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> software-properties-common</span><br><span class="line"></span><br><span class="line">安装<span class="keyword">java</span></span><br><span class="line"><span class="keyword">add</span>-apt-repository ppa:webupd8team/<span class="keyword">java</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">oracle</span>-java8-installer</span><br><span class="line"></span><br><span class="line">安装es</span><br><span class="line">wget -qO - https://packages.elastic.co/GPG-<span class="keyword">KEY</span>-elasticsearch | sudo apt-<span class="keyword">key</span> <span class="keyword">add</span> -</span><br><span class="line">echo <span class="string">"deb https://packages.elastic.co/elasticsearch/2.x/debian stable main"</span> &gt;&gt; /etc/apt/sources.<span class="keyword">list</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span> &amp;&amp; apt-<span class="keyword">get</span> <span class="keyword">install</span> elasticsearch</span><br><span class="line"><span class="keyword">update</span>-rc.<span class="keyword">d</span> elasticsearch <span class="keyword">defaults</span> <span class="number">95</span> <span class="number">10</span></span><br><span class="line">/etc/init.<span class="keyword">d</span>/elasticsearch <span class="keyword">start</span></span></span><br></pre></td></tr></table></figure>
 <h3 id="test"><a href="#test" class="headerlink" title="test"></a>test</h3><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">curl</span> -X GET <span class="string">'http://172.17.0.2:9200'</span></span><br></pre></td></tr></table></figure>
 <h3 id="install_marvel"><a href="#install_marvel" class="headerlink" title="install marvel"></a>install marvel</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>share<span class="regexp">/elasticsearch/</span>bin<span class="regexp">/plugin -i elasticsearch/</span>marvel/latest</span><br><span class="line"><span class="regexp">/etc/</span>init.d/elasticsearch restart</span><br></pre></td></tr></table></figure>
@@ -260,7 +304,7 @@ int((primary + number_of_replicas) / 2) + 1
     <link href="http://catlittlechen.com/2016/05/20/multinet/"/>
     <id>http://catlittlechen.com/2016/05/20/multinet/</id>
     <published>2016-05-20T06:07:22.000Z</published>
-    <updated>2016-07-02T16:17:30.000Z</updated>
+    <updated>2017-03-25T14:14:13.000Z</updated>
     <content type="html"><![CDATA[<h4 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h4><p>之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。</p>
 <h4 id="u7ECF_u8FC7"><a href="#u7ECF_u8FC7" class="headerlink" title="经过"></a>经过</h4><p>在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。最后使用了最简单的模式，通过添加head的方式，达到得知传输的data的长度，进而解决了黏包的问题，而且效率上的影响可以忽略不计。</p>
 <p>在解决了黏包的问题之后，我也通过控制代理的模式，发现在高并发的情况下，也许服务端同时需要多次创建or关闭TCP连接，来达到通讯的目的。而实际TCP的使用中，或许大部分时间内，会有TCP连接处于空闲的阶段，那是否可以复用呢？</p>
@@ -446,7 +490,7 @@ F**k
     <link href="http://catlittlechen.com/2015/10/19/%E8%87%AA%E5%BB%BADNS%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     <id>http://catlittlechen.com/2015/10/19/自建DNS服务器/</id>
     <published>2015-10-19T11:41:33.000Z</published>
-    <updated>2017-03-25T14:19:06.000Z</updated>
+    <updated>2017-03-25T14:19:19.000Z</updated>
     <content type="html"><![CDATA[<p>今天有时间，我想看下自己建立DNS服务器，是怎么样的流程。<br>结果发现是如此的简单。</p>
 <p>以下是基于ubuntu的。</p>
 <h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>域名管理系统DNS(Domain Name System)，是通过域名来解析到IP的一种网络服务，自建DNS服务器，可以在内网中，自己设定特定的域名解析，达到内网机器可以无需配置host，达到访问内网服务的作用。</p>
@@ -539,7 +583,7 @@ F**k
     <link href="http://catlittlechen.com/2015/09/29/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BA%86%E8%A7%A3/"/>
     <id>http://catlittlechen.com/2015/09/29/虚拟化技术了解/</id>
     <published>2015-09-29T12:05:17.000Z</published>
-    <updated>2016-01-27T11:35:04.000Z</updated>
+    <updated>2017-03-25T14:22:30.000Z</updated>
     <content type="html"><![CDATA[<h4 id="u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01"><a href="#u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01" class="headerlink" title="某一天，docker火了！"></a>某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
 <h3 id="LXC_3A"><a href="#LXC_3A" class="headerlink" title="LXC:"></a>LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
 <h3 id="KVM_uFF1A"><a href="#KVM_uFF1A" class="headerlink" title="KVM："></a>KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
@@ -562,7 +606,7 @@ F**k
     <link href="http://catlittlechen.com/2015/09/25/c%E7%9A%84%E6%A8%A1%E6%9D%BF%E7%B1%BB/"/>
     <id>http://catlittlechen.com/2015/09/25/c的模板类/</id>
     <published>2015-09-24T23:56:37.000Z</published>
-    <updated>2017-03-25T13:54:47.000Z</updated>
+    <updated>2017-03-25T13:55:56.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u8D77_u56E0"><a href="#u8D77_u56E0" class="headerlink" title="起因"></a>起因</h2><p>昨天帮一个同学debug一个问题，想想也是醉了，太久没写C++，报错信息都看着陌生，还好有万能的<a href="https://www.google.com.hk/" target="_blank" rel="external">Google</a>，让我从<a href="http://stackoverflow.com/" target="_blank" rel="external">stackoverflow</a>中找到了答案。</p>
 <h2 id="u5F00_u59CB_u8BB2_u6545_u4E8B"><a href="#u5F00_u59CB_u8BB2_u6545_u4E8B" class="headerlink" title="开始讲故事"></a>开始讲故事</h2><p>C++标准库的书中，曾经说过这么一句话</p>
 <pre><code>唯一一种方便的使用模板类的方法是用内联函数的方式在头文件中一次性实现。
