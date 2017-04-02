@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-03-26T01:30:34.000Z</updated>
+  <updated>2017-04-02T13:55:29.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[那些年不懂的spark(2)]]></title>
+    <link href="http://catlittlechen.com/2017/03/30/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-2/"/>
+    <id>http://catlittlechen.com/2017/03/30/那些年不懂的spark-2/</id>
+    <published>2017-03-30T11:38:28.000Z</published>
+    <updated>2017-04-02T13:55:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="partitionBy__26amp_3B_26amp_3B_s3"><a href="#partitionBy__26amp_3B_26amp_3B_s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;&amp; s3</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'date'</span>, <span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>我用spark程序在输出parquet的过程中，通过partitionBy的column来自动生成文件夹。由于spark在写入的过程中，会扫描<code>some/path/</code>的所有目录。然后由于我的目录中有以<code>date</code>这个时间维度的标准的，这造成随着时间的推移，文件夹会越来越多，扫描的数据也就越来越慢。然后由于我使用的存储是s3，而s3不是一个真正意义上的文件系统，因而扫描文件夹的过程是一个调用api的过程，就更加慢了~</p>
+<p>解决方式：可以写入hdfs等文件系统，再通过s3-dist-cp这个工具同步到s3上。</p>
+<h2 id="so_u6587_u4EF6"><a href="#so_u6587_u4EF6" class="headerlink" title="so文件"></a>so文件</h2><p>spark 可以通过sparkContext.addFiles这个api，把so文件添加到任务实例上。</p>
+<h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>未完待续</p>
+<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="partitionBy__26amp_3B_26amp_3B_s3"><a href="#partitionBy__26amp_3B_26amp_3B_s3" class="headerlink" title="partitionBy &amp;&amp; s3"]]>
+    </summary>
+    
+      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+    
+      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    
+      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[那些年不懂的spark]]></title>
@@ -719,34 +743,6 @@ curly larry moe shemp
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
       <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[第一篇博文]]></title>
-    <link href="http://catlittlechen.com/2015/09/22/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E6%96%87/"/>
-    <id>http://catlittlechen.com/2015/09/22/第一篇博文/</id>
-    <published>2015-09-22T13:24:52.000Z</published>
-    <updated>2016-01-27T11:34:32.000Z</updated>
-    <content type="html"><![CDATA[<p>你好，世界</p>
-<hr>
-<p>今天是拿到mac的第二天，兑现我的承诺，开始写属于自己的文字。</p>
-<p>人类总是任性和懒惰，多么好的条件都不会造就一个人，也就是<strong>生于忧患，死于安乐</strong>吧。</p>
-<p>好好奋斗，人生才刚刚开始。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>你好，世界</p>
-<hr>
-<p>今天是拿到mac的第二天，兑现我的承诺，开始写属于自己的文字。</p>
-<p>人类总是任性和懒惰，多么好的条件都不会造就一个人，也就是<strong>生于忧患，死于安乐</strong>吧。</p>
-<p>好好奋斗，人生才刚刚开始。</p]]>
-    </summary>
-    
-      <category term="生活" scheme="http://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
-    
-      <category term="起点" scheme="http://catlittlechen.com/tags/%E8%B5%B7%E7%82%B9/"/>
-    
-      <category term="活着" scheme="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
     
   </entry>
   
