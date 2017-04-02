@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-04-02T13:55:29.000Z</updated>
+  <updated>2017-04-02T14:28:03.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -15,11 +15,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[pyrobuf]]></title>
+    <link href="http://catlittlechen.com/2017/04/02/pyrobuf/"/>
+    <id>http://catlittlechen.com/2017/04/02/pyrobuf/</id>
+    <published>2017-04-02T14:03:44.000Z</published>
+    <updated>2017-04-02T14:28:03.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h2><p>Protocol Buffers 是一种轻便高效的结构化数据存储格式。我也是重度使用者。最近需要大量的实时处理Tb级别的数据，因此找到了protobuf的代替库 —- <a href="https://github.com/appnexus/pyrobuf" target="_blank" rel="external">pyrobuf</a></p>
+<h2 id="pyrobuf"><a href="#pyrobuf" class="headerlink" title="pyrobuf"></a>pyrobuf</h2><p>pyrobuf是一个使用cython的pb库。一开始从他的github中，我确实看到了挺好的优化效果。</p>
+<p>但是pyrobuf这个库的限制还是蛮大的，主要是对于proto文件。比如</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. 不能在message里面定义数据结构，不然转化的过程中，会找不到定义；</span><br><span class="line"><span class="number">2</span>. proto定义的过程中，message的定义不能加上分号为结尾；</span><br><span class="line"><span class="number">3</span>. <span class="class"><span class="keyword">enum</span>定义的类型，生成之后暂时还找不到映射会名称的方式；</span></span><br></pre></td></tr></table></figure>
+<h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pyrobuf</span><br><span class="line">pyrobuf --<span class="keyword">out</span>-<span class="keyword">dir</span> <span class="keyword">out</span> --build-<span class="keyword">dir</span> build --install</span><br></pre></td></tr></table></figure>
+<p>这里面，out目录存放着生成的cython的代码，build目录存放这边一好的so文件，而install的参数添加之后，则pyrobuf会将编译好的so文件复制到python的library目录，这就可以直接使用。</p>
+<h2 id="u7ED3_u679C"><a href="#u7ED3_u679C" class="headerlink" title="结果"></a>结果</h2><p>上线观察了下数据，原本20分钟转化的数据，只用了4分钟就转化完毕。不过数据内容还没有核对，晚点再查看吧~</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h2><p>Protocol Buffers 是一种轻便高效的结构化数据存储格式。我也是重度使用者。最近]]>
+    </summary>
+    
+      <category term="pyrobuf" scheme="http://catlittlechen.com/tags/pyrobuf/"/>
+    
+      <category term="python" scheme="http://catlittlechen.com/tags/python/"/>
+    
+      <category term="python" scheme="http://catlittlechen.com/categories/python/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[那些年不懂的spark(2)]]></title>
     <link href="http://catlittlechen.com/2017/03/30/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-2/"/>
     <id>http://catlittlechen.com/2017/03/30/那些年不懂的spark-2/</id>
     <published>2017-03-30T11:38:28.000Z</published>
-    <updated>2017-04-02T13:55:29.000Z</updated>
+    <updated>2017-04-02T14:01:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="partitionBy__26amp_3B_26amp_3B_s3"><a href="#partitionBy__26amp_3B_26amp_3B_s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;&amp; s3</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'date'</span>, <span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
 <p>我用spark程序在输出parquet的过程中，通过partitionBy的column来自动生成文件夹。由于spark在写入的过程中，会扫描<code>some/path/</code>的所有目录。然后由于我的目录中有以<code>date</code>这个时间维度的标准的，这造成随着时间的推移，文件夹会越来越多，扫描的数据也就越来越慢。然后由于我使用的存储是s3，而s3不是一个真正意义上的文件系统，因而扫描文件夹的过程是一个调用api的过程，就更加慢了~</p>
 <p>解决方式：可以写入hdfs等文件系统，再通过s3-dist-cp这个工具同步到s3上。</p>
@@ -660,89 +686,6 @@ F**k
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
       <category term="c++" scheme="http://catlittlechen.com/categories/c/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[[译]solr boolean operators]]></title>
-    <link href="http://catlittlechen.com/2015/09/23/%E8%AF%91-solr-boolean-operators/"/>
-    <id>http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/</id>
-    <published>2015-09-23T13:24:58.000Z</published>
-    <updated>2016-01-27T11:35:33.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="u8E29_u5751_u611F_u8A00_uFF1A"><a href="#u8E29_u5751_u611F_u8A00_uFF1A" class="headerlink" title="踩坑感言："></a>踩坑感言：</h2><p>这个故事告诉我，<strong>做事情不要想当然</strong>，你觉得的事情，一定不是对的。</p>
-<hr>
-<h2 id="u8BD1_u6587_u539F_u6587_uFF1A"><a href="#u8BD1_u6587_u539F_u6587_uFF1A" class="headerlink" title="译文原文："></a>译文原文：</h2><p>来自于<a href="http://robotlibrarian.billdueber.com/2011/12/solr-and-boolean-operators/" target="_blank" rel="external">Bill Dueber</a>.</p>
-<hr>
-<h2 id="u7ED3_u8BBA_uFF1A"><a href="#u7ED3_u8BBA_uFF1A" class="headerlink" title="结论："></a>结论：</h2><p>在Solr中一定要用括号去管理优先级！！！</p>
-<hr>
-<h6 id="u641E_u8D77_u641E_u8D77_uFF01"><a href="#u641E_u8D77_u641E_u8D77_uFF01" class="headerlink" title="搞起搞起！"></a>搞起搞起！</h6><p>用过Solr的同学知道一下查询，Solr是怎么做的么？</p>
-<pre><code>a OR b AND C
-</code></pre><p>我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。</p>
-<h3 id="boolean_u8FD0_u7B97_u7B26_u7684_u4F18_u5148_u7EA7"><a href="#boolean_u8FD0_u7B97_u7B26_u7684_u4F18_u5148_u7EA7" class="headerlink" title="boolean运算符的优先级"></a>boolean运算符的优先级</h3><p>如果你曾经知道过boolean运算相关的知识，你坑定为知道一个严格意义上的顺序，那就是NOT&gt;AND&gt;OR，因此，可能就会使下面一种执行顺序：</p>
-<pre><code>a OR (b AND c)
-</code></pre><p>这是猜想答案的一种，但是Solr不是这么做的。</p>
-<h3 id="u4ECE_u5DE6_u5230_u53F3_uFF1F"><a href="#u4ECE_u5DE6_u5230_u53F3_uFF1F" class="headerlink" title="从左到右？"></a>从左到右？</h3><p>部分本地的学生，或者说也有至少一门编程语言，用的是简单的从左到右的执行方法，因此，就会有如下的一种执行顺序：</p>
-<pre><code>（a OR b) AND c
-</code></pre><p>不幸的是，这个还是错的。</p>
-<h3 id="u90A3_u4E48_u8FD8_u6709_u4EC0_u4E48_u7B54_u6848_u5462_uFF1F"><a href="#u90A3_u4E48_u8FD8_u6709_u4EC0_u4E48_u7B54_u6848_u5462_uFF1F" class="headerlink" title="那么还有什么答案呢？"></a>那么还有什么答案呢？</h3><p>正确的执行顺序可以用如下的代码来表示，待会再通过lucene的查询分析来解释下：</p>
-<pre><code>（b AND c）
-</code></pre><p>在这里，第一个判断被抛弃了！也就是说，第一个判断其实是可有可无的！</p>
-<h3 id="u4F60_u8FD8_u4F1A_u8BA9_u4F60_u7684_u4F7F_u7528_u8005_u5C06AND/OR/NOT_u653E_u5728_u4ED6_u4EEC_u7684_u67E5_u8BE2_u91CC_u4E48_uFF1F"><a href="#u4F60_u8FD8_u4F1A_u8BA9_u4F60_u7684_u4F7F_u7528_u8005_u5C06AND/OR/NOT_u653E_u5728_u4ED6_u4EEC_u7684_u67E5_u8BE2_u91CC_u4E48_uFF1F" class="headerlink" title="你还会让你的使用者将AND/OR/NOT放在他们的查询里么？"></a>你还会让你的使用者将AND/OR/NOT放在他们的查询里么？</h3><p>但愿他们并不知道什么是boolean运算；如果他们知道，但愿他们会使用括号，或者你可以帮他们判断出来，不然，他们将会死得很惨。。。。</p>
-<h3 id="u66F4_u591A_u7684_u6D4B_u8BD5"><a href="#u66F4_u591A_u7684_u6D4B_u8BD5" class="headerlink" title="更多的测试"></a>更多的测试</h3><p>我在Solr(3.5)的里面测试下所有可以的情况（用的是curly，larry，moe和shemp的排序）总共有15种情况。</p>
-<p>我写了个脚本来跑这些情况，分别在lucene和edismax下，看看可以得到什么样的结果。所有的测试中，lucene的默认运算符是AND，edismax的mm参数设置为100%</p>
-<pre><code>Lucene                    EDismax
-</code></pre><hr>
-<ol>
-<li>curly AND larry</li>
-</ol>
-<pre><code>curly larry               curly larry
-curly larry moe           curly larry moe
-curly larry shemp         curly larry shemp
-curly larry moe shemp     curly larry moe shemp
-</code></pre><ol>
-<li>curly AND larry OR moe</li>
-</ol>
-<pre><code>curly                     curly larry
-curly larry               curly larry moe
-curly moe                 curly larry shemp
-curly shemp               curly larry moe shemp
-curly larry moe
-curly larry shemp
-curly moe shemp
-curly larry moe shemp
-</code></pre><ol>
-<li>curly OR larry AND moe</li>
-</ol>
-<pre><code>larry moe                 larry moe
-curly larry moe           curly larry moe
-larry moe shemp           larry moe shemp
-curly larry moe shemp     curly larry moe shemp
-</code></pre><ol>
-<li>curly AND larry OR moe AND shemp</li>
-</ol>
-<pre><code>curly moe shemp           curly larry moe shemp
-curly larry moe shemp
-</code></pre><ol>
-<li>moe AND shemp OR curly AND larry</li>
-</ol>
-<pre><code>curly larry moe           curly larry moe shemp
-curly larry moe shemp
-</code></pre><p>查询1的答案是在预想中的。查询2的答案中，明显的就发现在lucene查询器下只有有’curly’就可以了，而在edismax下就需要’curly AND larry’（查询3一样的是变成了’larry AND moe’）。查询4和查询5也是同样的道理。当然，你可以看下debug查询输出，来知道她们是什么样的运行结果，但是没有告诉我为什么。</p>
-<h3 id="u542F_u793A"><a href="#u542F_u793A" class="headerlink" title="启示"></a>启示</h3><p>好消息就是，不论是lucene还是edismax，在用括号的时候，她们的答案都是显而易见的。<br>在lucene-167cene的缺陷管理中也确实提到了这个问题(<a href="https://issues.apache.org/jira/browse/LUCENE-167" target="_blank" rel="external">Lucene-167</a>,<a href="https://issues.apache.org/jira/browse/LUCENE-1823" target="_blank" rel="external">lucene-1823</a>)，而在<a href="http://www.mail-archive.com/java-user@lucene.apache.org/msg00008.html" target="_blank" rel="external">2005 mailling list thread</a>中也指出也这种现象，但是它还是仍旧存在。</p>
-<p>~~~</p>
-<p>还是老老实实的用上括号吧，以免再入坑！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="u8E29_u5751_u611F_u8A00_uFF1A"><a href="#u8E29_u5751_u611F_u8A00_uFF1A" class="headerlink" title="踩坑感言："></a>踩坑感言：</h2><p>这个故事告诉我，<s]]>
-    </summary>
-    
-      <category term="solr" scheme="http://catlittlechen.com/tags/solr/"/>
-    
-      <category term="翻译" scheme="http://catlittlechen.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
-    
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
