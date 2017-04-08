@@ -3,25 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>elasticsearch系列笔记(六)  索引 | CatChen</title>
+  <title>Tag: 学习 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
-删除索引1DELETE /my_index
-settings:12number">
-<meta property="og:type" content="article">
-<meta property="og:title" content="elasticsearch系列笔记(六)  索引">
-<meta property="og:url" content="http://catlittlechen.com/2016/08/21/es6/index.html">
+  <meta name="description" content="互联网行业的猫">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CatChen">
+<meta property="og:url" content="http://catlittlechen.com/tags/学习/page/2/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
-删除索引1DELETE /my_index
-settings:12number">
-<meta property="og:updated_time" content="2017-03-25T14:12:44.000Z">
+<meta property="og:description" content="互联网行业的猫">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="elasticsearch系列笔记(六)  索引">
-<meta name="twitter:description" content="创建索引12345678PUT /my_index&amp;#123;    &quot;settings&quot; &amp;#123;&amp;#125;    &quot;mappings&quot;: &amp;#123;        &quot;type_one&quot;:&amp;#123;&amp;#125;,        &quot;type_two&quot;:&amp;#123;&amp;#125;,    &amp;#125;&amp;#125;
-删除索引1DELETE /my_index
-settings:12number">
+<meta name="twitter:title" content="CatChen">
+<meta name="twitter:description" content="互联网行业的猫">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -77,90 +70,39 @@ settings:12number">
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-es6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/08/21/es6/" class="article-date">
-  <time datetime="2016-08-21T12:37:01.000Z" itemprop="datePublished">2016-08-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/elasticsearch/">elasticsearch</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      elasticsearch系列笔记(六)  索引
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2016" class="archive-year">2016</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2016/08/01/es1/" class="archive-article-date">
+  <time datetime="2016-08-01T11:26:21.000Z" itemprop="datePublished">8月 1</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2016/08/01/es1/">elasticsearch系列笔记(一) 基础知识</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-entry" itemprop="articleBody">
-      
-           
-             
-               <h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /my_index</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"settings"</span> &#123;&#125;</span><br><span class="line">    <span class="string">"mappings"</span>: &#123;</span><br><span class="line">        <span class="string">"type_one"</span>:&#123;&#125;,</span><br><span class="line">        <span class="string">"type_two"</span>:&#123;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="u5220_u9664_u7D22_u5F15"><a href="#u5220_u9664_u7D22_u5F15" class="headerlink" title="删除索引"></a>删除索引</h4><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="regexp">/my_index</span></span><br></pre></td></tr></table></figure>
-<h4 id="settings_3A"><a href="#settings_3A" class="headerlink" title="settings:"></a>settings:</h4><figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">number<span class="number">_</span><span class="keyword">of</span><span class="number">_</span>shards    主索引的个数</span><br><span class="line">number<span class="number">_</span><span class="keyword">of</span><span class="number">_</span>replicas 复制分片的个数</span><br></pre></td></tr></table></figure>
-<p>分析器,这个很重要，合理的使用分析器，可以让你的es拥有合理的性能</p>
-
-             
-            
-          </div>
-    <footer class="article-footer">
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/elasticsearch/">elasticsearch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/01/25/向2016致敬/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          向2016致敬
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2016/08/12/es5/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">elasticsearch系列笔记(五) 结构化查询</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
-
-<section id="comments">
-<!-- UY BEGIN -->
-<div id="uyan_frame"></div>
-<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2128662"></script>
-<!-- UY END -->
-</section>
-
-
-<script>
-(function(){
-      var bp = document.createElement('script');
-          bp.src = '//push.zhanzhang.baidu.com/push.js';
-              var s = document.getElementsByTagName("script")[0];
-                  s.parentNode.insertBefore(bp, s);
-
-})();
-</script>
+  
+  
+    </div></section>
+  
 </section>
         
           <aside id="sidebar">
