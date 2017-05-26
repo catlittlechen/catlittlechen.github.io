@@ -6,22 +6,22 @@
   <title>touch | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务的更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性的会打ls -al的命令来查看文件的最后修改时间,来查看是否由小朋友乱动了线上的文件.
-直到有一天……..有同事告诉我,touch由个神奇的功能.于是乎,我touch --help下
--">
+  <meta name="description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性地打ls -al的命令来查看文件的最后修改时间,来查看是否有小朋友乱动了线上的文件.
+直到有一天……..有同事告诉我,touch有个神奇的功能.于是乎,我touch --help下
+-a">
 <meta property="og:type" content="article">
 <meta property="og:title" content="touch">
 <meta property="og:url" content="http://catlittlechen.com/2017/05/26/touch/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务的更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性的会打ls -al的命令来查看文件的最后修改时间,来查看是否由小朋友乱动了线上的文件.
-直到有一天……..有同事告诉我,touch由个神奇的功能.于是乎,我touch --help下
--">
-<meta property="og:updated_time" content="2017-05-26T07:40:13.000Z">
+<meta property="og:description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性地打ls -al的命令来查看文件的最后修改时间,来查看是否有小朋友乱动了线上的文件.
+直到有一天……..有同事告诉我,touch有个神奇的功能.于是乎,我touch --help下
+-a">
+<meta property="og:updated_time" content="2017-05-26T07:45:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="touch">
-<meta name="twitter:description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务的更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性的会打ls -al的命令来查看文件的最后修改时间,来查看是否由小朋友乱动了线上的文件.
-直到有一天……..有同事告诉我,touch由个神奇的功能.于是乎,我touch --help下
--">
+<meta name="twitter:description" content="Touchtouch这个命令,对于一个技术而言,应该是十分熟悉的.像uwsgi这种就可以使用监听一个文件的方式来触发服务更新的部署方式,我们这时候就会用到touch reload的命令来完成.更重要的是,我习惯性地打ls -al的命令来查看文件的最后修改时间,来查看是否有小朋友乱动了线上的文件.
+直到有一天……..有同事告诉我,touch有个神奇的功能.于是乎,我touch --help下
+-a">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -105,8 +105,8 @@
       
            
              
-               <h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服务的更新的部署方式,我们这时候就会用到<code>touch reload</code>的命令来完成.<br>更重要的是,我习惯性的会打<code>ls -al</code>的命令来查看文件的最后修改时间,来查看是否由小朋友乱动了线上的文件.</p>
-<p>直到有一天……..<br>有同事告诉我,touch由个神奇的功能.<br>于是乎,我<code>touch --help</code>下</p>
+               <h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服务更新的部署方式,我们这时候就会用到<code>touch reload</code>的命令来完成.<br>更重要的是,我习惯性地打<code>ls -al</code>的命令来查看文件的最后修改时间,来查看是否有小朋友乱动了线上的文件.</p>
+<p>直到有一天……..<br>有同事告诉我,touch有个神奇的功能.<br>于是乎,我<code>touch --help</code>下</p>
 <pre><code>-a            只更改访问时间
 -c, --no-create 不创建任何文件
 -d, --date=字符串 使用指定字符串表示时间而非当前时间
@@ -121,7 +121,7 @@
     WORD is modify or mtime: equivalent to -m
 --help      显示此帮助信息并退出
 --version     显示版本信息并退出
-</code></pre><p>惊!<br>touch是可以指定最后修改时间的!也就是说,<code>touch --date=&quot;2017-05-25 12:00:00&quot; reload&quot;</code>,这个命令可以将reload的最后修改时间改回去!<br>人与人之间最基本的信任呢.</p>
+</code></pre><h3 id="u60CA_21"><a href="#u60CA_21" class="headerlink" title="惊!"></a>惊!</h3><p>touch是可以指定最后修改时间的!也就是说,<code>touch --date=&quot;2017-05-25 12:00:00&quot; reload&quot;</code>,这个命令可以将reload的最后修改时间改回去!<br>人与人之间最基本的信任呢.</p>
 <h3 id="Stat"><a href="#Stat" class="headerlink" title="Stat"></a>Stat</h3><p>放心,<code>stat reload</code>这个命令还是可以看出问题来的.</p>
 <pre><code>文件：&quot;reload&quot;
 大小：0             块：0          IO 块：4096   普通空文件
