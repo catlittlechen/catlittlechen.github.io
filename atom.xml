@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-04-08T08:16:28.000Z</updated>
+  <updated>2017-05-26T07:40:13.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -15,11 +15,55 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[touch]]></title>
+    <link href="http://catlittlechen.com/2017/05/26/touch/"/>
+    <id>http://catlittlechen.com/2017/05/26/touch/</id>
+    <published>2017-05-26T07:26:01.000Z</published>
+    <updated>2017-05-26T07:40:13.000Z</updated>
+    <content type="html"><![CDATA[<h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服务的更新的部署方式,我们这时候就会用到<code>touch reload</code>的命令来完成.<br>更重要的是,我习惯性的会打<code>ls -al</code>的命令来查看文件的最后修改时间,来查看是否由小朋友乱动了线上的文件.</p>
+<p>直到有一天……..<br>有同事告诉我,touch由个神奇的功能.<br>于是乎,我<code>touch --help</code>下</p>
+<pre><code>-a            只更改访问时间
+-c, --no-create 不创建任何文件
+-d, --date=字符串 使用指定字符串表示时间而非当前时间
+-f          (忽略)
+-h, --no-dereference      会影响符号链接本身，而非符号链接所指示的目的地
+    (当系统支持更改符号链接的所有者时，此选项才有用)
+-m            只更改修改时间
+-r, --reference=FILE   use this file&apos;s times instead of current time
+-t STAMP               use [[CC]YY]MMDDhhmm[.ss] instead of current time
+--time=WORD        change the specified time:
+    WORD is access, atime, or use: equivalent to -a
+    WORD is modify or mtime: equivalent to -m
+--help      显示此帮助信息并退出
+--version     显示版本信息并退出
+</code></pre><p>惊!<br>touch是可以指定最后修改时间的!也就是说,<code>touch --date=&quot;2017-05-25 12:00:00&quot; reload&quot;</code>,这个命令可以将reload的最后修改时间改回去!<br>人与人之间最基本的信任呢.</p>
+<h3 id="Stat"><a href="#Stat" class="headerlink" title="Stat"></a>Stat</h3><p>放心,<code>stat reload</code>这个命令还是可以看出问题来的.</p>
+<pre><code>文件：&quot;reload&quot;
+大小：0             块：0          IO 块：4096   普通空文件
+    设备：808h/2056d    Inode：25039211    硬链接：1
+权限：(0664/-rw-rw-r--)  Uid：( 1000/ catchen)   Gid：( 1000/ catchen)
+    最近访问：2017-05-25 12:00:00.000000000 +0800
+    最近更改：2017-05-25 12:00:00.000000000 +0800
+    最近改动：2017-05-26 15:38:02.693909554 +0800
+    创建时间：-
+</code></pre><h3 id="u540E_u8BB0"><a href="#u540E_u8BB0" class="headerlink" title="后记"></a>后记</h3><p>这感觉,就像ls无法告诉我真实大小一样,现在连最后修改时间都不行了.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服]]>
+    </summary>
+    
+      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[dmesg]]></title>
     <link href="http://catlittlechen.com/2017/04/06/dmesg/"/>
     <id>http://catlittlechen.com/2017/04/06/dmesg/</id>
     <published>2017-04-06T12:09:19.000Z</published>
-    <updated>2017-04-08T08:16:28.000Z</updated>
+    <updated>2017-04-08T08:26:00.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u7528_u5904"><a href="#u7528_u5904" class="headerlink" title="用处"></a>用处</h2><p>dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。</p>
 <h2 id="u65F6_u95F4"><a href="#u65F6_u95F4" class="headerlink" title="时间"></a>时间</h2><p>dmesg的时间确实难看懂，可以通过以下的命令转化<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"1970-01-01 UTC `echo "</span>$(date +%s)-$(cat /<span class="keyword">proc</span>/uptime|cut -f <span class="number">1</span> -d' ')+dmesg的时间戳<span class="string">"|bc ` seconds"</span></span><br></pre></td></tr></table></figure></p>
 ]]></content>
@@ -644,29 +688,6 @@ F**k
       <category term="技术" scheme="http://catlittlechen.com/tags/%E6%8A%80%E6%9C%AF/"/>
     
       <category term="折腾" scheme="http://catlittlechen.com/categories/%E6%8A%98%E8%85%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[虚拟化技术了解]]></title>
-    <link href="http://catlittlechen.com/2015/09/29/%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E4%BA%86%E8%A7%A3/"/>
-    <id>http://catlittlechen.com/2015/09/29/虚拟化技术了解/</id>
-    <published>2015-09-29T12:05:17.000Z</published>
-    <updated>2017-03-25T14:22:30.000Z</updated>
-    <content type="html"><![CDATA[<h4 id="u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01"><a href="#u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01" class="headerlink" title="某一天，docker火了！"></a>某一天，docker火了！</h4><p>相信第一个看了docker的人，当然，不是我这种菜鸟，都会很快的了解到docker所利用的技术和理论，其实早在多年之前，就已经被提出。</p>
-<h3 id="LXC_3A"><a href="#LXC_3A" class="headerlink" title="LXC:"></a>LXC:</h3><p>lxc(Linux Containers)，是一种基于<strong>容器</strong>的操作系统层次的虚拟化技术，通过<strong>cgroup</strong>来控制硬件分配的，如CPU的使用率，内存的最大使用值等，通过<strong>namespace</strong>来隔离硬件环境。<br>这个点上推荐下陈皓先生的<a href="http://coolshell.cn/articles/17049.html" target="_blank" rel="external">文章</a>,通过了浅显易通的描述，可以帮读者更好的了解下docler及其运用的技术。</p>
-<h3 id="KVM_uFF1A"><a href="#KVM_uFF1A" class="headerlink" title="KVM："></a>KVM：</h3><p>KVM(kernel-bases Virtual Machine),是基于Linux的<strong>hypervisor</strong>解决方案，也是首个被集成到Linux内核的hypervisor解决方案，并且是实现了完整的虚拟化的。新的操作系统会成为宿主操作系统的一个进程，通过/dev/kvm设备映射，拥有了自己的虚拟地址，因此，kvm是用了底层硬件的虚拟化支持来提供完整的虚拟化。</p>
-<h2 id="SO_uFF1A"><a href="#SO_uFF1A" class="headerlink" title="SO："></a>SO：</h2><p>在虚拟化的性能方面，通过cgroup和namespace等技术的LXC会远超过KVM，但是虚拟化隔离方面，lxc只能说是达到了资源的控制和隔离，而不是真正意义上的硬件隔离，毕竟当你更新了宿主系统上面的一个关键程序的时候，lxc上的容器将很大程度上会收到影响，而kvm拥有完整的操作系统的虚拟化则不会受影响。<br>一切都是有代价的，取舍适当即可。<br>这里有一篇<a href="http://blog.chinaunix.net/uid-20662820-id-4514947.html" target="_blank" rel="external">文章</a>，博主通过测试数据，展示了LXC，KVM还有另外一种虚拟化技术XEN的性能数据。</p>
-<p>目前，除了<a href="https://www.docker.com/" target="_blank" rel="external">Docker</a>外，目前国内还有另外一个值得关注的项目<a href="https://hyper.sh/" target="_blank" rel="external">hyper</a>,是基于hypervisor与docker的项目。</p>
-<h3 id="TODO_3A"><a href="#TODO_3A" class="headerlink" title="TODO:"></a>TODO:</h3><p>了解下XEN，OVS，CEPH等，写写测试。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h4 id="u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01"><a href="#u67D0_u4E00_u5929_uFF0Cdocker_u706B_u4E86_uFF01" class="headerlink" title]]>
-    </summary>
-    
-      <category term="虚拟化" scheme="http://catlittlechen.com/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"/>
-    
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
