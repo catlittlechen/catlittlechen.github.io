@@ -20,7 +20,7 @@ INSTALL NAGIOS这次的安装是源码安装，现在ubuntu的apt-get安装了na
 1apt-get install libpe">
 <meta property="og:image" content="http://7xnn4y.com1.z0.glb.clouddn.com/E73986A3-89CE-4BDF-8601-CC53F38C64ED.png">
 <meta property="og:image" content="http://7xnn4y.com1.z0.glb.clouddn.com/76CE6A52-D7EC-42B8-90B5-C34B1D596421.png">
-<meta property="og:updated_time" content="2017-03-25T14:16:05.000Z">
+<meta property="og:updated_time" content="2017-07-31T09:47:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nagios和ganglia">
 <meta name="twitter:description" content="老生常谈–监控很远很久以前，看到过运维的同事在搞监控系统，自己这个苦逼的开发也在有空闲的时间里面，玩玩而已。  
@@ -130,7 +130,7 @@ INSTALL NAGIOS这次的安装是源码安装，现在ubuntu的apt-get安装了na
 <p>安装下nagios官方提供的插件</p>
 <figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cd nagios-plugins-<span class="number">2.1</span>.<span class="number">1</span></span><br><span class="line">./configure --<span class="keyword">with</span>-nagios-user=nagios --<span class="keyword">with</span>-nagios-<span class="keyword">group</span>=nagios</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 <p>之后可以通过执行下面的指令来验证下是否成功的配置了nagios</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>bin<span class="regexp">/nagios -v /</span>etc<span class="regexp">/nagios/</span>nagio.cfg</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/usr/</span>local<span class="regexp">/nagios/</span>bin<span class="regexp">/nagios -v /</span>etc<span class="regexp">/nagios/</span>nagios.cfg</span><br></pre></td></tr></table></figure>
 <p>启动的时候，这边的找了下，发现在/etc/rc.d/下，有一个nagios的脚本，就链接过来了/etc/init.d/nagios,然后就可以执行下面的命令启动来。</p>
 <figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service nagios <span class="built_in">start</span></span><br></pre></td></tr></table></figure>
 <p>弱弱的说，nginx配置在最下面~</p>
