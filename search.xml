@@ -4,6 +4,28 @@
   
     
     <entry>
+      <title><![CDATA[ganglia-buffer]]></title>
+      <url>http://catlittlechen.com/2017/07/10/ganglia-buffer/</url>
+      <content type="html"><![CDATA[<p>最近给服务器的redis-cluster加ganglia监控，但是配置加载之后，ganglia却失控了．面板上面ganglia部分数据无法显示．debug的时候，发现ganglia-monitor可以正常的收集数据，那么问题处在哪里呢？</p>
+<h2 id="/etc/ganglia/gmond-conf"><a href="#/etc/ganglia/gmond-conf" class="headerlink" title="/etc/ganglia/gmond.conf"></a>/etc/ganglia/gmond.conf</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">udp_recv_channel &#123;</span><br><span class="line">    port = 8649</span><br><span class="line">    bind = <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">    retry_bind = true</span><br><span class="line">    <span class="comment"># Size of the UDP buffer. If you are handling lots of metrics you really # should bump it up to e.g. 10MB or even higher.</span></span><br><span class="line">    buffer = 10485760</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>gmond默认的配置文件里面并没有写上这行配置，所以很多人都会忽略掉．</p>
+<h2 id="u7ED3_u679C"><a href="#u7ED3_u679C" class="headerlink" title="结果"></a>结果</h2><p>修改buffer大小就可以啦．</p>
+<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[那些年不懂的spark(4)]]></title>
+      <url>http://catlittlechen.com/2017/07/01/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-4/</url>
+      <content type="html"><![CDATA[<h2 id="spark-files"><a href="#spark-files" class="headerlink" title="spark-files"></a>spark-files</h2><p>spark-default.xml<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark<span class="class">.files</span><span class="class">.maxPartitionBytes</span> <span class="number">67108864</span></span><br><span class="line">spark<span class="class">.sql</span><span class="class">.files</span><span class="class">.maxPartitionBytes</span> <span class="number">33554432</span></span><br></pre></td></tr></table></figure></p>
+<p>spark在读取大文件的时候会自动的分区，这时候分区的标准就是上面这两个参数．<br>因此可以根据这两个参数调配任务的task，防止内存爆了．</p>
+<h2 id="spark-dynamicAllocation"><a href="#spark-dynamicAllocation" class="headerlink" title="spark-dynamicAllocation"></a>spark-dynamicAllocation</h2><p>spark-default.xml<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark<span class="class">.dynamicAllocation</span><span class="class">.enabled</span>  true</span><br><span class="line">spark<span class="class">.dynamicAllocation</span><span class="class">.executorIdleTimeout</span> <span class="number">10s</span></span><br></pre></td></tr></table></figure></p>
+<p>dynamicAllocation 是spark自动调配executor的方式．可以尽可能的使用spark集群，<br>调节executorIdleTimeout，可以在任务使用完executor之后，尽快地释放executor，使得其它任务可以尽快的使用．</p>
+<h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>未完待续</p>
+<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><p>偶尔会遇到timeout的情况，这时候一般都是内存不足，一直不是很明白spark到底怎么使用内存的．也许不是java党的缘故，有点难以作手．有空再好好剖析．</p>
+<h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[那些年不懂的spark(3)]]></title>
       <url>http://catlittlechen.com/2017/06/03/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-3/</url>
       <content type="html"><![CDATA[<p>aws的emr起来之后，默认的磁盘很小，所以长期跑任务的时候，经常会因为磁盘不够，导致节点失败。而且，这种情况下的emr，是不会自动修复的。</p>

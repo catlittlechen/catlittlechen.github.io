@@ -4,6 +4,50 @@
 
     
   <url>
+    <loc>http://catlittlechen.com/2017/07/10/ganglia-buffer/</loc>
+    <lastmod>2017-08-30T00:49:03.000Z</lastmod>
+    <data>
+        <display>
+        <title>ganglia-buffer</title>
+        <pubTime>2017-07-10T11:03:58.000Z</pubTime>
+        
+        <tag>ganglia</tag>
+         
+        <tag>踩坑日记</tag>
+         
+         
+           
+             
+              <breadCrumb title="ganglia" url="http://catlittlechen.com/categories/ganglia/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://catlittlechen.com/2017/07/01/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-4/</loc>
+    <lastmod>2017-08-30T00:48:55.000Z</lastmod>
+    <data>
+        <display>
+        <title>那些年不懂的spark(4)</title>
+        <pubTime>2017-07-01T03:19:20.000Z</pubTime>
+        
+        <tag>spark</tag>
+         
+        <tag>踩坑日记</tag>
+         
+         
+           
+             
+              <breadCrumb title="spark" url="http://catlittlechen.com/categories/spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://catlittlechen.com/2015/11/11/nagios%E5%92%8Cganglia/</loc>
     <lastmod>2017-07-31T09:47:32.000Z</lastmod>
     <data>
