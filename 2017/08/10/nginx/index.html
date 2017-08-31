@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>nginx-limit—req 的坑 | CatChen</title>
+  <title>踩坑日记之nginx-limit-req | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
   <meta name="description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
@@ -11,16 +11,16 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
 这是nginx配置速率限制的插件。具体可以自行查询相关资料。
 坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx-limit—req 的坑">
+<meta property="og:title" content="踩坑日记之nginx-limit-req">
 <meta property="og:url" content="http://catlittlechen.com/2017/08/10/nginx/index.html">
 <meta property="og:site_name" content="CatChen">
 <meta property="og:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
 limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
 这是nginx配置速率限制的插件。具体可以自行查询相关资料。
 坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
-<meta property="og:updated_time" content="2017-08-30T16:01:25.000Z">
+<meta property="og:updated_time" content="2017-08-31T15:46:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="nginx-limit—req 的坑">
+<meta name="twitter:title" content="踩坑日记之nginx-limit-req">
 <meta name="twitter:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
 limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
 这是nginx配置速率限制的插件。具体可以自行查询相关资料。
@@ -98,7 +98,7 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
         
   
     <h1 class="article-title" itemprop="name">
-      nginx-limit—req 的坑
+      踩坑日记之nginx-limit-req
     </h1>
   
 
@@ -128,11 +128,11 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
     
 <nav id="article-nav">
   
-    <a href="/2017/08/11/upstart的坑/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/08/11/upstart/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Upstart的坑
+          踩坑日记之Upstart
         
       </div>
     </a>
@@ -207,11 +207,11 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
       <ul>
         
           <li>
-            <a href="/2017/08/11/upstart的坑/">Upstart的坑</a>
+            <a href="/2017/08/11/upstart/">踩坑日记之Upstart</a>
           </li>
         
           <li>
-            <a href="/2017/08/10/nginx/">nginx-limit—req 的坑</a>
+            <a href="/2017/08/10/nginx/">踩坑日记之nginx-limit-req</a>
           </li>
         
           <li>

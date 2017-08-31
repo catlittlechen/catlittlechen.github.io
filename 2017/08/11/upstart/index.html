@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Upstart的坑 | CatChen</title>
+  <title>踩坑日记之Upstart | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
   <meta name="description" content="Upstart的Expect用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。
 Expect有两种，”expect fork”表示进程只会fork一次，”expect daemonize”表示进程会fork两次，将自己变成后台进程。
 然而，错误的配置文件会让upstart启动某个进程之后，却无法跟踪管理这个进程的PID。结果Upstart会进入奇妙">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Upstart的坑">
-<meta property="og:url" content="http://catlittlechen.com/2017/08/11/upstart的坑/index.html">
+<meta property="og:title" content="踩坑日记之Upstart">
+<meta property="og:url" content="http://catlittlechen.com/2017/08/11/upstart/index.html">
 <meta property="og:site_name" content="CatChen">
 <meta property="og:description" content="Upstart的Expect用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。
 Expect有两种，”expect fork”表示进程只会fork一次，”expect daemonize”表示进程会fork两次，将自己变成后台进程。
 然而，错误的配置文件会让upstart启动某个进程之后，却无法跟踪管理这个进程的PID。结果Upstart会进入奇妙">
-<meta property="og:updated_time" content="2017-08-31T15:41:28.000Z">
+<meta property="og:updated_time" content="2017-08-31T15:45:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Upstart的坑">
+<meta name="twitter:title" content="踩坑日记之Upstart">
 <meta name="twitter:description" content="Upstart的Expect用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。
 Expect有两种，”expect fork”表示进程只会fork一次，”expect daemonize”表示进程会fork两次，将自己变成后台进程。
 然而，错误的配置文件会让upstart启动某个进程之后，却无法跟踪管理这个进程的PID。结果Upstart会进入奇妙">
@@ -77,9 +77,9 @@ Expect有两种，”expect fork”表示进程只会fork一次，”expect daem
 </header>
 
       <div class="outer">
-        <section id="main"><article id="post-upstart的坑" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-upstart" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/08/11/upstart的坑/" class="article-date">
+    <a href="/2017/08/11/upstart/" class="article-date">
   <time datetime="2017-08-11T15:03:55.000Z" itemprop="datePublished">2017-08-11</time>
 </a>
     
@@ -95,7 +95,7 @@ Expect有两种，”expect fork”表示进程只会fork一次，”expect daem
         
   
     <h1 class="article-title" itemprop="name">
-      Upstart的坑
+      踩坑日记之Upstart
     </h1>
   
 
@@ -128,7 +128,7 @@ Expect有两种，”expect fork”表示进程只会fork一次，”expect daem
   
     <a href="/2017/08/10/nginx/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">nginx-limit—req 的坑</div>
+      <div class="article-nav-title">踩坑日记之nginx-limit-req</div>
     </a>
   
 </nav>
@@ -195,11 +195,11 @@ Expect有两种，”expect fork”表示进程只会fork一次，”expect daem
       <ul>
         
           <li>
-            <a href="/2017/08/11/upstart的坑/">Upstart的坑</a>
+            <a href="/2017/08/11/upstart/">踩坑日记之Upstart</a>
           </li>
         
           <li>
-            <a href="/2017/08/10/nginx/">nginx-limit—req 的坑</a>
+            <a href="/2017/08/10/nginx/">踩坑日记之nginx-limit-req</a>
           </li>
         
           <li>
