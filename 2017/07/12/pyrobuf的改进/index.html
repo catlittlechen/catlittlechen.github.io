@@ -3,18 +3,28 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Archives: 2015/9 | CatChen</title>
+  <title>pyrobuf的改进 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.com/archives/2015/09/index.html">
+  <meta name="description" content="问题(1)–字符串编码protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而python恰恰是一个经常性遇到字符串编码问题的语言。
+但是pyrobuf里面，处理字符串的时候，当遇到字符串问题的时候，不会跑出错误，而会直接崩溃。
+解决(1)源码的模板中，可以选择在字符串decode的判断中，加入try-except，pass掉错误。
+12345try:	self._ = unicode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pyrobuf的改进">
+<meta property="og:url" content="http://catlittlechen.com/2017/07/12/pyrobuf的改进/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="问题(1)–字符串编码protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而python恰恰是一个经常性遇到字符串编码问题的语言。
+但是pyrobuf里面，处理字符串的时候，当遇到字符串问题的时候，不会跑出错误，而会直接崩溃。
+解决(1)源码的模板中，可以选择在字符串decode的判断中，加入try-except，pass掉错误。
+12345try:	self._ = unicode">
+<meta property="og:updated_time" content="2017-09-02T03:11:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="pyrobuf的改进">
+<meta name="twitter:description" content="问题(1)–字符串编码protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而python恰恰是一个经常性遇到字符串编码问题的语言。
+但是pyrobuf里面，处理字符串的时候，当遇到字符串问题的时候，不会跑出错误，而会直接崩溃。
+解决(1)源码的模板中，可以选择在字符串decode的判断中，加入try-except，pass掉错误。
+12345try:	self._ = unicode">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -70,96 +80,96 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/29/虚拟化技术了解/" class="archive-article-date">
-  <time datetime="2015-09-29T12:05:17.000Z" itemprop="datePublished">9月 29</time>
+        <section id="main"><article id="post-pyrobuf的改进" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/12/pyrobuf的改进/" class="article-date">
+  <time datetime="2017-07-12T02:42:18.000Z" itemprop="datePublished">2017-07-12</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/python/">python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/29/虚拟化技术了解/">虚拟化技术了解</a>
+    <h1 class="article-title" itemprop="name">
+      pyrobuf的改进
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/25/c的模板类/" class="archive-article-date">
-  <time datetime="2015-09-24T23:56:37.000Z" itemprop="datePublished">9月 25</time>
-</a>
+      </header>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/25/c的模板类/">c++的模板类</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-踩坑日记">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/23/译-solr-boolean-operators/" class="archive-article-date">
-  <time datetime="2015-09-23T13:24:58.000Z" itemprop="datePublished">9月 23</time>
-</a>
+      <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/23/译-solr-boolean-operators/">[译]solr boolean operators</a>
-    </h1>
-  
+           
+             
+               <h3 id="u95EE_u9898_281_29_u2013_u5B57_u7B26_u4E32_u7F16_u7801"><a href="#u95EE_u9898_281_29_u2013_u5B57_u7B26_u4E32_u7F16_u7801" class="headerlink" title="问题(1)–字符串编码"></a>问题(1)–字符串编码</h3><p>protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而python恰恰是一个经常性遇到字符串编码问题的语言。</p>
+<p>但是pyrobuf里面，处理字符串的时候，当遇到字符串问题的时候，不会跑出错误，而会直接崩溃。</p>
+<h3 id="u89E3_u51B3_281_29"><a href="#u89E3_u51B3_281_29" class="headerlink" title="解决(1)"></a>解决(1)</h3><p>源码的模板中，可以选择在字符串decode的判断中，加入try-except，pass掉错误。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">	self._ = unicode(memory[current_offset:current_offset + field_size], <span class="string">'utf-8'</span>)</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">	self._ = <span class="string">u''</span></span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>当然，这种修改必须修改掉全部的decode判断。也有另外一种方式，就是简单地抛出错误。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cdef <span class="keyword">int</span> _protobuf_deserialize(self, <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *memory, <span class="keyword">int</span> size) except -<span class="number">1</span>:</span><br></pre></td></tr></table></figure>
+<p>在cython中<code>except -1</code>,代表着会将抛出的错误转化为python里面的Exception，就可以被上层调用的代码捕捉，不至于直接退出程序。</p>
+<h3 id="u95EE_u9898_282_29_u2013_u5B57_u6BB5_u7F3A_u5C11"><a href="#u95EE_u9898_282_29_u2013_u5B57_u6BB5_u7F3A_u5C11" class="headerlink" title="问题(2)–字段缺少"></a>问题(2)–字段缺少</h3><p>通过源码阅读，可以发现实际上如果protobuf里面的字段我并不需要，那么精简proto定义，可以减少解析的字段，因而优化解析的性能。然而，pyrobuf却判断了传入的data的长度，和解析过的长度，然后抛出了错误，</p>
+<h3 id="u89E3_u51B3_282_29"><a href="#u89E3_u51B3_282_29" class="headerlink" title="解决(2)"></a>解决(2)</h3><p>因而，需要删除这部分判断。<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> buf != <span class="keyword">length</span>:</span><br><span class="line">	raise DecodeError(<span class="string">"Truncated message: got <span class="variable">%s</span> expected <span class="variable">%s</span>"</span> % (buf, size))</span><br></pre></td></tr></table></figure></p>
+<h2 id="u53E6_u8F9F_u6EAA_u8DEF"><a href="#u53E6_u8F9F_u6EAA_u8DEF" class="headerlink" title="另辟溪路"></a>另辟溪路</h2><p>google的protobuf库里面实际上已经有了protobufc，解析的效率实际上与pyrobuf差不多。如果单纯只是解析的话，可以直接使用google的原生库。当然，pyrobuf还提供了输出到json,dict的函数~~</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-生活">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/22/第一篇博文/" class="archive-article-date">
-  <time datetime="2015-09-22T13:24:52.000Z" itemprop="datePublished">9月 22</time>
-</a>
+             
+            
+          </div>
+    <footer class="article-footer">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/22/第一篇博文/">第一篇博文</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pyrobuf/">pyrobuf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/">python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/08/10/nginx/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          踩坑日记之nginx-limit-req
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/10/ganglia-buffer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ganglia-buffer</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+<section id="comments">
+<!-- UY BEGIN -->
+<div id="uyan_frame"></div>
+<script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2128662"></script>
+<!-- UY END -->
+</section>
+
+
+<script>
+(function(){
+      var bp = document.createElement('script');
+          bp.src = '//push.zhanzhang.baidu.com/push.js';
+              var s = document.getElementsByTagName("script")[0];
+                  s.parentNode.insertBefore(bp, s);
+
+})();
+</script>
 </section>
         
           <aside id="sidebar">
