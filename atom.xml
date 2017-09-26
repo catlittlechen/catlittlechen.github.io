@@ -53,7 +53,7 @@
     <link href="http://catlittlechen.com/2017/09/21/oneproxy/"/>
     <id>http://catlittlechen.com/2017/09/21/oneproxy/</id>
     <published>2017-09-21T00:49:25.000Z</published>
-    <updated>2017-09-26T13:04:12.000Z</updated>
+    <updated>2017-09-26T13:57:21.000Z</updated>
     <content type="html"><![CDATA[<p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="external">oneproxy</a>，出生于阿里系的人员之手，主要的目的是为了解决数据库变迁所带来的问题．</p>
 <h2 id="u7279_u70B9"><a href="#u7279_u70B9" class="headerlink" title="特点"></a>特点</h2><p>负载均衡 + 分库分表 + 大数据 + SQL监控 + 安全审计</p>
 <p>说说我想了解的几个方面吧～</p>
@@ -76,7 +76,7 @@
     
       <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="oneproxy" scheme="http://catlittlechen.com/categories/oneproxy/"/>
+      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -85,7 +85,7 @@
     <link href="http://catlittlechen.com/2017/09/16/naxsi/"/>
     <id>http://catlittlechen.com/2017/09/16/naxsi/</id>
     <published>2017-09-16T12:58:16.000Z</published>
-    <updated>2017-09-26T13:51:26.000Z</updated>
+    <updated>2017-09-26T13:56:08.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Naxsi"><a href="#Naxsi" class="headerlink" title="Naxsi"></a><a href="https://github.com/nbs-system/naxsi" target="_blank" rel="external">Naxsi</a></h2><p>github上，NAXSI自我介绍是Nginx Anti XSS &amp; SQL Injection。顾名思义，他是nginx一个用来防止XSS和SQL注入的Nginx插件。</p>
 <p>原来就是将请求的各个参数，通过Naxsi预先设置的规则判断，通过得分，来决定是否拦截。</p>
 <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><p>安装很简单，ubuntu上面只需要<code>apt-get nginx-naxsi</code>就可以啦~其他系统则可以选择官方介绍的，将Naxsi编译进nginx中，wiki上注明需要优先编译Naxsi。</p>
@@ -110,7 +110,7 @@
     
       <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="naxsi" scheme="http://catlittlechen.com/categories/naxsi/"/>
+      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -119,7 +119,7 @@
     <link href="http://catlittlechen.com/2017/08/11/upstart/"/>
     <id>http://catlittlechen.com/2017/08/11/upstart/</id>
     <published>2017-08-11T15:03:55.000Z</published>
-    <updated>2017-08-31T15:45:18.000Z</updated>
+    <updated>2017-09-26T13:57:36.000Z</updated>
     <content type="html"><![CDATA[<h4 id="Upstart_u7684Expect"><a href="#Upstart_u7684Expect" class="headerlink" title="Upstart的Expect"></a>Upstart的Expect</h4><p>用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。</p>
 <p>Expect有两种，”expect fork”表示进程只会fork一次，”expect daemonize”表示进程会fork两次，将自己变成后台进程。</p>
 <p>然而，错误的配置文件会让upstart启动某个进程之后，却无法跟踪管理这个进程的PID。结果Upstart会进入奇妙的状态。</p>
@@ -135,7 +135,7 @@
     
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="upstart" scheme="http://catlittlechen.com/categories/upstart/"/>
+      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -144,7 +144,7 @@
     <link href="http://catlittlechen.com/2017/08/10/nginx/"/>
     <id>http://catlittlechen.com/2017/08/10/nginx/</id>
     <published>2017-08-10T15:47:11.000Z</published>
-    <updated>2017-08-31T15:46:13.000Z</updated>
+    <updated>2017-09-26T13:56:59.000Z</updated>
     <content type="html"><![CDATA[<p>一般我们都认为nginx -t可以测试出配置文件是否配置正确。<br>其实不然~</p>
 <h4 id="limit_req_zone"><a href="#limit_req_zone" class="headerlink" title="limit_req_zone"></a><code>limit_req_zone</code></h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone  <span class="variable">$binary</span>_remote_addr  zone=req_one:<span class="number">10</span>m rate=<span class="number">1</span>r/s</span><br></pre></td></tr></table></figure>
 <p>这是nginx配置速率限制的插件。具体可以自行查询相关资料。</p>
@@ -161,7 +161,7 @@
     
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="nginx" scheme="http://catlittlechen.com/categories/nginx/"/>
+      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -199,7 +199,7 @@
     <link href="http://catlittlechen.com/2017/07/10/ganglia-buffer/"/>
     <id>http://catlittlechen.com/2017/07/10/ganglia-buffer/</id>
     <published>2017-07-10T11:03:58.000Z</published>
-    <updated>2017-08-30T00:56:35.000Z</updated>
+    <updated>2017-09-26T13:58:30.000Z</updated>
     <content type="html"><![CDATA[<p>最近给服务器的redis-cluster加ganglia监控，但是配置加载之后，ganglia却失控了．面板上面ganglia部分数据无法显示．debug的时候，发现ganglia-monitor可以正常的收集数据，那么问题出在哪里呢？</p>
 <h2 id="/etc/ganglia/gmond-conf"><a href="#/etc/ganglia/gmond-conf" class="headerlink" title="/etc/ganglia/gmond.conf"></a>/etc/ganglia/gmond.conf</h2><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">udp_recv_channel &#123;</span><br><span class="line">    port = 8649</span><br><span class="line">    bind = <span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>.<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">    retry_bind = true</span><br><span class="line">    <span class="comment"># Size of the UDP buffer. If you are handling lots of metrics you really # should bump it up to e.g. 10MB or even higher.</span></span><br><span class="line">    buffer = 10485760</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>gmond默认的配置文件里面并没有写上这行配置，所以很多人都会忽略掉．</p>
@@ -214,7 +214,7 @@
     
       <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="ganglia" scheme="http://catlittlechen.com/categories/ganglia/"/>
+      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
