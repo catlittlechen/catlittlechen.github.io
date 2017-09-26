@@ -49,6 +49,36 @@
   </entry>
   
   <entry>
+    <title><![CDATA[oneproxy]]></title>
+    <link href="http://catlittlechen.com/2017/09/21/oneproxy/"/>
+    <id>http://catlittlechen.com/2017/09/21/oneproxy/</id>
+    <published>2017-09-21T00:49:25.000Z</published>
+    <updated>2017-09-26T02:08:22.000Z</updated>
+    <content type="html"><![CDATA[<p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="external">oneproxy</a>，出生于阿里系的人员之手，主要的目的是为了解决数据库变迁所带来的问题．</p>
+<h2 id="u7279_u70B9"><a href="#u7279_u70B9" class="headerlink" title="特点"></a>特点</h2><p>负载均衡 + 分库分表 + 大数据 + SQL监控 + 安全审计</p>
+<p>说说我想了解的几个方面吧～</p>
+<h2 id="SQL_u76D1_u63A7"><a href="#SQL_u76D1_u63A7" class="headerlink" title="SQL监控"></a>SQL监控</h2><p>在解决安全方面，oneproxy有几个层次验证拦截．<br>  1．网络隔离，oneproxy可以限制其他机器对端口的访问</p>
+<ol>
+<li>登录验证，就是数据库用户密码验证</li>
+<li>访问限制，就是MySQL等常见的权限验证</li>
+<li>应用验证，类似于Google的动态口令，发送一个特殊的SQL语句来对数据库的访问进行解锁</li>
+<li>SQL白名单，需要搜集目前可以执行的SQL模板形成白名单，可以有效的防止SQL注入．<br>除此之外，还有基于客户端IP地址的流量控制，而且还有很多监控相关的数据可以查看，具体就不罗列了．</li>
+</ol>
+<h2 id="u8D1F_u8F7D_u5747_u8861"><a href="#u8D1F_u8F7D_u5747_u8861" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>由于oneproxy实际上是一个代理，所以实际上，后端到底是访问哪个数据库，对于用户本身是未知的．<br>如同haproxy或者codis这一类应用一样，它可以减少实际数据库的链接数，减少tcp链接频繁创建．<br>所以，oneproxy不能用<code>use</code>,存储过程，<code>prepare</code>这一类的操作．<br>更大的好处是，多实例数据库可以防止单点故障．</p>
+<p>我看oneproxy有相关的配置，可以让它优先去访问master还是slave数据库，但是这个操作是oneproxy实例级别的，大部分业务场景都是读写分离，但是对于部分实时性要求比较高的场景，读写都会在主数据库完成，即使是开了SemiSync也是不够的，是否可以做到指定呢？还是说，这时候实际上，开发不应该基于MySQL等来完成实时的一致性校验．<br>目前的策略是 read_slave, read_balance, big_slave, big_balance．完整的介绍<a href="http://www.onexsoft.com/zh/oneproxy-read-traffic-scaleout.html" target="_blank" rel="external">传送门</a></p>
+<h2 id="u5206_u5E93_u5206_u8868"><a href="#u5206_u5E93_u5206_u8868" class="headerlink" title="分库分表"></a>分库分表</h2><p>这是很多proxy都需要支持的一个特性，mysql实际上也是支持单实例的分区的，不过这对SQL解析和merge数据方存在一定的挑战．这个特性的基础上，大表可以根据需要分散到各个不同的数据库实例之中，对查询的性能瓶颈有很大的突破．不过存在的问题，比如分布式事务的支持，我看oneproxy还是没有解决的，毕竟老大难．<br>这里有个很不错的功能，是在分库分表的情况下，可以生成对应的主键．<a href="http://www.onexsoft.com/zh/oneproxy-sharding-key-sequence.html" target="_blank" rel="external">创送们</a> 从前自己实现的分表里面，主键是通过redis来维护的自增值．用oneproxy的话，就方便多了～</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="external">oneproxy</a>，出生于阿里系的人]]>
+    </summary>
+    
+      <category term="oneproxy" scheme="http://catlittlechen.com/tags/oneproxy/"/>
+    
+      <category term="oneproxy" scheme="http://catlittlechen.com/categories/oneproxy/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[踩坑日记之Upstart]]></title>
     <link href="http://catlittlechen.com/2017/08/11/upstart/"/>
     <id>http://catlittlechen.com/2017/08/11/upstart/</id>
@@ -539,40 +569,6 @@ int((primary + number_of_replicas) / 2) + 1
       <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
       <category term="elasticsearch" scheme="http://catlittlechen.com/categories/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[docker-swarm]]></title>
-    <link href="http://catlittlechen.com/2016/07/22/docker-swarm/"/>
-    <id>http://catlittlechen.com/2016/07/22/docker-swarm/</id>
-    <published>2016-07-22T14:51:48.000Z</published>
-    <updated>2017-03-25T13:58:55.000Z</updated>
-    <content type="html"><![CDATA[<p>前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~</p>
-<p>所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是按照docker-swram的官方教程改的~</p>
-<h4 id="u521B_u5EFAdocker-machine"><a href="#u521B_u5EFAdocker-machine" class="headerlink" title="创建docker-machine"></a>创建docker-machine</h4><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-machine <span class="built_in">create</span> <span class="comment">--driver virtualbox consul</span></span><br><span class="line">docker-machine <span class="built_in">create</span> <span class="comment">--driver virtualbox manager1</span></span><br><span class="line">docker-machine <span class="built_in">create</span> <span class="comment">--driver virtualbox manager2</span></span><br><span class="line">docker-machine <span class="built_in">create</span> <span class="comment">--driver virtualbox node1</span></span><br><span class="line">docker-machine <span class="built_in">create</span> <span class="comment">--driver virtualbox node2</span></span><br></pre></td></tr></table></figure>
-<h4 id="u914D_u7F6Econsul"><a href="#u914D_u7F6Econsul" class="headerlink" title="配置consul"></a>配置consul</h4><p>切换到consul虚机里面：</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span> <span class="variable">$(</span>docker-machine <span class="keyword">env</span> consul)</span><br></pre></td></tr></table></figure>
-<p>启动consul服务：</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="keyword">run</span> -<span class="keyword">d</span> -p 8500:8500 --name=consul progrium/consul -server -<span class="keyword">bootstrap</span></span><br></pre></td></tr></table></figure>
-<h4 id="u914D_u7F6Emanager_u8282_u70B9"><a href="#u914D_u7F6Emanager_u8282_u70B9" class="headerlink" title="配置manager节点"></a>配置manager节点</h4><p>配置manager1节点：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eval $(docker-machine env manager1)</span><br><span class="line">docker run -d -p <span class="number">4000</span>:<span class="number">4000</span> -v <span class="regexp">/var/</span>lib<span class="regexp">/boot2docker:/</span><span class="string">certs:</span>ro swarm manage -<span class="string">H :</span><span class="number">4000</span> --tlsverify --tlscacert=<span class="regexp">/certs/</span>ca.pem --tlscert=<span class="regexp">/certs/</span>server.pem --tlskey=<span class="regexp">/certs/</span>server-key.pem --replication --advertise $(docker-machine ip manager1):<span class="number">4000</span> <span class="string">consul:</span><span class="comment">//$(docker-machine ip consul):8500</span></span><br></pre></td></tr></table></figure>
-<p>配置manager2节点：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eval $(docker-machine env manager2)</span><br><span class="line">docker run -d -p <span class="number">4000</span>:<span class="number">4000</span> -v <span class="regexp">/var/</span>lib<span class="regexp">/boot2docker:/</span><span class="string">certs:</span>ro swarm manage -<span class="string">H :</span><span class="number">4000</span> --tlsverify --tlscacert=<span class="regexp">/certs/</span>ca.pem --tlscert=<span class="regexp">/certs/</span>server.pem --tlskey=<span class="regexp">/certs/</span>server-key.pem --replication --advertise $(docker-machine ip manager2):<span class="number">4000</span> <span class="string">consul:</span><span class="comment">//$(docker-machine ip consul):8500</span></span><br></pre></td></tr></table></figure>
-<h4 id="u914D_u7F6Enode_u8282_u70B9"><a href="#u914D_u7F6Enode_u8282_u70B9" class="headerlink" title="配置node节点"></a>配置node节点</h4><p>配置node1节点</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span> <span class="variable">$(</span>docker-machine <span class="keyword">env</span> node1)</span><br><span class="line">docker run -d swarm join --advertise=<span class="variable">$(</span>docker-machine ip node1):<span class="number">2376</span> consul:<span class="comment">//$(docker-machine ip consul):8500</span></span><br></pre></td></tr></table></figure>
-<p>配置node2节点</p>
-<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">eval</span> <span class="variable">$(</span>docker-machine <span class="keyword">env</span> node2)</span><br><span class="line">docker run -d swarm join --advertise=<span class="variable">$(</span>docker-machine ip node2):<span class="number">2376</span> consul:<span class="comment">//$(docker-machine ip consul):8500</span></span><br></pre></td></tr></table></figure>
-<h3 id="u6D4B_u8BD5"><a href="#u6D4B_u8BD5" class="headerlink" title="测试"></a>测试</h3><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -<span class="string">H :</span><span class="number">4000</span> --tlsverify --tlscacert=<span class="regexp">/var/</span>lib<span class="regexp">/boot2docker/</span>ca.pem --tlscert=<span class="regexp">/var/</span>lib<span class="regexp">/boot2docker/</span>server.pem --tlskey=<span class="regexp">/var/</span>lib<span class="regexp">/boot2docker/</span>server-key.pem run hello-world</span><br></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<p>前段时间，我和公司的运维朋友一起玩了下docker。在配置docker-swarm的时候，运维朋友可以安逸地开启aws，可怜的我只能默默地在自己的单机上面搭建了~~</p>
-<p>所以，才有了今天在用docker-machine来搭建docker-swarm，这份教程基本是]]>
-    </summary>
-    
-      <category term="docker" scheme="http://catlittlechen.com/tags/docker/"/>
-    
-      <category term="docker" scheme="http://catlittlechen.com/categories/docker/"/>
     
   </entry>
   
