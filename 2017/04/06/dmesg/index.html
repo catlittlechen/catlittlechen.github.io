@@ -6,26 +6,25 @@
   <title>dmesg | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。
-时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
+  <meta name="description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。 时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
+<meta name="keywords" content="学习">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dmesg">
 <meta property="og:url" content="http://catlittlechen.com/2017/04/06/dmesg/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。
-时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
+<meta property="og:description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。 时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-04-08T08:26:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dmesg">
-<meta name="twitter:description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。
-时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
+<meta name="twitter:description" content="用处dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。 时间dmesg的时间确实难看懂，可以通过以下的命令转化1date -d &quot;1970-01-01 UTC `echo &quot;$(date +%s)-$(cat /proc/uptime|cut -f 1 -d&apos; &apos;)+dmesg的时间戳&quot;|">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -66,7 +65,7 @@
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -102,7 +101,7 @@
            
              
                <h2 id="u7528_u5904"><a href="#u7528_u5904" class="headerlink" title="用处"></a>用处</h2><p>dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。</p>
-<h2 id="u65F6_u95F4"><a href="#u65F6_u95F4" class="headerlink" title="时间"></a>时间</h2><p>dmesg的时间确实难看懂，可以通过以下的命令转化<br><figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date -d <span class="string">"1970-01-01 UTC `echo "</span>$(date +%s)-$(cat /<span class="keyword">proc</span>/uptime|cut -f <span class="number">1</span> -d' ')+dmesg的时间戳<span class="string">"|bc ` seconds"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u65F6_u95F4"><a href="#u65F6_u95F4" class="headerlink" title="时间"></a>时间</h2><p>dmesg的时间确实难看懂，可以通过以下的命令转化<br><figure class="highlight mel"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">date</span> -d <span class="string">"1970-01-01 UTC `echo "</span>$(<span class="keyword">date</span> +%s)-$(cat /<span class="keyword">proc</span>/uptime|cut -f <span class="number">1</span> -d<span class="string">' '</span>)+dmesg的时间戳<span class="string">"|bc ` seconds"</span></div></pre></td></tr></table></figure></p>
 
              
             
@@ -251,11 +250,11 @@
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

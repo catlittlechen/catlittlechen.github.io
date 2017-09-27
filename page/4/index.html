@@ -12,6 +12,7 @@
 <meta property="og:url" content="http://catlittlechen.com/page/4/index.html">
 <meta property="og:site_name" content="CatChen">
 <meta property="og:description" content="互联网行业的猫">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CatChen">
 <meta name="twitter:description" content="互联网行业的猫">
@@ -21,7 +22,7 @@
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -62,7 +63,7 @@
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -99,7 +100,7 @@
       
            
              
-               <h4 id="u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID"><a href="#u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID" class="headerlink" title="添加文档,自定义ID"></a>添加文档,自定义ID</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PUT /&#123;index&#125;/&#123;type&#125;/&#123;id&#125;</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"field"</span>: <span class="string">"value"</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+               <h4 id="u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID"><a href="#u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID" class="headerlink" title="添加文档,自定义ID"></a>添加文档,自定义ID</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">PUT /&#123;index&#125;/&#123;type&#125;/&#123;id&#125;</div><div class="line">&#123;</div><div class="line">    <span class="string">"field"</span>: <span class="string">"value"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/04/es3/#more">阅读全文</a>
@@ -156,7 +157,7 @@
       
            
              
-               <h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es1 elasticsearch /bin/bash</span></span><br><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es2 elasticsearch /bin/bash</span></span><br></pre></td></tr></table></figure>
+               <h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"> -ti --name es1 elasticsearch /bin/bash</span></div><div class="line"><span class="bash">docker run -ti --name es2 elasticsearch /bin/bash</span></div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/02/es2/#more">阅读全文</a>
@@ -213,7 +214,7 @@
       
            
              
-               <h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">启动docker</span><br><span class="line">docker run -ti <span class="comment">--name es -p 9200:9200 ubuntu:14.04 /bin/bash</span></span><br><span class="line"></span><br><span class="line">更新系统</span><br><span class="line">apt-get <span class="operator"><span class="keyword">update</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">upgrade</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> software-properties-common</span><br><span class="line"></span><br><span class="line">安装<span class="keyword">java</span></span><br><span class="line"><span class="keyword">add</span>-apt-repository ppa:webupd8team/<span class="keyword">java</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">oracle</span>-java8-installer</span><br><span class="line"></span><br><span class="line">安装es</span><br><span class="line">wget -qO - https://packages.elastic.co/GPG-<span class="keyword">KEY</span>-elasticsearch | sudo apt-<span class="keyword">key</span> <span class="keyword">add</span> -</span><br><span class="line">echo <span class="string">"deb https://packages.elastic.co/elasticsearch/2.x/debian stable main"</span> &gt;&gt; /etc/apt/sources.<span class="keyword">list</span></span><br><span class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span> &amp;&amp; apt-<span class="keyword">get</span> <span class="keyword">install</span> elasticsearch</span><br><span class="line"><span class="keyword">update</span>-rc.<span class="keyword">d</span> elasticsearch <span class="keyword">defaults</span> <span class="number">95</span> <span class="number">10</span></span><br><span class="line">/etc/init.<span class="keyword">d</span>/elasticsearch <span class="keyword">start</span></span></span><br></pre></td></tr></table></figure>
+               <h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">启动docker</div><div class="line">docker run -ti <span class="comment">--name es -p 9200:9200 ubuntu:14.04 /bin/bash</span></div><div class="line"></div><div class="line">更新系统</div><div class="line">apt-get <span class="keyword">update</span></div><div class="line">apt-<span class="keyword">get</span> <span class="keyword">upgrade</span></div><div class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> software-properties-common</div><div class="line"></div><div class="line">安装<span class="keyword">java</span></div><div class="line"><span class="keyword">add</span>-apt-repository ppa:webupd8team/<span class="keyword">java</span></div><div class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span></div><div class="line">apt-<span class="keyword">get</span> <span class="keyword">install</span> <span class="keyword">oracle</span>-java8-installer</div><div class="line"></div><div class="line">安装es</div><div class="line">wget -qO - https://packages.elastic.co/GPG-<span class="keyword">KEY</span>-elasticsearch | sudo apt-<span class="keyword">key</span> <span class="keyword">add</span> -</div><div class="line">echo <span class="string">"deb https://packages.elastic.co/elasticsearch/2.x/debian stable main"</span> &gt;&gt; /etc/apt/sources.list</div><div class="line">apt-<span class="keyword">get</span> <span class="keyword">update</span> &amp;&amp; apt-<span class="keyword">get</span> <span class="keyword">install</span> elasticsearch</div><div class="line"><span class="keyword">update</span>-rc.d elasticsearch <span class="keyword">defaults</span> <span class="number">95</span> <span class="number">10</span></div><div class="line">/etc/init.d/elasticsearch <span class="keyword">start</span></div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/01/es1/#more">阅读全文</a>
@@ -523,11 +524,11 @@
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

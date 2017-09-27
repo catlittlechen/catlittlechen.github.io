@@ -6,32 +6,25 @@
   <title>踩坑日记之nginx-limit-req | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
-limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
-这是nginx配置速率限制的插件。具体可以自行查询相关资料。
-坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
+  <meta name="description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s 这是nginx配置速率限制的插件。具体可以自行查询相关资料。 坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
+<meta name="keywords" content="踩坑日记,nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="踩坑日记之nginx-limit-req">
 <meta property="og:url" content="http://catlittlechen.com/2017/08/10/nginx/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
-limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
-这是nginx配置速率限制的插件。具体可以自行查询相关资料。
-坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
+<meta property="og:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s 这是nginx配置速率限制的插件。具体可以自行查询相关资料。 坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-09-26T13:56:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="踩坑日记之nginx-limit-req">
-<meta name="twitter:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~
-limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
-这是nginx配置速率限制的插件。具体可以自行查询相关资料。
-坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
+<meta name="twitter:description" content="一般我们都认为nginx -t可以测试出配置文件是否配置正确。其实不然~ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s 这是nginx配置速率限制的插件。具体可以自行查询相关资料。 坑当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -72,7 +65,7 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -108,7 +101,7 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
            
              
                <p>一般我们都认为nginx -t可以测试出配置文件是否配置正确。<br>其实不然~</p>
-<h4 id="limit_req_zone"><a href="#limit_req_zone" class="headerlink" title="limit_req_zone"></a><code>limit_req_zone</code></h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">limit_req_zone  <span class="variable">$binary</span>_remote_addr  zone=req_one:<span class="number">10</span>m rate=<span class="number">1</span>r/s</span><br></pre></td></tr></table></figure>
+<h4 id="limit_req_zone"><a href="#limit_req_zone" class="headerlink" title="limit_req_zone"></a><code>limit_req_zone</code></h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">limit_req_zone  <span class="variable">$binary_remote_addr</span>  <span class="attribute">zone</span>=req_one:10m <span class="attribute">rate</span>=1r/s</div></pre></td></tr></table></figure>
 <p>这是nginx配置速率限制的插件。具体可以自行查询相关资料。</p>
 <h4 id="u5751"><a href="#u5751" class="headerlink" title="坑"></a>坑</h4><p>当时原本设置的限制条件为$uri，测试的过程中，发现实际上$request_uri才是符合要求的限制条件，因而修改了配置，<code>nginx -t</code>测试顺利通过，<code>nginx -s reload</code>也没有任何报错。但是实际上，nginx worker并没有退出。</p>
 <p>一开始还认为是worker承载的请求太多，以至于请求没能处理完毕，导师worker延迟退出。<br>直到多心去看了一眼日志，才发现，limit_req这个模块，在设置<code>limit_req_zone</code>的时候是无法修改限制条件的。</p>
@@ -261,11 +254,11 @@ limit_req_zone1limit_req_zone  $binary_remote_addr  zone=req_one:10m rate=1r/s
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

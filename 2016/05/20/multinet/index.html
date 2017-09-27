@@ -6,26 +6,25 @@
   <title>multinet | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。
-经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
+  <meta name="description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。 经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
+<meta name="keywords" content="golang">
 <meta property="og:type" content="article">
 <meta property="og:title" content="multinet">
 <meta property="og:url" content="http://catlittlechen.com/2016/05/20/multinet/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。
-经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
+<meta property="og:description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。 经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-03-25T14:14:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="multinet">
-<meta name="twitter:description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。
-经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
+<meta name="twitter:description" content="起因之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。 经过在解决黏包的问题时，曾经尝试运用go标准库中的json库，将数据打包成为一个结构体的方式，确实时解决了黏包的问题，但是由于go的json库效率不高，整体的效率下下降了2-3倍。">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -66,7 +65,7 @@
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -255,11 +254,11 @@
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

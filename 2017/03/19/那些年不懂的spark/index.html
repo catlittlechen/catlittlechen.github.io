@@ -6,29 +6,25 @@
   <title>那些年不懂的spark | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。
-_jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~
-最后发现python的SparkContext里，有一">
+  <meta name="description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。 _jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~ 最后发现python的SparkContext里，有一">
+<meta name="keywords" content="踩坑日记,spark">
 <meta property="og:type" content="article">
 <meta property="og:title" content="那些年不懂的spark">
 <meta property="og:url" content="http://catlittlechen.com/2017/03/19/那些年不懂的spark/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。
-_jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~
-最后发现python的SparkContext里，有一">
+<meta property="og:description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。 _jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~ 最后发现python的SparkContext里，有一">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-03-26T01:30:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="那些年不懂的spark">
-<meta name="twitter:description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。
-_jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~
-最后发现python的SparkContext里，有一">
+<meta name="twitter:description" content="感悟spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。 _jsc我是python的使用者，近来发现需要在启动spark的时候设置参数，但是在文档查找的过程中，只发现只有java的api文档里面有相关的参数设置，而python没有。囧~ 最后发现python的SparkContext里，有一">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -69,7 +65,7 @@ _jsc我是python的使用者，近来发现需要在启动spark的时候设置�
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -111,22 +107,22 @@ _jsc我是python的使用者，近来发现需要在启动spark的时候设置�
 <p>大概意思如下，spark在生成parquet文件的过程中，最后会扫描文件夹下的所有文件，并将文件的大致的详细汇总到文件夹目录的metadata文件，完成这个过程之后，在下次直接匹配这个文件夹的时候，spark会读取metadata，加快扫描的速度。</p>
 <p>问题是生成这个metadata的文件是需要扫描所有文件的！而我生成paruqet的时候，是以追加的形式加入，频率还是蛮高的情况下，这就意味着我的spark程序会花费大量的时间在汇总这部分数据。并且汇总数据的过程是不会分布到多台机器上运行的。这就大大的降低了集群的利用率，其实也毫无必要。</p>
 <p>因此spark生成parquet的过程中，可以选择关闭这个特性~</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sparkContext._jsc<span class="class">.hadoopConfiguration</span><span class="class">.set</span>(<span class="string">'parquet.enable.summary-metadata'</span>, <span class="string">'false'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sparkContext._jsc<span class="selector-class">.hadoopConfiguration</span><span class="selector-class">.set</span>(<span class="string">'parquet.enable.summary-metadata'</span>, <span class="string">'false'</span>)</div></pre></td></tr></table></figure>
 <h2 id="partitionBy"><a href="#partitionBy" class="headerlink" title="partitionBy"></a>partitionBy</h2><p>一开始我一直纠结了很多问题，output的分类就是其中一个。而<code>partitonBy</code>完美地解决了我的需求。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df<span class="selector-class">.write</span><span class="selector-class">.partitionBy</span>(<span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).parquet(<span class="string">'some/path/'</span>)</div></pre></td></tr></table></figure>
 <p>以上的代码中，<code>df</code>为一个dataFrame的数据集。</p>
 <p>这段代码可以根据index1, index2, index3这几个columns来分类，将数据自动分为如下的目录结构保存.</p>
-<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">some/path/i<span class="label">ndex1</span>=&#123;i<span class="label">ndex1</span>&#125;/i<span class="label">ndex2</span>=&#123;i<span class="label">ndex2</span>&#125;/i<span class="label">ndex3</span>=&#123;i<span class="label">ndex3</span>&#125;/part-****.parquet</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">some/path/i<span class="symbol">ndex1</span>=&#123;i<span class="symbol">ndex1</span>&#125;/i<span class="symbol">ndex2</span>=&#123;i<span class="symbol">ndex2</span>&#125;/i<span class="symbol">ndex3</span>=&#123;i<span class="symbol">ndex3</span>&#125;/part-****.parquet</div></pre></td></tr></table></figure>
 <p>之前还傻乎乎地groupBy数据，然后用了collect这个算子，因而需要读取所有文件，就有内存问题等存在。</p>
 <h2 id="binaryFiles"><a href="#binaryFiles" class="headerlink" title="binaryFiles"></a>binaryFiles</h2><p>这个不算坑，只是自己没有注意到而已。</p>
 <p>之前都是使用<code>textFile</code>的格式读取文本文件，这个过程中，没有指定<code>minPartition</code>，而<code>minPartition</code>的值也基本默认为文本文件的个数。但是<code>binaryFiles</code>不是。程序在默认读取大量二进制文件之后，并没有选择分开，而是<code>minPartition</code>为1，因此这里需要手动指定。</p>
 <h2 id="parquet__26amp_3B_26amp_3B_sparkSQL"><a href="#parquet__26amp_3B_26amp_3B_sparkSQL" class="headerlink" title="parquet &amp;&amp; sparkSQL"></a>parquet &amp;&amp; sparkSQL</h2><p>sparkSQL太杀手级了~</p>
 <p>parquet是列存储数据模式，可以大大的减少存储的文件大小，减少扫描过程中的大小。效率惊人~</p>
 <p>sparkSQL在读取文件夹目录下所有文件的过程中，存在一个特定<code>partition auto-discovery</code>的特性。在spark的文档中有详细的记载。大概如下：</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df = sqlContext<span class="class">.read</span><span class="class">.parquet</span>(/some/path)</span><br></pre></td></tr></table></figure>
-<p>如果<code>/some/path</code>下有目录如下<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/some/path</span></span><br><span class="line">	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f2/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f1/</span><br><span class="line"></span>	-<span class="ruby">- <span class="regexp">/index1=h2/index</span>2=f2/</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df = sqlContext<span class="selector-class">.read</span><span class="selector-class">.parquet</span>(/some/path)</div></pre></td></tr></table></figure>
+<p>如果<code>/some/path</code>下有目录如下<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/some/path</span></div><div class="line">	-<span class="ruby">- <span class="regexp">/index1=h1/index</span>2=f1/</span></div><div class="line"><span class="ruby">	-- <span class="regexp">/index1=h1/index</span>2=f2/</span></div><div class="line"><span class="ruby">	-- <span class="regexp">/index1=h2/index</span>2=f1/</span></div><div class="line"><span class="ruby">	-- <span class="regexp">/index1=h2/index</span>2=f2/</span></div></pre></td></tr></table></figure></p>
 <p>则最后生成的sparkSQL的table里面，将会自动的加入index1, index2的column，当你使用index1来查询时，即</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.<span class="function"><span class="title">registerTempTable</span><span class="params">(<span class="string">"log"</span>)</span></span></span><br><span class="line">sqlContext.<span class="function"><span class="title">sql</span><span class="params">(<span class="string">"SELECT * FROM log WHERE index1 = h1"</span>)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">df</span><span class="selector-class">.registerTempTable</span>(<span class="string">"log"</span>)</div><div class="line"><span class="selector-tag">sqlContext</span><span class="selector-class">.sql</span>(<span class="string">"SELECT * FROM log WHERE index1 = h1"</span>)</div></pre></td></tr></table></figure>
 <p>这个过程中，会自动的只扫描index1=h1的目录下的文件。<br>缺点是我喜欢使用通配符的形式来读取，结果通配的列就不存在了~<br>sad~</p>
 <h2 id="u7ED3_u5C40"><a href="#u7ED3_u5C40" class="headerlink" title="结局"></a>结局</h2><p>未完待续~</p>
 <h2 id="Done"><a href="#Done" class="headerlink" title="Done"></a>Done</h2>
@@ -277,11 +273,11 @@ _jsc我是python的使用者，近来发现需要在启动spark的时候设置�
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

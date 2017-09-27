@@ -6,26 +6,25 @@
   <title>elasticsearch系列笔记(二) 集群安装 | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash
-configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
+  <meta name="description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
+<meta name="keywords" content="学习,elasticsearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elasticsearch系列笔记(二) 集群安装">
 <meta property="og:url" content="http://catlittlechen.com/2016/08/02/es2/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash
-configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
+<meta property="og:description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-03-25T14:01:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch系列笔记(二) 集群安装">
-<meta name="twitter:description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash
-configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
+<meta name="twitter:description" content="two es12docker run -ti --name es1 elasticsearch /bin/bashdocker run -ti --name es2 elasticsearch /bin/bash configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elasticsearch-clu">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -66,7 +65,7 @@ configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elas
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -101,10 +100,10 @@ configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elas
       
            
              
-               <h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es1 elasticsearch /bin/bash</span></span><br><span class="line">docker <span class="command">run</span> -ti <span class="comment">--name es2 elasticsearch /bin/bash</span></span><br></pre></td></tr></table></figure>
-<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><h4 id="in_es1"><a href="#in_es1" class="headerlink" title="in es1"></a>in es1</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/elasticsearch/elasticsearch<span class="class">.yml</span></span><br><span class="line">   cluster<span class="class">.name</span>: elasticsearch-cluster-centos</span><br><span class="line">   node<span class="class">.name</span>: <span class="string">"es-node1"</span></span><br><span class="line">   bootstrap<span class="class">.mlockall</span>: true</span><br><span class="line">   network<span class="class">.host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></span><br><span class="line">   network<span class="class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></span><br><span class="line">   discovery<span class="class">.zen</span><span class="class">.ping</span><span class="class">.unicast</span><span class="class">.hosts</span>: [<span class="string">"172.17.0.3"</span>]</span><br></pre></td></tr></table></figure>
-<h4 id="in_es2"><a href="#in_es2" class="headerlink" title="in es2"></a>in es2</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cluster<span class="class">.name</span>: elasticsearch-cluster-centos</span><br><span class="line">node<span class="class">.name</span>: <span class="string">"es-node2"</span></span><br><span class="line">bootstrap<span class="class">.mlockall</span>: true</span><br><span class="line">network<span class="class">.host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></span><br><span class="line">network<span class="class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></span><br><span class="line">discovery<span class="class">.zen</span><span class="class">.ping</span><span class="class">.unicast</span><span class="class">.hosts</span>: [<span class="string">"172.17.0.2"</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h3><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/elasticsearch restart</span></span><br></pre></td></tr></table></figure>
+               <h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"> -ti --name es1 elasticsearch /bin/bash</span></div><div class="line"><span class="bash">docker run -ti --name es2 elasticsearch /bin/bash</span></div></pre></td></tr></table></figure>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><h4 id="in_es1"><a href="#in_es1" class="headerlink" title="in es1"></a>in es1</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vim /etc/elasticsearch/elasticsearch.yml</div><div class="line">   cluster<span class="selector-class">.name</span>: elasticsearch-cluster-centos</div><div class="line">   node<span class="selector-class">.name</span>: <span class="string">"es-node1"</span></div><div class="line">   bootstrap<span class="selector-class">.mlockall</span>: true</div><div class="line">   network<span class="selector-class">.host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></div><div class="line">   network<span class="selector-class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></div><div class="line">   discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"172.17.0.3"</span>]</div></pre></td></tr></table></figure>
+<h4 id="in_es2"><a href="#in_es2" class="headerlink" title="in es2"></a>in es2</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cluster<span class="selector-class">.name</span>: elasticsearch-cluster-centos</div><div class="line">node<span class="selector-class">.name</span>: <span class="string">"es-node2"</span></div><div class="line">bootstrap<span class="selector-class">.mlockall</span>: true</div><div class="line">network<span class="selector-class">.host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></div><div class="line">network<span class="selector-class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></div><div class="line">discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"172.17.0.2"</span>]</div></pre></td></tr></table></figure>
+<h3 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/elasticsearch restart</span></div></pre></td></tr></table></figure>
 
              
             
@@ -253,11 +252,11 @@ configin es11234567vim /etc/elasticsearch/elasticsearch.yml   cluster.name: elas
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

@@ -6,50 +6,25 @@
   <title>[译]solr boolean operators | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
-
-译文原文：来自于Bill Dueber.
-
-结论：在Solr中一定要用括号去管理优先级！！！
-
-搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
-a OR b AND C
-我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
-boolean运算符的优先级如果">
+  <meta name="description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。  译文原文：来自于Bill Dueber.  结论：在Solr中一定要用括号去管理优先级！！！  搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？ a OR b AND C 我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。 boolean运算符的优先级如果">
+<meta name="keywords" content="踩坑日记,翻译,solr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[译]solr boolean operators">
 <meta property="og:url" content="http://catlittlechen.com/2015/09/23/译-solr-boolean-operators/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
-
-译文原文：来自于Bill Dueber.
-
-结论：在Solr中一定要用括号去管理优先级！！！
-
-搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
-a OR b AND C
-我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
-boolean运算符的优先级如果">
+<meta property="og:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。  译文原文：来自于Bill Dueber.  结论：在Solr中一定要用括号去管理优先级！！！  搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？ a OR b AND C 我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。 boolean运算符的优先级如果">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2016-01-27T11:35:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[译]solr boolean operators">
-<meta name="twitter:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。
-
-译文原文：来自于Bill Dueber.
-
-结论：在Solr中一定要用括号去管理优先级！！！
-
-搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？
-a OR b AND C
-我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。
-boolean运算符的优先级如果">
+<meta name="twitter:description" content="踩坑感言：这个故事告诉我，做事情不要想当然，你觉得的事情，一定不是对的。  译文原文：来自于Bill Dueber.  结论：在Solr中一定要用括号去管理优先级！！！  搞起搞起！用过Solr的同学知道一下查询，Solr是怎么做的么？ a OR b AND C 我可以给你三种选择，但是前两种肯定是错误的，而且你也不会想到第三种，因此还是不要花费太多的时间去想吧。 boolean运算符的优先级如果">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -90,7 +65,7 @@ boolean运算符的优先级如果">
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -335,11 +310,11 @@ curly larry moe shemp
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>

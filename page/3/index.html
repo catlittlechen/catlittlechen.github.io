@@ -12,6 +12,7 @@
 <meta property="og:url" content="http://catlittlechen.com/page/3/index.html">
 <meta property="og:site_name" content="CatChen">
 <meta property="og:description" content="互联网行业的猫">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CatChen">
 <meta name="twitter:description" content="互联网行业的猫">
@@ -21,7 +22,7 @@
   
     <link rel="icon" href="/favicon.png">
   
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
   
 
 </head>
@@ -62,7 +63,7 @@
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
       </div>
     </div>
   </div>
@@ -99,7 +100,7 @@
       
            
              
-               <h2 id="partitionBy__26amp_3B_26amp_3B_s3"><a href="#partitionBy__26amp_3B_26amp_3B_s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;&amp; s3</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="class">.write</span><span class="class">.partitionBy</span>(<span class="string">'date'</span>, <span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).<span class="function"><span class="title">parquet</span><span class="params">(<span class="string">'some/path/'</span>)</span></span></span><br></pre></td></tr></table></figure>
+               <h2 id="partitionBy__26amp_3B_26amp_3B_s3"><a href="#partitionBy__26amp_3B_26amp_3B_s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;&amp; s3</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">df<span class="selector-class">.write</span><span class="selector-class">.partitionBy</span>(<span class="string">'date'</span>, <span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).parquet(<span class="string">'some/path/'</span>)</div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2017/03/30/那些年不懂的spark-2/#more">阅读全文</a>
@@ -270,7 +271,7 @@
       
            
              
-               <h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">PUT /my_index</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"settings"</span> &#123;&#125;</span><br><span class="line">    <span class="string">"mappings"</span>: &#123;</span><br><span class="line">        <span class="string">"type_one"</span>:&#123;&#125;,</span><br><span class="line">        <span class="string">"type_two"</span>:&#123;&#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+               <h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">PUT /my_index</div><div class="line">&#123;</div><div class="line">    <span class="string">"settings"</span> &#123;&#125;</div><div class="line">    <span class="string">"mappings"</span>: &#123;</div><div class="line">        <span class="string">"type_one"</span>:&#123;&#125;,</div><div class="line">        <span class="string">"type_two"</span>:&#123;&#125;,</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/21/es6/#more">阅读全文</a>
@@ -327,7 +328,7 @@
       
            
              
-               <h4 id="u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL"><a href="#u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL" class="headerlink" title="结构化查询Query DSL"></a>结构化查询Query DSL</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET /_search</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"query"</span>: &#123;</span><br><span class="line">            QUERY_NAME: &#123;</span><br><span class="line">                FIELD_NAME: &#123;</span><br><span class="line">                    ARGUMENT: VALUE,</span><br><span class="line">                    ARGUMENT: VALUE,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+               <h4 id="u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL"><a href="#u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL" class="headerlink" title="结构化查询Query DSL"></a>结构化查询Query DSL</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">    &#123;</div><div class="line">        <span class="string">"query"</span>: &#123;</div><div class="line"><span class="symbol">            QUERY_NAME:</span> &#123;</div><div class="line"><span class="symbol">                FIELD_NAME:</span> &#123;</div><div class="line"><span class="symbol">                    ARGUMENT:</span> VALUE,</div><div class="line"><span class="symbol">                    ARGUMENT:</span> VALUE,</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/12/es5/#more">阅读全文</a>
@@ -384,7 +385,7 @@
       
            
              
-               <h4 id="u8DEF_u7531_u6587_u6863_u5230_u5206_u7247"><a href="#u8DEF_u7531_u6587_u6863_u5230_u5206_u7247" class="headerlink" title="路由文档到分片"></a>路由文档到分片</h4><figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shard = hash<span class="comment">(routing)</span> <span class="preprocessor">%</span> <span class="label">number_of_primary_shards</span></span><br></pre></td></tr></table></figure>
+               <h4 id="u8DEF_u7531_u6587_u6863_u5230_u5206_u7247"><a href="#u8DEF_u7531_u6587_u6863_u5230_u5206_u7247" class="headerlink" title="路由文档到分片"></a>路由文档到分片</h4><figure class="highlight gcode"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shard = hash<span class="comment">(routing)</span> <span class="meta">%</span> <span class="symbol">number_of_primary_shards</span></div></pre></td></tr></table></figure>
                
                   <p class="article-more-link">
                       <a href="/2016/08/09/es4/#more">阅读全文</a>
@@ -523,11 +524,11 @@
 <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+<script src="/js/script.js"></script>
 
   </div>
 </body>
