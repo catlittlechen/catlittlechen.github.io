@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-09-23T17:33:47.000Z</updated>
+  <updated>2017-11-20T15:38:14.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[kafka]]></title>
+    <link href="http://catlittlechen.com/2017/10/10/kafka/"/>
+    <id>http://catlittlechen.com/2017/10/10/kafka/</id>
+    <published>2017-10-10T14:54:53.000Z</published>
+    <updated>2017-11-20T15:38:14.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。</p>
+<h2 id="formatVersion"><a href="#formatVersion" class="headerlink" title="formatVersion"></a>formatVersion</h2><p>  kafka好不容易到达1.0版本，而0.8版本到现在，message的format有了3个版本，其中v1，v2的差距不大，但是v3的版本为了batch而生，因而版本差异比较大。<br>  但是落地到文件的版本，是由kafka启动的配置文件中配置的。kafka为了兼容各个版本，在通讯协议中支持message版本之间的转化。但是这个转化势必在server端执行，会浪费不必要的CPU，因为，在使用kafka的过程中，最好是根据业务需要，统一server与client的messageFormatVersion。</p>
+<h2 id="jmxtrans"><a href="#jmxtrans" class="headerlink" title="jmxtrans"></a>jmxtrans</h2><p>  kafka原生会暴露一个java系的监控接口，在kafka-server-start.sh中，可以看到JMX_PORT相关的配置。而jmxtrans是一个服务，可以将kafka—jmx中暴露出来的数据，整理写入ganglia中。配置可以看它的<a href="https://github.com/jmxtrans/jmxtrans" target="_blank" rel="external">github</a>，kafka的监控项可以看<a href="http://kafka.apache.org/documentation/#configuration" target="_blank" rel="external">官网</a></p>
+<h2 id="kafka-manager"><a href="#kafka-manager" class="headerlink" title="kafka-manager"></a>kafka-manager</h2><p>  好吧，业务的同学都是喜欢有个页面的监控，所以嘛，找个yahoo的这个<a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="external">监控</a>.配置简单，可以通过jmx的接口，查找到类似于consumerGroup的延迟，数据传输的监控，并且可以看到类似于out of Sync等。点到为止~</p>
+<h2 id="replications"><a href="#replications" class="headerlink" title="replications"></a>replications</h2><p>  一个好的作品都是留给了使用者很多配置，很多很多配置。因此，kafka留了这个replication特性。如果你只关注性能，那么replication=1，每一个partition只有一份，这个在写入的时候，性能最佳，坏处就是单一个kafka实例失败的时候，这个partition就失败了。但是，一旦设置了replication&gt;1，那么kafka实例失败后，这个实例的partition只是outOfSync，重启等操作后，可以恢复。整个集群的partition还是可用的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Googl]]>
+    </summary>
+    
+      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+    
+      <category term="kafka" scheme="http://catlittlechen.com/tags/kafka/"/>
+    
+      <category term="kafka" scheme="http://catlittlechen.com/categories/kafka/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[whoiam]]></title>
@@ -552,29 +576,6 @@ int((primary + number_of_replicas) / 2) + 1
 ]]></content>
     <summary type="html">
     <![CDATA[<h4 id="u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID"><a href="#u6DFB_u52A0_u6587_u6863_2C_u81EA_u5B9A_u4E49ID" class="headerlink" title="]]>
-    </summary>
-    
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="elasticsearch" scheme="http://catlittlechen.com/tags/elasticsearch/"/>
-    
-      <category term="elasticsearch" scheme="http://catlittlechen.com/categories/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[elasticsearch系列笔记(二) 集群安装]]></title>
-    <link href="http://catlittlechen.com/2016/08/02/es2/"/>
-    <id>http://catlittlechen.com/2016/08/02/es2/</id>
-    <published>2016-08-02T12:06:33.000Z</published>
-    <updated>2017-03-25T14:01:12.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">docker <span class="keyword">run</span><span class="bash"> -ti --name es1 elasticsearch /bin/bash</span></div><div class="line"><span class="bash">docker run -ti --name es2 elasticsearch /bin/bash</span></div></pre></td></tr></table></figure>
-<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><h4 id="in_es1"><a href="#in_es1" class="headerlink" title="in es1"></a>in es1</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vim /etc/elasticsearch/elasticsearch.yml</div><div class="line">   cluster<span class="selector-class">.name</span>: elasticsearch-cluster-centos</div><div class="line">   node<span class="selector-class">.name</span>: <span class="string">"es-node1"</span></div><div class="line">   bootstrap<span class="selector-class">.mlockall</span>: true</div><div class="line">   network<span class="selector-class">.host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></div><div class="line">   network<span class="selector-class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.2</span></div><div class="line">   discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"172.17.0.3"</span>]</div></pre></td></tr></table></figure>
-<h4 id="in_es2"><a href="#in_es2" class="headerlink" title="in es2"></a>in es2</h4><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cluster<span class="selector-class">.name</span>: elasticsearch-cluster-centos</div><div class="line">node<span class="selector-class">.name</span>: <span class="string">"es-node2"</span></div><div class="line">bootstrap<span class="selector-class">.mlockall</span>: true</div><div class="line">network<span class="selector-class">.host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></div><div class="line">network<span class="selector-class">.publish_host</span>: <span class="number">172.17</span>.<span class="number">0.3</span></div><div class="line">discovery<span class="selector-class">.zen</span><span class="selector-class">.ping</span><span class="selector-class">.unicast</span><span class="selector-class">.hosts</span>: [<span class="string">"172.17.0.2"</span>]</div></pre></td></tr></table></figure>
-<h3 id="restart"><a href="#restart" class="headerlink" title="restart"></a>restart</h3><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="regexp">/etc/i</span>nit.d<span class="regexp">/elasticsearch restart</span></div></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="two_es"><a href="#two_es" class="headerlink" title="two es"></a>two es</h3><figure class="highlight dockerfile"><table><tr><td class]]>
     </summary>
     
       <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>

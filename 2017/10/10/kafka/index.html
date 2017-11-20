@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>kafka | CatChen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
+  <meta name="description" content="Kafka一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。 formatVersion  kafka好不容易到达1.0版本，而0.8版本到现在，message的format有了3个版本，其中v1，v2的差距不大，但是v3的版本为了batch而生，因而版本差异比较大。">
+<meta name="keywords" content="学习,kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka">
+<meta property="og:url" content="http://catlittlechen.com/2017/10/10/kafka/index.html">
+<meta property="og:site_name" content="CatChen">
+<meta property="og:description" content="Kafka一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。 formatVersion  kafka好不容易到达1.0版本，而0.8版本到现在，message的format有了3个版本，其中v1，v2的差距不大，但是v3的版本为了batch而生，因而版本差异比较大。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-20T15:38:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka">
+<meta name="twitter:description" content="Kafka一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。 formatVersion  kafka好不容易到达1.0版本，而0.8版本到现在，message的format有了3个版本，其中v1，v2的差距不大，但是v3的版本为了batch而生，因而版本差异比较大。">
+  
+    <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">CatChen</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">我的王国，我一定会让你永垂不朽的</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">主页</a>
+        
+          <a class="main-nav-link" href="/archives">文章</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-github-btn" class="nav-icon" href="https://github.com/catlittlechen" title="github"></a>
+         
+        
+          <a id="nav-rss-btn" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-kafka" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/10/kafka/" class="article-date">
+  <time datetime="2017-10-10T14:54:53.000Z" itemprop="datePublished">2017-10-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/kafka/">kafka</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      kafka
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。</p>
+<h2 id="formatVersion"><a href="#formatVersion" class="headerlink" title="formatVersion"></a>formatVersion</h2><p>  kafka好不容易到达1.0版本，而0.8版本到现在，message的format有了3个版本，其中v1，v2的差距不大，但是v3的版本为了batch而生，因而版本差异比较大。<br>  但是落地到文件的版本，是由kafka启动的配置文件中配置的。kafka为了兼容各个版本，在通讯协议中支持message版本之间的转化。但是这个转化势必在server端执行，会浪费不必要的CPU，因为，在使用kafka的过程中，最好是根据业务需要，统一server与client的messageFormatVersion。</p>
+<h2 id="jmxtrans"><a href="#jmxtrans" class="headerlink" title="jmxtrans"></a>jmxtrans</h2><p>  kafka原生会暴露一个java系的监控接口，在kafka-server-start.sh中，可以看到JMX_PORT相关的配置。而jmxtrans是一个服务，可以将kafka—jmx中暴露出来的数据，整理写入ganglia中。配置可以看它的<a href="https://github.com/jmxtrans/jmxtrans" target="_blank" rel="external">github</a>，kafka的监控项可以看<a href="http://kafka.apache.org/documentation/#configuration" target="_blank" rel="external">官网</a></p>
+<h2 id="kafka-manager"><a href="#kafka-manager" class="headerlink" title="kafka-manager"></a>kafka-manager</h2><p>  好吧，业务的同学都是喜欢有个页面的监控，所以嘛，找个yahoo的这个<a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="external">监控</a>.配置简单，可以通过jmx的接口，查找到类似于consumerGroup的延迟，数据传输的监控，并且可以看到类似于out of Sync等。点到为止~</p>
+<h2 id="replications"><a href="#replications" class="headerlink" title="replications"></a>replications</h2><p>  一个好的作品都是留给了使用者很多配置，很多很多配置。因此，kafka留了这个replication特性。如果你只关注性能，那么replication=1，每一个partition只有一份，这个在写入的时候，性能最佳，坏处就是单一个kafka实例失败的时候，这个partition就失败了。但是，一旦设置了replication&gt;1，那么kafka实例失败后，这个实例的partition只是outOfSync，重启等操作后，可以恢复。整个集群的partition还是可用的。</p>
+
+             
+            
+          </div>
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/09/24/whoiam/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">whoiam</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<script>
+(function(){
+      var bp = document.createElement('script');
+          bp.src = '//push.zhanzhang.baidu.com/push.js';
+              var s = document.getElementsByTagName("script")[0];
+                  s.parentNode.insertBefore(bp, s);
+
+})();
+</script>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">目录</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 17.14px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.43px;">ganglia</a> <a href="/tags/golang/" style="font-size: 12.86px;">golang</a> <a href="/tags/kafka/" style="font-size: 10px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.43px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.43px;">python</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 14.29px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 15.71px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.57px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">文章</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/10/10/kafka/">kafka</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/24/whoiam/">whoiam</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/21/oneproxy/">oneproxy</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/16/naxsi/">naxsi</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/11/upstart/">踩坑日记之Upstart</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Chan Cat<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+    <div id="footer-info" class="inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <span id="busuanzi_container_site_pv">
+        本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        </span>
+        <span id="busuanzi_container_page_pv">
+        本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        </span>
+    </div>
+  </div>
+
+</footer>
+
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">文章</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    
+
+<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
