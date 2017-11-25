@@ -24,8 +24,9 @@ save to test.json
 <h4 id="u63D0_u4EA4_u8C03_u6574_u7684_json"><a href="#u63D0_u4EA4_u8C03_u6574_u7684_json" class="headerlink" title="提交调整的 json"></a>提交调整的 json</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --execute
 </code></pre><p>提交的任务是异步执行的，这个过程中网络磁盘IO都会很大，负载也会升高，所以需要注意。</p>
 <h4 id="u68C0_u67E5"><a href="#u68C0_u67E5" class="headerlink" title="检查"></a>检查</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --verify
-</code></pre><h3 id="u6307_u5B9A_leader"><a href="#u6307_u5B9A_leader" class="headerlink" title="指定 leader"></a>指定 leader</h3><p>指定 leader 的话，通过<code>kafka-preferred-replica-election.sh</code>这个脚本提交的。默认是选择了 Replicas 中，还出于 sycn 状态的broker的第一个。所以上面提交调整的 json，需要把这一条考虑进去，注意 broker 的顺序。<br>    ./kafka-preferred-replica-election.sh –zookeeper 127.0.0.1:2181/kafka</p>
-]]></content>
+</code></pre><h3 id="u6307_u5B9A_leader"><a href="#u6307_u5B9A_leader" class="headerlink" title="指定 leader"></a>指定 leader</h3><p>指定 leader 的话，通过<code>kafka-preferred-replica-election.sh</code>这个脚本提交的。默认是选择了 Replicas 中，还出于 sycn 状态的broker的第一个。所以上面提交调整的 json，需要把这一条考虑进去，注意 broker 的顺序。</p>
+<pre><code>./kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181/kafka
+</code></pre>]]></content>
     </entry>
     
     <entry>

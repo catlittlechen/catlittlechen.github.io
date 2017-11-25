@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-11-25T06:54:36.000Z</updated>
+  <updated>2017-11-25T06:55:59.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://catlittlechen.com/2017/10/25/kafka-replication/"/>
     <id>http://catlittlechen.com/2017/10/25/kafka-replication/</id>
     <published>2017-10-25T06:23:03.000Z</published>
-    <updated>2017-11-25T06:54:36.000Z</updated>
+    <updated>2017-11-25T06:55:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u6587_u7AE0_u5206_u4EAB"><a href="#u6587_u7AE0_u5206_u4EAB" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/" target="_blank" rel="external">好文</a></p>
 <p>这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。</p>
 <h2 id="u6269_u5BB9"><a href="#u6269_u5BB9" class="headerlink" title="扩容"></a>扩容</h2><h3 id="add_broker"><a href="#add_broker" class="headerlink" title="add broker"></a>add broker</h3><p>kafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没啥好说的。</p>
@@ -38,8 +38,9 @@ save to test.json
 <h4 id="u63D0_u4EA4_u8C03_u6574_u7684_json"><a href="#u63D0_u4EA4_u8C03_u6574_u7684_json" class="headerlink" title="提交调整的 json"></a>提交调整的 json</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --execute
 </code></pre><p>提交的任务是异步执行的，这个过程中网络磁盘IO都会很大，负载也会升高，所以需要注意。</p>
 <h4 id="u68C0_u67E5"><a href="#u68C0_u67E5" class="headerlink" title="检查"></a>检查</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --verify
-</code></pre><h3 id="u6307_u5B9A_leader"><a href="#u6307_u5B9A_leader" class="headerlink" title="指定 leader"></a>指定 leader</h3><p>指定 leader 的话，通过<code>kafka-preferred-replica-election.sh</code>这个脚本提交的。默认是选择了 Replicas 中，还出于 sycn 状态的broker的第一个。所以上面提交调整的 json，需要把这一条考虑进去，注意 broker 的顺序。<br>    ./kafka-preferred-replica-election.sh –zookeeper 127.0.0.1:2181/kafka</p>
-]]></content>
+</code></pre><h3 id="u6307_u5B9A_leader"><a href="#u6307_u5B9A_leader" class="headerlink" title="指定 leader"></a>指定 leader</h3><p>指定 leader 的话，通过<code>kafka-preferred-replica-election.sh</code>这个脚本提交的。默认是选择了 Replicas 中，还出于 sycn 状态的broker的第一个。所以上面提交调整的 json，需要把这一条考虑进去，注意 broker 的顺序。</p>
+<pre><code>./kafka-preferred-replica-election.sh --zookeeper 127.0.0.1:2181/kafka
+</code></pre>]]></content>
     <summary type="html">
     <![CDATA[<h2 id="u6587_u7AE0_u5206_u4EAB"><a href="#u6587_u7AE0_u5206_u4EAB" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.con]]>
     </summary>
