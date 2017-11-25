@@ -3,19 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: c++ | CatChen</title>
+  <title>kafka-replication | CatChen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <a class="nav-icon" href="https://github.com/catlittlechen" title="GitHub" target="_blank">&#61595;</a>
-  <meta name="description" content="互联网行业的猫">
-<meta property="og:type" content="website">
-<meta property="og:title" content="CatChen">
-<meta property="og:url" content="http://catlittlechen.com/tags/c/index.html">
+  <meta name="description" content="文章分享好文 这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。 扩容add brokerkafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没">
+<meta name="keywords" content="学习,kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka-replication">
+<meta property="og:url" content="http://catlittlechen.com/2017/10/25/kafka-replication/index.html">
 <meta property="og:site_name" content="CatChen">
-<meta property="og:description" content="互联网行业的猫">
+<meta property="og:description" content="文章分享好文 这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。 扩容add brokerkafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2017-11-25T06:54:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CatChen">
-<meta name="twitter:description" content="互联网行业的猫">
+<meta name="twitter:title" content="kafka-replication">
+<meta name="twitter:description" content="文章分享好文 这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。 扩容add brokerkafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没">
   
     <link rel="alternative" href="/atom.xml" title="CatChen" type="application/atom+xml">
   
@@ -70,39 +72,87 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/25/c的模板类/" class="archive-article-date">
-  <time datetime="2015-09-24T23:56:37.000Z" itemprop="datePublished">9月 25</time>
+        <section id="main"><article id="post-kafka-replication" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/25/kafka-replication/" class="article-date">
+  <time datetime="2017-10-25T06:23:03.000Z" itemprop="datePublished">2017-10-25</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/kafka/">kafka</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/25/c的模板类/">c++的模板类</a>
+    <h1 class="article-title" itemprop="name">
+      kafka-replication
     </h1>
   
 
-    </header>
+      </header>
+      
+      <div class="article-entry" itemprop="articleBody">
+      
+           
+             
+               <h2 id="u6587_u7AE0_u5206_u4EAB"><a href="#u6587_u7AE0_u5206_u4EAB" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/" target="_blank" rel="external">好文</a></p>
+<p>这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。</p>
+<h2 id="u6269_u5BB9"><a href="#u6269_u5BB9" class="headerlink" title="扩容"></a>扩容</h2><h3 id="add_broker"><a href="#add_broker" class="headerlink" title="add broker"></a>add broker</h3><p>kafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没啥好说的。</p>
+<h3 id="add_partitions"><a href="#add_partitions" class="headerlink" title="add partitions"></a>add partitions</h3><p>增加 partition 的话，通过<code>kafka-topics.sh</code>这个脚本即可。</p>
+<pre><code>./kafka-topics.sh --alter --zookeeper 127.0.0.1:2181/kafka --partitions 10 --topic topic_test
+</code></pre><h4 id="u8C03_u6574_partitions"><a href="#u8C03_u6574_partitions" class="headerlink" title="调整 partitions"></a>调整 partitions</h4><p>调整的话，是通过<code>kafka-reassign-partitions.sh</code>这个脚本提交任务的。具体教程网上蛮多的，还是多写一些吧。</p>
+<h5 id="u6307_u5B9A_u9700_u8981_u8C03_u6574_u7684_topics"><a href="#u6307_u5B9A_u9700_u8981_u8C03_u6574_u7684_topics" class="headerlink" title="指定需要调整的 topics"></a>指定需要调整的 topics</h5><pre><code>{
+      &quot;topics&quot;: [
+        {&quot;topic&quot;:&quot;topic_test&quot;},
+      ],
+      &quot;version&quot;: 1
+}
+save to test.json
+</code></pre><h5 id="u751F_u6210_u8C03_u6574_u540E_u7684_json"><a href="#u751F_u6210_u8C03_u6574_u540E_u7684_json" class="headerlink" title="生成调整后的 json"></a>生成调整后的 json</h5><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --topics-to-move-json-file ./test.json --broker-list &quot;0,1,2,3,4&quot; --generate
+</code></pre><p>这里的 broker-list 是 kafka 配置文件里面 broker-id 的集合。<br>命令之后，会生成两个 json，一个是目前 partition 的分布，第二个是调整后的 partiton 分布，这里保存为 move.json。这里 kafka 是按照自己的算法生成的，实际上，并不是最优。所以最好对照目前 partition 的分布，自己再做调整。<br>原则有两个，1. Skewed, partition 分布要均匀；2. Leader Skewed, leader 分布要均匀。</p>
+<h4 id="u63D0_u4EA4_u8C03_u6574_u7684_json"><a href="#u63D0_u4EA4_u8C03_u6574_u7684_json" class="headerlink" title="提交调整的 json"></a>提交调整的 json</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --execute
+</code></pre><p>提交的任务是异步执行的，这个过程中网络磁盘IO都会很大，负载也会升高，所以需要注意。</p>
+<h4 id="u68C0_u67E5"><a href="#u68C0_u67E5" class="headerlink" title="检查"></a>检查</h4><pre><code>./kafka-reassign-partitions.sh --zookeeper 127.0.0.1:2181/kafka --reassignment-json-file  move.json --verify
+</code></pre><h3 id="u6307_u5B9A_leader"><a href="#u6307_u5B9A_leader" class="headerlink" title="指定 leader"></a>指定 leader</h3><p>指定 leader 的话，通过<code>kafka-preferred-replica-election.sh</code>这个脚本提交的。默认是选择了 Replicas 中，还出于 sycn 状态的broker的第一个。所以上面提交调整的 json，需要把这一条考虑进去，注意 broker 的顺序。<br>    ./kafka-preferred-replica-election.sh –zookeeper 127.0.0.1:2181/kafka</p>
+
+             
+            
+          </div>
+    <footer class="article-footer">
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kafka/">kafka</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/学习/">学习</a></li></ul>
+
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/10/10/kafka/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">kafka</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+<script>
+(function(){
+      var bp = document.createElement('script');
+          bp.src = '//push.zhanzhang.baidu.com/push.js';
+              var s = document.getElementsByTagName("script")[0];
+                  s.parentNode.insertBefore(bp, s);
+
+})();
+</script>
 </section>
         
           <aside id="sidebar">

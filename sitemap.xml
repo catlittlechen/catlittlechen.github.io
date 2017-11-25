@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://catlittlechen.com/2017/10/25/kafka-replication/</loc>
+    <lastmod>2017-11-25T06:54:36.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://catlittlechen.com/2017/10/10/kafka/</loc>
-    <lastmod>2017-11-20T15:38:14.000Z</lastmod>
+    <lastmod>2017-11-25T06:23:38.000Z</lastmod>
   </url>
   
   <url>
