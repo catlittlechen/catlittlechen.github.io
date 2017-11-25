@@ -4,6 +4,14 @@
   
     
     <entry>
+      <title><![CDATA[script]]></title>
+      <url>http://catlittlechen.com/2017/11/03/script/</url>
+      <content type="html"><![CDATA[<p>写golang的时候，很多人都是用fmt来调试的。因此，大量的输出没出都要重定向到文件，然后查看，有时候挺烦的。其实有个命令，可以帮忙。那就是 script。</p>
+<p>命令行中直接运行<code>script</code>命令后，它会默认将屏幕出现的所有内容，写入 typescript 的文件里面。<br>通过<code>exit</code>可以退出记录模式。<br>接下来就可以通过<code>more typescript</code>查看调试输出了.</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[kafka-replication]]></title>
       <url>http://catlittlechen.com/2017/10/25/kafka-replication/</url>
       <content type="html"><![CDATA[<h2 id="u6587_u7AE0_u5206_u4EAB"><a href="#u6587_u7AE0_u5206_u4EAB" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/" target="_blank" rel="external">好文</a></p>
