@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-11-25T06:55:59.000Z</updated>
+  <updated>2017-11-25T07:21:24.000Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,9 +19,10 @@
     <link href="http://catlittlechen.com/2017/10/25/kafka-replication/"/>
     <id>http://catlittlechen.com/2017/10/25/kafka-replication/</id>
     <published>2017-10-25T06:23:03.000Z</published>
-    <updated>2017-11-25T06:55:59.000Z</updated>
+    <updated>2017-11-25T07:21:24.000Z</updated>
     <content type="html"><![CDATA[<h2 id="u6587_u7AE0_u5206_u4EAB"><a href="#u6587_u7AE0_u5206_u4EAB" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/" target="_blank" rel="external">好文</a></p>
 <p>这里讲述了 partition 对于并发的重要性，其中介绍了 kafka 实现中，kafka 处理每一个 partition 都是对应一个线程的，所以多 partition 之间是写入是可以并发的。读取的时候，多个 consumer 消耗对应的 partition 是可以增加吞吐量的。</p>
+<p><a href="https://docs.confluent.io/current/kafka/deployment.html#hardware" target="_blank" rel="external">好文</a><br>这里讲述了 kafka 对硬件的选择。</p>
 <h2 id="u6269_u5BB9"><a href="#u6269_u5BB9" class="headerlink" title="扩容"></a>扩容</h2><h3 id="add_broker"><a href="#add_broker" class="headerlink" title="add broker"></a>add broker</h3><p>kafka 加入一个 broker 只需要配置文件对了，直接起来就好了，没啥好说的。</p>
 <h3 id="add_partitions"><a href="#add_partitions" class="headerlink" title="add partitions"></a>add partitions</h3><p>增加 partition 的话，通过<code>kafka-topics.sh</code>这个脚本即可。</p>
 <pre><code>./kafka-topics.sh --alter --zookeeper 127.0.0.1:2181/kafka --partitions 10 --topic topic_test
