@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2017-11-25T11:44:46.507Z</updated>
+  <updated>2017-12-12T11:51:42.245Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -13,6 +13,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[nginx_header]]></title>
+    <link href="http://catlittlechen.com/2017/12/12/nginx-header/"/>
+    <id>http://catlittlechen.com/2017/12/12/nginx-header/</id>
+    <published>2017-12-12T11:36:56.000Z</published>
+    <updated>2017-12-12T11:51:42.245Z</updated>
+    <content type="html"><![CDATA[<h3 id="u7EC6_u8282_u51B3_u5B9A"><a href="#u7EC6_u8282_u51B3_u5B9A" class="headerlink" title="细节决定"></a>细节决定</h3><p>因为业务方的需求，需要在 nginx 那层做 ssl 等解析，然后将443端口过来的流量，proxy 到下层的80端口。业务层的机器上，同样也搭建了一个nginx，将流量根据 uri 分发到不同的服务上。</p>
+<p>然后我犯错了。</p>
+<p>在两层的 nginx 上，都有一个配置是 add_header <strong><strong>: </strong></strong>，所以放回的请求的 header 上，出现了两个相同 key 和相同 value 的 header。</p>
+<p>所以当我用 curl 等命令请求数据的时候，可以完整的看到请求的 header 和 body。但是对于很多应用程序而言，这样子的 header 是非法的。</p>
+<p>记得 http header 的问题之前也遇到过，golang在解析 header 的过程中，如果发现异常的时候，会直接放回40*，而不会有任何日志输出。当时还是新版本的特性，升级了golang版本后发版后，就让我开始怀疑人生。</p>
+<p>总之，很多看起来不是很重要的细节，还是得了解。关键的时候，还是有用的。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h3 id="u7EC6_u8282_u51B3_u5B9A"><a href="#u7EC6_u8282_u51B3_u5B9A" class="headerlink" title="细节决定"></a>细节决定</h3><p>因为业务方的需求，需要在 nginx 那层做 s]]>
+    </summary>
+    
+      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    
+      <category term="nginx" scheme="http://catlittlechen.com/tags/nginx/"/>
+    
+      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[script]]></title>
@@ -550,34 +575,6 @@ save to test.json
 ]]></content>
     <summary type="html">
     <![CDATA[<h4 id="u521B_u5EFA_u7D22_u5F15"><a href="#u521B_u5EFA_u7D22_u5F15" class="headerlink" title="创建索引"></a>创建索引</h4><figure class="highlight xq]]>
-    </summary>
-    
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
-    
-      <category term="elasticsearch" scheme="http://catlittlechen.com/tags/elasticsearch/"/>
-    
-      <category term="elasticsearch" scheme="http://catlittlechen.com/categories/elasticsearch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[elasticsearch系列笔记(五) 结构化查询]]></title>
-    <link href="http://catlittlechen.com/2016/08/12/es5/"/>
-    <id>http://catlittlechen.com/2016/08/12/es5/</id>
-    <published>2016-08-12T13:16:59.000Z</published>
-    <updated>2017-03-25T14:07:48.000Z</updated>
-    <content type="html"><![CDATA[<h4 id="u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL"><a href="#u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL" class="headerlink" title="结构化查询Query DSL"></a>结构化查询Query DSL</h4><figure class="highlight dts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">    &#123;</div><div class="line">        <span class="string">"query"</span>: &#123;</div><div class="line"><span class="symbol">            QUERY_NAME:</span> &#123;</div><div class="line"><span class="symbol">                FIELD_NAME:</span> &#123;</div><div class="line"><span class="symbol">                    ARGUMENT:</span> VALUE,</div><div class="line"><span class="symbol">                    ARGUMENT:</span> VALUE,</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h4 id="u8FC7_u6EE4_u67E5_u8BE2Filter_DSL"><a href="#u8FC7_u6EE4_u67E5_u8BE2Filter_DSL" class="headerlink" title="过滤查询Filter DSL"></a>过滤查询Filter DSL</h4><h4 id="term__u8FC7_u6EE4"><a href="#term__u8FC7_u6EE4" class="headerlink" title="term 过滤"></a>term 过滤</h4><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"term"</span>: &#123;</div><div class="line">        <span class="string">"&#123;field&#125;"</span>: &#123;value&#125; </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="terms__u8FC7_u6EE4"><a href="#terms__u8FC7_u6EE4" class="headerlink" title="terms 过滤"></a>terms 过滤</h4><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"terms"</span>: &#123;</div><div class="line">        <span class="string">"&#123;field&#125;"</span>: [ &#123;value1&#125;, &#123;value2&#125; ]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="range_u8FC7_u6EE4"><a href="#range_u8FC7_u6EE4" class="headerlink" title="range过滤"></a>range过滤</h4><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"range"</span>: &#123;</div><div class="line">        <span class="string">"&#123;field&#125;"</span>: &#123;</div><div class="line">            <span class="string">"gte"</span>: <span class="number">20</span>, //<span class="keyword">gt</span> <span class="keyword">gte</span>, <span class="keyword">lt</span> <span class="keyword">lte</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="exits_2C_missing_u8FC7_u6EE4"><a href="#exits_2C_missing_u8FC7_u6EE4" class="headerlink" title="exits, missing过滤"></a>exits, missing过滤</h4><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"exists"</span>: &#123;</div><div class="line">        <span class="string">"field"</span>: <span class="string">"&#123;field&#125;"</span>,//存在这个类型</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="u8FC7_u6EE4"><a href="#u8FC7_u6EE4" class="headerlink" title="过滤"></a>过滤</h4><figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"bool"</span>: &#123;</div><div class="line">        <span class="string">"must"</span>: &#123;&#125;,//必须符合</div><div class="line">        <span class="string">"must_not"</span>: &#123;&#125;,//必须不符合</div><div class="line">        <span class="string">"should"</span>: &#123;&#125;,//必须符合其中一个条件</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="match_all"><a href="#match_all" class="headerlink" title="match_all"></a>match_all</h4><h4 id="match"><a href="#match" class="headerlink" title="match"></a>match</h4><h4 id="multi_match"><a href="#multi_match" class="headerlink" title="multi_match"></a>multi_match</h4><h4 id="u67E5_u8BE2_u6BD4_u8FC7_u6EE4_u591A_u4E86_u76F8_u5173_u6027_u8BA1_u7B97"><a href="#u67E5_u8BE2_u6BD4_u8FC7_u6EE4_u591A_u4E86_u76F8_u5173_u6027_u8BA1_u7B97" class="headerlink" title="查询比过滤多了相关性计算"></a>查询比过滤多了相关性计算</h4><h4 id="u590D_u5408_u67E5_u8BE2"><a href="#u590D_u5408_u67E5_u8BE2" class="headerlink" title="复合查询"></a>复合查询</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">   	<span class="attr">"filtered"</span>: &#123;</div><div class="line">       	<span class="attr">"query"</span>:  &#123; <span class="attr">"match"</span>: &#123; <span class="attr">"email"</span>: <span class="string">"business opportunity"</span> &#125;&#125;,</div><div class="line">       	<span class="attr">"filter"</span>: &#123; <span class="attr">"term"</span>:  &#123; <span class="attr">"folder"</span>: <span class="string">"inbox"</span> &#125;&#125;</div><div class="line">   	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="u9A8C_u8BC1_u67E5_u8BE2_uFF0C_u89E3_u91CA_u9519_u8BEF"><a href="#u9A8C_u8BC1_u67E5_u8BE2_uFF0C_u89E3_u91CA_u9519_u8BEF" class="headerlink" title="验证查询，解释错误"></a>验证查询，解释错误</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">GET <span class="regexp">/gb/</span>tweet<span class="regexp">/_validate/</span>query?explain</div><div class="line">   	&#123;</div><div class="line">       	<span class="string">"query"</span>: &#123;</div><div class="line">           	*********</div><div class="line">       	&#125;</div><div class="line">   	&#125;</div></pre></td></tr></table></figure>
-<h4 id="u6392_u5E8F_uFF0C_u5728query_u4E4B_u540E"><a href="#u6392_u5E8F_uFF0C_u5728query_u4E4B_u540E" class="headerlink" title="排序，在query之后"></a>排序，在query之后</h4><figure class="highlight xquery"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">GET /_search</div><div class="line">&#123;</div><div class="line">   	<span class="string">"query"</span>: &#123;</div><div class="line">   	&#125;,</div><div class="line">   	<span class="string">"sort"</span>: &#123;</div><div class="line">   		<span class="string">"&#123;field&#125;"</span>:&#123;</div><div class="line">   			<span class="string">"order"</span>: <span class="string">"desc"</span></div><div class="line">   		&#125;,</div><div class="line">   		<span class="string">"&#123;field&#125;"</span>:&#123;</div><div class="line">   			<span class="string">"order"</span>: <span class="string">"asc"</span>,</div><div class="line">   			<span class="string">"mode"</span>: <span class="string">"min"</span> //field为多个值时</div><div class="line">       	&#125;</div><div class="line">   	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h4 id="u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL"><a href="#u7ED3_u6784_u5316_u67E5_u8BE2Query_DSL" class="headerlink" title="结构化查询Query DSL">]]>
     </summary>
     
       <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>

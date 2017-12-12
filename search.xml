@@ -4,6 +4,18 @@
   
     
     <entry>
+      <title><![CDATA[nginx_header]]></title>
+      <url>http://catlittlechen.com/2017/12/12/nginx-header/</url>
+      <content type="html"><![CDATA[<h3 id="u7EC6_u8282_u51B3_u5B9A"><a href="#u7EC6_u8282_u51B3_u5B9A" class="headerlink" title="细节决定"></a>细节决定</h3><p>因为业务方的需求，需要在 nginx 那层做 ssl 等解析，然后将443端口过来的流量，proxy 到下层的80端口。业务层的机器上，同样也搭建了一个nginx，将流量根据 uri 分发到不同的服务上。</p>
+<p>然后我犯错了。</p>
+<p>在两层的 nginx 上，都有一个配置是 add_header <strong><strong>: </strong></strong>，所以放回的请求的 header 上，出现了两个相同 key 和相同 value 的 header。</p>
+<p>所以当我用 curl 等命令请求数据的时候，可以完整的看到请求的 header 和 body。但是对于很多应用程序而言，这样子的 header 是非法的。</p>
+<p>记得 http header 的问题之前也遇到过，golang在解析 header 的过程中，如果发现异常的时候，会直接放回40*，而不会有任何日志输出。当时还是新版本的特性，升级了golang版本后发版后，就让我开始怀疑人生。</p>
+<p>总之，很多看起来不是很重要的细节，还是得了解。关键的时候，还是有用的。</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[script]]></title>
       <url>http://catlittlechen.com/2017/11/03/script/</url>
       <content type="html"><![CDATA[<p>写golang的时候，很多人都是用fmt来调试的。因此，大量的输出没出都要重定向到文件，然后查看，有时候挺烦的。其实有个命令，可以帮忙。那就是 script。</p>
