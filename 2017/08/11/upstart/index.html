@@ -100,12 +100,12 @@
       
            
              
-               <h4 id="Upstart_u7684Expect"><a href="#Upstart_u7684Expect" class="headerlink" title="Upstart的Expect"></a>Upstart的Expect</h4><p>用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。</p>
+               <h4 id="Upstart的Expect"><a href="#Upstart的Expect" class="headerlink" title="Upstart的Expect"></a>Upstart的Expect</h4><p>用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。</p>
 <p>Expect有两种，”expect fork”表示进程只会fork一次，”expect daemonize”表示进程会fork两次，将自己变成后台进程。</p>
 <p>然而，错误的配置文件会让upstart启动某个进程之后，却无法跟踪管理这个进程的PID。结果Upstart会进入奇妙的状态。</p>
 <p>没办法，虽然本应该是它的PID，还没找到就不见了~因此，它十分怀念，念念不忘这个PID，以至于再也无法控制这个程序~无法启动，停止，重启这个进程。</p>
-<h3 id="u600E_u4E48_u529E_uFF1F"><a href="#u600E_u4E48_u529E_uFF1F" class="headerlink" title="怎么办？"></a>怎么办？</h3><p>方法其实很简单，如果我们可以启动一个服务，它的PID是Upstart所需要的PID，然后让Upstart跟踪到，然后kill掉这个PID的进程，那么Upstart的行为才可以变为正常。</p>
-<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>有一个ruby的<a href="https://raw.githubusercontent.com/ion1/workaround-upstart-snafu/master/workaround-upstart-snafu" target="_blank" rel="external">代码</a>，可以参考下。亲测可用~</p>
+<h3 id="怎么办？"><a href="#怎么办？" class="headerlink" title="怎么办？"></a>怎么办？</h3><p>方法其实很简单，如果我们可以启动一个服务，它的PID是Upstart所需要的PID，然后让Upstart跟踪到，然后kill掉这个PID的进程，那么Upstart的行为才可以变为正常。</p>
+<h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><p>有一个ruby的<a href="https://raw.githubusercontent.com/ion1/workaround-upstart-snafu/master/workaround-upstart-snafu" target="_blank" rel="noopener">代码</a>，可以参考下。亲测可用~</p>
 
              
             
@@ -157,7 +157,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">目录</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -167,7 +167,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 17.14px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.43px;">ganglia</a> <a href="/tags/golang/" style="font-size: 12.86px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.43px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.43px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.43px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.43px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 14.29px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 15.71px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.57px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.67px;">ganglia</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.67px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.67px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.67px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.67px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 15px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.33px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
     </div>
   </div>
 
@@ -177,7 +177,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -188,6 +188,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/17/向2017致敬/">向2017致敬</a>
+          </li>
         
           <li>
             <a href="/2017/12/12/nginx-header/">nginx_header</a>
@@ -205,10 +209,6 @@
             <a href="/2017/10/10/kafka/">kafka</a>
           </li>
         
-          <li>
-            <a href="/2017/09/24/whoiam/">whoiam</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -222,7 +222,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Chan Cat<br>
+      &copy; 2018 Chan Cat<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
     <div id="footer-info" class="inner">

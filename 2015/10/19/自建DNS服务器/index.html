@@ -106,15 +106,15 @@
                <p>今天有时间，我想看下自己建立DNS服务器，是怎么样的流程。<br>结果发现是如此的简单。</p>
 <p>以下是基于ubuntu的。</p>
 <h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><p>域名管理系统DNS(Domain Name System)，是通过域名来解析到IP的一种网络服务，自建DNS服务器，可以在内网中，自己设定特定的域名解析，达到内网机器可以无需配置host，达到访问内网服务的作用。</p>
-<h3 id="DNS_u8BB0_u5F55_28_u5907_u5FD8_29_uFF1A"><a href="#DNS_u8BB0_u5F55_28_u5907_u5FD8_29_uFF1A" class="headerlink" title="DNS记录(备忘)："></a>DNS记录(备忘)：</h3><ul>
+<h3 id="DNS记录-备忘-："><a href="#DNS记录-备忘-：" class="headerlink" title="DNS记录(备忘)："></a>DNS记录(备忘)：</h3><ul>
 <li>A记录：        主机名或者域名 –&gt; 相应的IP地址；</li>
 <li>NS记录：        记录域名有哪些DNS服务器来解析；</li>
 <li>CNAME记录：    将域名的解析转到另外一个域名上去；</li>
 <li>MX记录：        一个网络里面的电子邮件服务引导到特定服务器；</li>
 <li>TXT记录：        提供了域名的文本信息；</li>
 </ul>
-<h2 id="Bind9"><a href="#Bind9" class="headerlink" title="Bind9"></a>Bind9</h2><p>bind(berkeley Internet Name Daemon)<br>建立DNS服务器，在ubuntu下只需要安装bind9就可以了。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-<span class="builtin-name">get</span> install bind9</div></pre></td></tr></table></figure></p>
-<h3 id="u670D_u52A1_u5668"><a href="#u670D_u52A1_u5668" class="headerlink" title="服务器"></a>服务器</h3><p>bind9可以配置多种DNS服务器:</p>
+<h2 id="Bind9"><a href="#Bind9" class="headerlink" title="Bind9"></a>Bind9</h2><p>bind(berkeley Internet Name Daemon)<br>建立DNS服务器，在ubuntu下只需要安装bind9就可以了。<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-<span class="builtin-name">get</span> install bind9</span><br></pre></td></tr></table></figure></p>
+<h3 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h3><p>bind9可以配置多种DNS服务器:</p>
 <ol>
 <li>缓冲服务器，用于缓存DNS服务，减少带宽使用；</li>
 <li>主服务器，用于记录DNS服务信息；</li>
@@ -122,7 +122,7 @@
 <li>混合服务器，多种服务器合并的累心；</li>
 <li>私用的主从服务器；</li>
 </ol>
-<h3 id="u4E3B_u8981_u914D_u7F6E"><a href="#u4E3B_u8981_u914D_u7F6E" class="headerlink" title="主要配置"></a>主要配置</h3><pre><code>cd /etc/bind/
+<h3 id="主要配置"><a href="#主要配置" class="headerlink" title="主要配置"></a>主要配置</h3><pre><code>cd /etc/bind/
 </code></pre><p>可以看出在目录下面有多个name.conf*的文件，为配置文件；db.*的文件为DNS记录文件；*.keys文件是Bind在交互过程中用于检验的秘钥。    </p>
 <h4 id="name-conf-options"><a href="#name-conf-options" class="headerlink" title="name.conf.options"></a>name.conf.options</h4><ul>
 <li>forwarders: 选择现有的DNS提供商，以’;’分割，如果不写的话，这个地方会被默认为root名称服务器来解析，速度会特别慢；</li>
@@ -139,7 +139,7 @@
 <li>notify no: 在区域数据改动或者重启服务时，是否通知其他服务器；</li>
 <li>dump-file “filename”: 执行rndc dumpdb时，存放的路径；</li>
 </ul>
-<h4 id="name-conf_logging"><a href="#name-conf_logging" class="headerlink" title="name.conf logging"></a>name.conf logging</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">	logging </span>&#123;</div><div class="line"> 			[ channel channel_name &#123;</div><div class="line">   			( file path_name</div><div class="line">       		[ versions ( number | unlimited ) ]</div><div class="line">       		[ size size_spec ]</div><div class="line">       		[ syslog (syslog_facility） | stderr | <span class="literal">null</span>)];</div><div class="line">   			[ severity (critical | <span class="builtin-name">error</span> | <span class="builtin-name">warning</span> | notice | <span class="builtin-name">info</span> | <span class="builtin-name">debug</span> [ level ] | dynamic ); ]</div><div class="line">   			[ print-category <span class="literal">yes</span> | <span class="literal">no</span>; ]</div><div class="line">   			[ print-severity <span class="literal">yes</span> | <span class="literal">no</span>; ]</div><div class="line">   			[ print-time <span class="literal">yes</span> | <span class="literal">no</span>; ]</div><div class="line"> 			&#125;; ]</div><div class="line"> 			[ category category_name &#123;</div><div class="line">   			channel_name ; [ channel_name ; <span class="built_in">..</span>. ]</div><div class="line"> 			&#125;; ]</div><div class="line"> 			<span class="built_in">..</span>.</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="name-conf-logging"><a href="#name-conf-logging" class="headerlink" title="name.conf logging"></a>name.conf logging</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">	logging </span>&#123;</span><br><span class="line"> 			[ channel channel_name &#123;</span><br><span class="line">   			( file path_name</span><br><span class="line">       		[ versions ( number | unlimited ) ]</span><br><span class="line">       		[ size size_spec ]</span><br><span class="line">       		[ syslog (syslog_facility） | stderr | <span class="literal">null</span>)];</span><br><span class="line">   			[ severity (critical | <span class="builtin-name">error</span> | <span class="builtin-name">warning</span> | notice | <span class="builtin-name">info</span> | <span class="builtin-name">debug</span> [ level ] | dynamic ); ]</span><br><span class="line">   			[ print-category <span class="literal">yes</span> | <span class="literal">no</span>; ]</span><br><span class="line">   			[ print-severity <span class="literal">yes</span> | <span class="literal">no</span>; ]</span><br><span class="line">   			[ print-time <span class="literal">yes</span> | <span class="literal">no</span>; ]</span><br><span class="line"> 			&#125;; ]</span><br><span class="line"> 			[ category category_name &#123;</span><br><span class="line">   			channel_name ; [ channel_name ; <span class="built_in">..</span>. ]</span><br><span class="line"> 			&#125;; ]</span><br><span class="line"> 			<span class="built_in">..</span>.</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>file: 日志文件的路径；</li>
 <li>versions, size: 用于控制日志文件的版本；<ol>
@@ -151,9 +151,9 @@
 <li>syslog, stderr, null: 三个参数填写出其中的一个，syslog会将输出的信息输出到系统日志中，详细的配置可以看下syslog，stderr将通道的输出信息重定向到标准错误流中，null则是忽略信息；</li>
 <li>category: 这一部分的信息其实是将特定的输出内容写入指定的通道之中；具体有哪些种类的输出内容可以看下官方的介绍，种类太多也就不想列了。</li>
 </ul>
-<h4 id="name-conf_zone"><a href="#name-conf_zone" class="headerlink" title="name.conf zone"></a>name.conf zone</h4><p>在配置文件中，有name.conf.defaul-zones文件，已经默认的添加了部分DNS记录，而自建dns服务器，达到内网解析的关键，也就是配置这部分的文件。  </p>
+<h4 id="name-conf-zone"><a href="#name-conf-zone" class="headerlink" title="name.conf zone"></a>name.conf zone</h4><p>在配置文件中，有name.conf.defaul-zones文件，已经默认的添加了部分DNS记录，而自建dns服务器，达到内网解析的关键，也就是配置这部分的文件。  </p>
 <p>zone的配置模板目下所示：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">zone “catchenii.com” <span class="keyword">in</span> &#123;</div><div class="line"><span class="built_in">	type </span>master;</div><div class="line">	file <span class="string">"/etc/bind/db.catchenii.com"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">zone “catchenii.com” <span class="keyword">in</span> &#123;</span><br><span class="line"><span class="built_in">	type </span>master;</span><br><span class="line">	file <span class="string">"/etc/bind/db.catchenii.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>type: 指DNS服务器的类型，分别为master(主服务器)，slave(从服务器)，hint(区域服务器)；</li>
 <li>file: 区域数据文件；</li>
@@ -172,11 +172,11 @@
 <li>Negative Cache TTL: 解析失败的记录的缓存时间；  </li>
 </ul>
 <p>接下来的数据为DNS的解析记录啦！</p>
-<h3 id="u7ED3_u679C"><a href="#u7ED3_u679C" class="headerlink" title="结果"></a>结果</h3><p>修改好文件之后，可以重启下服务：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">sudo</span> /etc/init.d/<span class="keyword">bind9 </span>restart</div></pre></td></tr></table></figure>
+<h3 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h3><p>修改好文件之后，可以重启下服务：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">sudo</span> /etc/init.d/<span class="keyword">bind9 </span>restart</span><br></pre></td></tr></table></figure>
 <p>效果如图所示：<br><img src="http://7xnn4y.com1.z0.glb.clouddn.com/3.png" alt="结果图"></p>
 <p>嘻嘻。</p>
-<h2 id="u5907_u8BB0_uFF1A"><a href="#u5907_u8BB0_uFF1A" class="headerlink" title="备记："></a>备记：</h2><p>各类DNS服务器的<a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software" target="_blank" rel="external">比较</a>!</p>
+<h2 id="备记："><a href="#备记：" class="headerlink" title="备记："></a>备记：</h2><p>各类DNS服务器的<a href="https://en.wikipedia.org/wiki/Comparison_of_DNS_server_software" target="_blank" rel="noopener">比较</a>!</p>
 
              
             
@@ -228,7 +228,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">目录</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -238,7 +238,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 17.14px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.43px;">ganglia</a> <a href="/tags/golang/" style="font-size: 12.86px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.43px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.43px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.43px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.43px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 14.29px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 15.71px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.57px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.67px;">ganglia</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.67px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.67px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.67px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.67px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 15px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.33px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
     </div>
   </div>
 
@@ -248,7 +248,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -259,6 +259,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/17/向2017致敬/">向2017致敬</a>
+          </li>
         
           <li>
             <a href="/2017/12/12/nginx-header/">nginx_header</a>
@@ -276,10 +280,6 @@
             <a href="/2017/10/10/kafka/">kafka</a>
           </li>
         
-          <li>
-            <a href="/2017/09/24/whoiam/">whoiam</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -293,7 +293,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Chan Cat<br>
+      &copy; 2018 Chan Cat<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
     <div id="footer-info" class="inner">

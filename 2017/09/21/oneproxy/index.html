@@ -100,19 +100,19 @@
       
            
              
-               <p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="external">oneproxy</a>，出生于阿里系的人员之手，主要的目的是为了解决数据库变迁所带来的问题．</p>
-<h2 id="u7279_u70B9"><a href="#u7279_u70B9" class="headerlink" title="特点"></a>特点</h2><p>负载均衡 + 分库分表 + 大数据 + SQL监控 + 安全审计</p>
+               <p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="noopener">oneproxy</a>，出生于阿里系的人员之手，主要的目的是为了解决数据库变迁所带来的问题．</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>负载均衡 + 分库分表 + 大数据 + SQL监控 + 安全审计</p>
 <p>说说我想了解的几个方面吧～</p>
-<h2 id="SQL_u76D1_u63A7"><a href="#SQL_u76D1_u63A7" class="headerlink" title="SQL监控"></a>SQL监控</h2><p>在解决安全方面，oneproxy有几个层次验证拦截．<br>  1．网络隔离，oneproxy可以限制其他机器对端口的访问</p>
+<h2 id="SQL监控"><a href="#SQL监控" class="headerlink" title="SQL监控"></a>SQL监控</h2><p>在解决安全方面，oneproxy有几个层次验证拦截．<br>  1．网络隔离，oneproxy可以限制其他机器对端口的访问</p>
 <ol>
 <li>登录验证，就是数据库用户密码验证</li>
 <li>访问限制，就是MySQL等常见的权限验证</li>
 <li>应用验证，类似于Google的动态口令，发送一个特殊的SQL语句来对数据库的访问进行解锁</li>
 <li>SQL白名单，需要搜集目前可以执行的SQL模板形成白名单，可以有效的防止SQL注入．<br>除此之外，还有基于客户端IP地址的流量控制，而且还有很多监控相关的数据可以查看，具体就不罗列了．</li>
 </ol>
-<h2 id="u8D1F_u8F7D_u5747_u8861"><a href="#u8D1F_u8F7D_u5747_u8861" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>由于oneproxy实际上是一个代理，所以实际上，后端到底是访问哪个数据库，对于用户本身是未知的．<br>如同haproxy或者codis这一类应用一样，它可以减少实际数据库的链接数，减少tcp链接频繁创建．<br>所以，oneproxy不能用<code>use</code>,存储过程，<code>prepare</code>这一类的操作．<br>更大的好处是，多实例数据库可以防止单点故障．</p>
-<p>我看oneproxy有相关的配置，可以让它优先去访问master还是slave数据库，但是这个操作是oneproxy实例级别的，大部分业务场景都是读写分离，但是对于部分实时性要求比较高的场景，读写都会在主数据库完成，即使是开了SemiSync也是不够的，是否可以做到指定呢？还是说，这时候实际上，开发不应该基于MySQL等来完成实时的一致性校验．<br>目前的策略是 read_slave, read_balance, big_slave, big_balance．完整的介绍<a href="http://www.onexsoft.com/zh/oneproxy-read-traffic-scaleout.html" target="_blank" rel="external">传送门</a></p>
-<h2 id="u5206_u5E93_u5206_u8868"><a href="#u5206_u5E93_u5206_u8868" class="headerlink" title="分库分表"></a>分库分表</h2><p>这是很多proxy都需要支持的一个特性，mysql实际上也是支持单实例的分区的，不过这对SQL解析和merge数据方存在一定的挑战．这个特性的基础上，大表可以根据需要分散到各个不同的数据库实例之中，对查询的性能瓶颈有很大的突破．不过存在的问题，比如分布式事务的支持，我看oneproxy还是没有解决的，毕竟老大难．<br>这里有个很不错的功能，是在分库分表的情况下，可以生成对应的主键．<a href="http://www.onexsoft.com/zh/oneproxy-sharding-key-sequence.html" target="_blank" rel="external">创送们</a> 从前自己实现的分表里面，主键是通过redis来维护的自增值．用oneproxy的话，就方便多了～</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>由于oneproxy实际上是一个代理，所以实际上，后端到底是访问哪个数据库，对于用户本身是未知的．<br>如同haproxy或者codis这一类应用一样，它可以减少实际数据库的链接数，减少tcp链接频繁创建．<br>所以，oneproxy不能用<code>use</code>,存储过程，<code>prepare</code>这一类的操作．<br>更大的好处是，多实例数据库可以防止单点故障．</p>
+<p>我看oneproxy有相关的配置，可以让它优先去访问master还是slave数据库，但是这个操作是oneproxy实例级别的，大部分业务场景都是读写分离，但是对于部分实时性要求比较高的场景，读写都会在主数据库完成，即使是开了SemiSync也是不够的，是否可以做到指定呢？还是说，这时候实际上，开发不应该基于MySQL等来完成实时的一致性校验．<br>目前的策略是 read_slave, read_balance, big_slave, big_balance．完整的介绍<a href="http://www.onexsoft.com/zh/oneproxy-read-traffic-scaleout.html" target="_blank" rel="noopener">传送门</a></p>
+<h2 id="分库分表"><a href="#分库分表" class="headerlink" title="分库分表"></a>分库分表</h2><p>这是很多proxy都需要支持的一个特性，mysql实际上也是支持单实例的分区的，不过这对SQL解析和merge数据方存在一定的挑战．这个特性的基础上，大表可以根据需要分散到各个不同的数据库实例之中，对查询的性能瓶颈有很大的突破．不过存在的问题，比如分布式事务的支持，我看oneproxy还是没有解决的，毕竟老大难．<br>这里有个很不错的功能，是在分库分表的情况下，可以生成对应的主键．<a href="http://www.onexsoft.com/zh/oneproxy-sharding-key-sequence.html" target="_blank" rel="noopener">创送们</a> 从前自己实现的分表里面，主键是通过redis来维护的自增值．用oneproxy的话，就方便多了～</p>
 
              
             
@@ -164,7 +164,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">目录</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c++</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/elasticsearch/">elasticsearch</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/golang/">golang</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/kafka/">kafka</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/spark/">spark</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/学习/">学习</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/折腾/">折腾</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/活着/">活着</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/踩坑日记/">踩坑日记</a><span class="category-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -174,7 +174,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 17.14px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.43px;">ganglia</a> <a href="/tags/golang/" style="font-size: 12.86px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.43px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.43px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.43px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.43px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 14.29px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 15.71px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.57px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
+      <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/docker/" style="font-size: 10px;">docker</a> <a href="/tags/elasticsearch/" style="font-size: 16.67px;">elasticsearch</a> <a href="/tags/ganglia/" style="font-size: 11.67px;">ganglia</a> <a href="/tags/golang/" style="font-size: 13.33px;">golang</a> <a href="/tags/kafka/" style="font-size: 11.67px;">kafka</a> <a href="/tags/nagios/" style="font-size: 10px;">nagios</a> <a href="/tags/naxsi/" style="font-size: 10px;">naxsi</a> <a href="/tags/nginx/" style="font-size: 11.67px;">nginx</a> <a href="/tags/oneproxy/" style="font-size: 10px;">oneproxy</a> <a href="/tags/pyrobuf/" style="font-size: 11.67px;">pyrobuf</a> <a href="/tags/python/" style="font-size: 11.67px;">python</a> <a href="/tags/script/" style="font-size: 10px;">script</a> <a href="/tags/solr/" style="font-size: 10px;">solr</a> <a href="/tags/spark/" style="font-size: 15px;">spark</a> <a href="/tags/upstart/" style="font-size: 10px;">upstart</a> <a href="/tags/学习/" style="font-size: 20px;">学习</a> <a href="/tags/技术/" style="font-size: 10px;">技术</a> <a href="/tags/生活/" style="font-size: 16.67px;">生活</a> <a href="/tags/监控/" style="font-size: 10px;">监控</a> <a href="/tags/翻译/" style="font-size: 10px;">翻译</a> <a href="/tags/虚拟化/" style="font-size: 10px;">虚拟化</a> <a href="/tags/起点/" style="font-size: 10px;">起点</a> <a href="/tags/踩坑日记/" style="font-size: 18.33px;">踩坑日记</a> <a href="/tags/转折/" style="font-size: 10px;">转折</a>
     </div>
   </div>
 
@@ -184,7 +184,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">文章</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">二月 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">十月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">五月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">七月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">一月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">十一月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">4</span></li></ul>
     </div>
   </div>
 
@@ -195,6 +195,10 @@
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/02/17/向2017致敬/">向2017致敬</a>
+          </li>
         
           <li>
             <a href="/2017/12/12/nginx-header/">nginx_header</a>
@@ -212,10 +216,6 @@
             <a href="/2017/10/10/kafka/">kafka</a>
           </li>
         
-          <li>
-            <a href="/2017/09/24/whoiam/">whoiam</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -229,7 +229,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2017 Chan Cat<br>
+      &copy; 2018 Chan Cat<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
     <div id="footer-info" class="inner">

@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://catlittlechen.com/2018/02/17/%E5%90%912017%E8%87%B4%E6%95%AC/</loc>
+    <lastmod>2018-02-23T12:48:56.048Z</lastmod>
+    <data>
+        <display>
+        <title>向2017致敬</title>
+        <pubTime>2018-02-16T16:38:52.000Z</pubTime>
+        
+        <tag>生活</tag>
+         
+         
+           
+             
+              <breadCrumb title="活着" url="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://catlittlechen.com/2017/12/12/nginx-header/</loc>
     <lastmod>2017-12-12T11:51:42.245Z</lastmod>
     <data>
@@ -276,9 +296,9 @@
         <title>nagios和ganglia</title>
         <pubTime>2015-11-11T08:32:19.000Z</pubTime>
         
-        <tag>ganglia</tag>
-         
         <tag>nagios</tag>
+         
+        <tag>ganglia</tag>
          
         <tag>监控</tag>
          
