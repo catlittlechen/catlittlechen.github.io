@@ -26,26 +26,6 @@
 
     
   <url>
-    <loc>http://catlittlechen.com/2018/02/17/%E5%90%912017%E8%87%B4%E6%95%AC/</loc>
-    <lastmod>2018-02-23T15:18:51.314Z</lastmod>
-    <data>
-        <display>
-        <title>向2017致敬</title>
-        <pubTime>2018-02-16T16:38:52.000Z</pubTime>
-        
-        <tag>生活</tag>
-         
-         
-           
-             
-              <breadCrumb title="活着" url="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://catlittlechen.com/2017/12/12/nginx-header/</loc>
     <lastmod>2017-12-12T11:51:42.245Z</lastmod>
     <data>
@@ -710,26 +690,6 @@
            
              
               <breadCrumb title="docker" url="http://catlittlechen.com/categories/docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://catlittlechen.com/2017/01/25/%E5%90%912016%E8%87%B4%E6%95%AC/</loc>
-    <lastmod>2017-02-20T13:14:33.000Z</lastmod>
-    <data>
-        <display>
-        <title>向2016致敬</title>
-        <pubTime>2017-01-25T10:26:51.000Z</pubTime>
-        
-        <tag>生活</tag>
-         
-         
-           
-             
-              <breadCrumb title="活着" url="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
           
         </display>
     </data>
