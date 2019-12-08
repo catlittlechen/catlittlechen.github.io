@@ -10,7 +10,7 @@
 <meta name="keywords" content="踩坑日记,nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="nginx_header">
-<meta property="og:url" content="http://catlittlechen.com/2017/12/12/nginx-header/index.html">
+<meta property="og:url" content="https://catlittlechen.com/2017/12/12/nginx-header/index.html">
 <meta property="og:site_name" content="CatChen">
 <meta property="og:description" content="细节决定因为业务方的需求，需要在 nginx 那层做 ssl 等解析，然后将443端口过来的流量，proxy 到下层的80端口。业务层的机器上，同样也搭建了一个nginx，将流量根据 uri 分发到不同的服务上。 然后我犯错了。 在两层的 nginx 上，都有一个配置是 add_header : ，所以放回的请求的 header 上，出现了两个相同 key 和相同 value 的 header。">
 <meta property="og:locale" content="zh-CN">
@@ -65,7 +65,7 @@
         
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://catlittlechen.com"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://catlittlechen.com"></form>
       </div>
     </div>
   </div>

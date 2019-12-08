@@ -3,9 +3,9 @@
   <title><![CDATA[CatChen]]></title>
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://catlittlechen.com/"/>
+  <link href="https://catlittlechen.com/"/>
   <updated>2019-11-16T07:08:36.089Z</updated>
-  <id>http://catlittlechen.com/</id>
+  <id>https://catlittlechen.com/</id>
   
   <author>
     <name><![CDATA[Chan Cat]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[tmux]]></title>
-    <link href="http://catlittlechen.com/2018/08/13/tmux/"/>
-    <id>http://catlittlechen.com/2018/08/13/tmux/</id>
+    <link href="https://catlittlechen.com/2018/08/13/tmux/"/>
+    <id>https://catlittlechen.com/2018/08/13/tmux/</id>
     <published>2018-08-13T05:57:03.000Z</published>
     <updated>2019-11-16T07:08:36.089Z</updated>
     <content type="html"><![CDATA[<h2 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h2><p>新的公司，开发需要远程到另外一台开发机器上，所以开始使用 tmux，虽然还是喜欢 ubuntu 的 terminal 多一些点。</p>
@@ -55,16 +55,16 @@
     <![CDATA[<h2 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h2><p>新的公司，开发需要远程到另外一台开发机器上，所以开始使用 tmux，虽然还是喜欢 ubuntu 的 terminal 多一些]]>
     </summary>
     
-      <category term="工具" scheme="http://catlittlechen.com/tags/%E5%B7%A5%E5%85%B7/"/>
+      <category term="工具" scheme="https://catlittlechen.com/tags/%E5%B7%A5%E5%85%B7/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[向2017致敬]]></title>
-    <link href="http://catlittlechen.com/2018/02/17/%E5%90%912017%E8%87%B4%E6%95%AC/"/>
-    <id>http://catlittlechen.com/2018/02/17/向2017致敬/</id>
+    <link href="https://catlittlechen.com/2018/02/17/%E5%90%912017%E8%87%B4%E6%95%AC/"/>
+    <id>https://catlittlechen.com/2018/02/17/向2017致敬/</id>
     <published>2018-02-16T16:38:52.000Z</published>
     <updated>2018-02-23T15:18:51.314Z</updated>
     <content type="html"><![CDATA[<h2 id="大概"><a href="#大概" class="headerlink" title="大概"></a>大概</h2><p>大年初一结束了。每年过年的放假，除了陪陪家人，次要的事情就是反思过去。</p>
@@ -79,16 +79,16 @@
 <p>2017年，这个鸡年，打个分的话，只有59分，差一分及]]>
     </summary>
     
-      <category term="生活" scheme="http://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
-      <category term="活着" scheme="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
+      <category term="活着" scheme="https://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[nginx_header]]></title>
-    <link href="http://catlittlechen.com/2017/12/12/nginx-header/"/>
-    <id>http://catlittlechen.com/2017/12/12/nginx-header/</id>
+    <link href="https://catlittlechen.com/2017/12/12/nginx-header/"/>
+    <id>https://catlittlechen.com/2017/12/12/nginx-header/</id>
     <published>2017-12-12T11:36:56.000Z</published>
     <updated>2017-12-12T11:51:42.245Z</updated>
     <content type="html"><![CDATA[<h3 id="细节决定"><a href="#细节决定" class="headerlink" title="细节决定"></a>细节决定</h3><p>因为业务方的需求，需要在 nginx 那层做 ssl 等解析，然后将443端口过来的流量，proxy 到下层的80端口。业务层的机器上，同样也搭建了一个nginx，将流量根据 uri 分发到不同的服务上。</p>
@@ -102,18 +102,18 @@
     <![CDATA[<h3 id="细节决定"><a href="#细节决定" class="headerlink" title="细节决定"></a>细节决定</h3><p>因为业务方的需求，需要在 nginx 那层做 ssl 等解析，然后将443端口过来的流量，proxy 到下层的80端口。业务]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="nginx" scheme="http://catlittlechen.com/tags/nginx/"/>
+      <category term="nginx" scheme="https://catlittlechen.com/tags/nginx/"/>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[script]]></title>
-    <link href="http://catlittlechen.com/2017/11/03/script/"/>
-    <id>http://catlittlechen.com/2017/11/03/script/</id>
+    <link href="https://catlittlechen.com/2017/11/03/script/"/>
+    <id>https://catlittlechen.com/2017/11/03/script/</id>
     <published>2017-11-03T11:34:36.000Z</published>
     <updated>2017-11-25T11:44:46.507Z</updated>
     <content type="html"><![CDATA[<p>写golang的时候，很多人都是用fmt来调试的。因此，大量的输出没出都要重定向到文件，然后查看，有时候挺烦的。其实有个命令，可以帮忙。那就是 script。</p>
@@ -124,18 +124,18 @@
 <p>命令行中直接运行<code>script</code>命令后，它会默认将屏幕出现的所有内容，写入 t]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="script" scheme="http://catlittlechen.com/tags/script/"/>
+      <category term="script" scheme="https://catlittlechen.com/tags/script/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[kafka-replication]]></title>
-    <link href="http://catlittlechen.com/2017/10/25/kafka-replication/"/>
-    <id>http://catlittlechen.com/2017/10/25/kafka-replication/</id>
+    <link href="https://catlittlechen.com/2017/10/25/kafka-replication/"/>
+    <id>https://catlittlechen.com/2017/10/25/kafka-replication/</id>
     <published>2017-10-25T06:23:03.000Z</published>
     <updated>2017-11-25T07:21:24.000Z</updated>
     <content type="html"><![CDATA[<h2 id="文章分享"><a href="#文章分享" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-number-of-topicspartitions-in-a-kafka-cluster/" target="_blank" rel="noopener">好文</a></p>
@@ -164,18 +164,18 @@ save to test.json
     <![CDATA[<h2 id="文章分享"><a href="#文章分享" class="headerlink" title="文章分享"></a>文章分享</h2><p><a href="https://www.confluent.io/blog/how-to-choose-the-numbe]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="kafka" scheme="http://catlittlechen.com/tags/kafka/"/>
+      <category term="kafka" scheme="https://catlittlechen.com/tags/kafka/"/>
     
-      <category term="kafka" scheme="http://catlittlechen.com/categories/kafka/"/>
+      <category term="kafka" scheme="https://catlittlechen.com/categories/kafka/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[kafka]]></title>
-    <link href="http://catlittlechen.com/2017/10/10/kafka/"/>
-    <id>http://catlittlechen.com/2017/10/10/kafka/</id>
+    <link href="https://catlittlechen.com/2017/10/10/kafka/"/>
+    <id>https://catlittlechen.com/2017/10/10/kafka/</id>
     <published>2017-10-10T14:54:53.000Z</published>
     <updated>2017-11-25T06:23:38.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Google等搜索引擎可以找到很多文章来介绍，那我就介绍下，我遇到的问题吧。</p>
@@ -188,18 +188,18 @@ save to test.json
     <![CDATA[<h2 id="Kafka"><a href="#Kafka" class="headerlink" title="Kafka"></a>Kafka</h2><p>一大利器，以零拷贝，文件append之类好玩的优点，而被选择为了很多公司的数据总线，配置什么的就不多说了，Googl]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="kafka" scheme="http://catlittlechen.com/tags/kafka/"/>
+      <category term="kafka" scheme="https://catlittlechen.com/tags/kafka/"/>
     
-      <category term="kafka" scheme="http://catlittlechen.com/categories/kafka/"/>
+      <category term="kafka" scheme="https://catlittlechen.com/categories/kafka/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[whoiam]]></title>
-    <link href="http://catlittlechen.com/2017/09/24/whoiam/"/>
-    <id>http://catlittlechen.com/2017/09/24/whoiam/</id>
+    <link href="https://catlittlechen.com/2017/09/24/whoiam/"/>
+    <id>https://catlittlechen.com/2017/09/24/whoiam/</id>
     <published>2017-09-23T16:18:44.000Z</published>
     <updated>2017-09-23T17:33:47.000Z</updated>
     <content type="html"><![CDATA[<p>你离开的第一周，生活继续。</p>
@@ -222,18 +222,18 @@ save to test.json
 <li>这周刚好飞哥他们参加各种校招笔试面试，所以下班后也帮他们做做笔试，讲解各种遇到的知识点。但是]]>
     </summary>
     
-      <category term="生活" scheme="http://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="https://catlittlechen.com/tags/%E7%94%9F%E6%B4%BB/"/>
     
-      <category term="转折" scheme="http://catlittlechen.com/tags/%E8%BD%AC%E6%8A%98/"/>
+      <category term="转折" scheme="https://catlittlechen.com/tags/%E8%BD%AC%E6%8A%98/"/>
     
-      <category term="活着" scheme="http://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
+      <category term="活着" scheme="https://catlittlechen.com/categories/%E6%B4%BB%E7%9D%80/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[oneproxy]]></title>
-    <link href="http://catlittlechen.com/2017/09/21/oneproxy/"/>
-    <id>http://catlittlechen.com/2017/09/21/oneproxy/</id>
+    <link href="https://catlittlechen.com/2017/09/21/oneproxy/"/>
+    <id>https://catlittlechen.com/2017/09/21/oneproxy/</id>
     <published>2017-09-21T00:49:25.000Z</published>
     <updated>2017-09-26T13:57:21.000Z</updated>
     <content type="html"><![CDATA[<p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="noopener">oneproxy</a>，出生于阿里系的人员之手，主要的目的是为了解决数据库变迁所带来的问题．</p>
@@ -254,18 +254,18 @@ save to test.json
     <![CDATA[<p>前段时间调研了一下oneproxy，google收录的资料比较少，基本都是看得官方的博客文章．<br><a href="http://www.onexsoft.com" target="_blank" rel="noopener">oneproxy</a>，出生于阿里系的人]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="oneproxy" scheme="http://catlittlechen.com/tags/oneproxy/"/>
+      <category term="oneproxy" scheme="https://catlittlechen.com/tags/oneproxy/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[naxsi]]></title>
-    <link href="http://catlittlechen.com/2017/09/16/naxsi/"/>
-    <id>http://catlittlechen.com/2017/09/16/naxsi/</id>
+    <link href="https://catlittlechen.com/2017/09/16/naxsi/"/>
+    <id>https://catlittlechen.com/2017/09/16/naxsi/</id>
     <published>2017-09-16T12:58:16.000Z</published>
     <updated>2017-09-26T13:56:08.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Naxsi"><a href="#Naxsi" class="headerlink" title="Naxsi"></a><a href="https://github.com/nbs-system/naxsi" target="_blank" rel="noopener">Naxsi</a></h2><p>github上，NAXSI自我介绍是Nginx Anti XSS &amp; SQL Injection。顾名思义，他是nginx一个用来防止XSS和SQL注入的Nginx插件。</p>
@@ -288,18 +288,18 @@ save to test.json
     <![CDATA[<h2 id="Naxsi"><a href="#Naxsi" class="headerlink" title="Naxsi"></a><a href="https://github.com/nbs-system/naxsi" target="_blank" rel="noop]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="naxsi" scheme="http://catlittlechen.com/tags/naxsi/"/>
+      <category term="naxsi" scheme="https://catlittlechen.com/tags/naxsi/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[踩坑日记之Upstart]]></title>
-    <link href="http://catlittlechen.com/2017/08/11/upstart/"/>
-    <id>http://catlittlechen.com/2017/08/11/upstart/</id>
+    <link href="https://catlittlechen.com/2017/08/11/upstart/"/>
+    <id>https://catlittlechen.com/2017/08/11/upstart/</id>
     <published>2017-08-11T15:03:55.000Z</published>
     <updated>2017-09-26T13:57:36.000Z</updated>
     <content type="html"><![CDATA[<h4 id="Upstart的Expect"><a href="#Upstart的Expect" class="headerlink" title="Upstart的Expect"></a>Upstart的Expect</h4><p>用upstart来管理系统的服务，很常见。但是也有需要注意的地方。比如，配置文件里面的expect。</p>
@@ -313,18 +313,18 @@ save to test.json
     <![CDATA[<h4 id="Upstart的Expect"><a href="#Upstart的Expect" class="headerlink" title="Upstart的Expect"></a>Upstart的Expect</h4><p>用upstart来管理系统的服务，很常见。但]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="upstart" scheme="http://catlittlechen.com/tags/upstart/"/>
+      <category term="upstart" scheme="https://catlittlechen.com/tags/upstart/"/>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[踩坑日记之nginx-limit-req]]></title>
-    <link href="http://catlittlechen.com/2017/08/10/nginx/"/>
-    <id>http://catlittlechen.com/2017/08/10/nginx/</id>
+    <link href="https://catlittlechen.com/2017/08/10/nginx/"/>
+    <id>https://catlittlechen.com/2017/08/10/nginx/</id>
     <published>2017-08-10T15:47:11.000Z</published>
     <updated>2017-09-26T13:56:59.000Z</updated>
     <content type="html"><![CDATA[<p>一般我们都认为nginx -t可以测试出配置文件是否配置正确。<br>其实不然~</p>
@@ -339,18 +339,18 @@ save to test.json
 <h4 id="limit-req-zone"><a href="#limit-req-zone" class="headerlink" title="limit_req_zone">]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="nginx" scheme="http://catlittlechen.com/tags/nginx/"/>
+      <category term="nginx" scheme="https://catlittlechen.com/tags/nginx/"/>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[pyrobuf的改进]]></title>
-    <link href="http://catlittlechen.com/2017/07/12/pyrobuf%E7%9A%84%E6%94%B9%E8%BF%9B/"/>
-    <id>http://catlittlechen.com/2017/07/12/pyrobuf的改进/</id>
+    <link href="https://catlittlechen.com/2017/07/12/pyrobuf%E7%9A%84%E6%94%B9%E8%BF%9B/"/>
+    <id>https://catlittlechen.com/2017/07/12/pyrobuf的改进/</id>
     <published>2017-07-12T02:42:18.000Z</published>
     <updated>2017-09-02T03:11:03.000Z</updated>
     <content type="html"><![CDATA[<h3 id="问题-1-–字符串编码"><a href="#问题-1-–字符串编码" class="headerlink" title="问题(1)–字符串编码"></a>问题(1)–字符串编码</h3><p>protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而python恰恰是一个经常性遇到字符串编码问题的语言。</p>
@@ -368,18 +368,18 @@ save to test.json
     <![CDATA[<h3 id="问题-1-–字符串编码"><a href="#问题-1-–字符串编码" class="headerlink" title="问题(1)–字符串编码"></a>问题(1)–字符串编码</h3><p>protobuf的标准里面，所有的字符串都是标准的UTF-8模式。而]]>
     </summary>
     
-      <category term="python" scheme="http://catlittlechen.com/tags/python/"/>
+      <category term="python" scheme="https://catlittlechen.com/tags/python/"/>
     
-      <category term="pyrobuf" scheme="http://catlittlechen.com/tags/pyrobuf/"/>
+      <category term="pyrobuf" scheme="https://catlittlechen.com/tags/pyrobuf/"/>
     
-      <category term="python" scheme="http://catlittlechen.com/categories/python/"/>
+      <category term="python" scheme="https://catlittlechen.com/categories/python/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ganglia-buffer]]></title>
-    <link href="http://catlittlechen.com/2017/07/10/ganglia-buffer/"/>
-    <id>http://catlittlechen.com/2017/07/10/ganglia-buffer/</id>
+    <link href="https://catlittlechen.com/2017/07/10/ganglia-buffer/"/>
+    <id>https://catlittlechen.com/2017/07/10/ganglia-buffer/</id>
     <published>2017-07-10T11:03:58.000Z</published>
     <updated>2017-09-26T13:58:30.000Z</updated>
     <content type="html"><![CDATA[<p>最近给服务器的redis-cluster加ganglia监控，但是配置加载之后，ganglia却失控了．面板上面ganglia部分数据无法显示．debug的时候，发现ganglia-monitor可以正常的收集数据，那么问题出在哪里呢？</p>
@@ -392,18 +392,18 @@ save to test.json
 <h2 id="etc-ga]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="ganglia" scheme="http://catlittlechen.com/tags/ganglia/"/>
+      <category term="ganglia" scheme="https://catlittlechen.com/tags/ganglia/"/>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/categories/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[那些年不懂的spark(4)]]></title>
-    <link href="http://catlittlechen.com/2017/07/01/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-4/"/>
-    <id>http://catlittlechen.com/2017/07/01/那些年不懂的spark-4/</id>
+    <link href="https://catlittlechen.com/2017/07/01/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-4/"/>
+    <id>https://catlittlechen.com/2017/07/01/那些年不懂的spark-4/</id>
     <published>2017-07-01T03:19:20.000Z</published>
     <updated>2017-09-02T03:14:45.000Z</updated>
     <content type="html"><![CDATA[<h2 id="spark-files"><a href="#spark-files" class="headerlink" title="spark-files"></a>spark-files</h2><p>spark-default.xml<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark<span class="selector-class">.files</span><span class="selector-class">.maxPartitionBytes</span> <span class="number">67108864</span></span><br><span class="line">spark<span class="selector-class">.sql</span><span class="selector-class">.files</span><span class="selector-class">.maxPartitionBytes</span> <span class="number">33554432</span></span><br></pre></td></tr></table></figure></p>
@@ -417,18 +417,18 @@ save to test.json
     <![CDATA[<h2 id="spark-files"><a href="#spark-files" class="headerlink" title="spark-files"></a>spark-files</h2><p>spark-default.xml<br><figure class]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/tags/spark/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/categories/spark/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[那些年不懂的spark(3)]]></title>
-    <link href="http://catlittlechen.com/2017/06/03/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-3/"/>
-    <id>http://catlittlechen.com/2017/06/03/那些年不懂的spark-3/</id>
+    <link href="https://catlittlechen.com/2017/06/03/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-3/"/>
+    <id>https://catlittlechen.com/2017/06/03/那些年不懂的spark-3/</id>
     <published>2017-06-03T04:13:45.000Z</published>
     <updated>2017-06-03T06:34:46.000Z</updated>
     <content type="html"><![CDATA[<p>aws的emr起来之后，默认的磁盘很小，所以长期跑任务的时候，经常会因为磁盘不够，导致节点失败。而且，这种情况下的emr，是不会自动修复的。</p>
@@ -443,18 +443,18 @@ save to test.json
 <h2 id="spark-history"><a href="#spark-history" class="headerl]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/tags/spark/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/categories/spark/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[touch]]></title>
-    <link href="http://catlittlechen.com/2017/05/26/touch/"/>
-    <id>http://catlittlechen.com/2017/05/26/touch/</id>
+    <link href="https://catlittlechen.com/2017/05/26/touch/"/>
+    <id>https://catlittlechen.com/2017/05/26/touch/</id>
     <published>2017-05-26T07:26:01.000Z</published>
     <updated>2017-05-26T07:45:29.000Z</updated>
     <content type="html"><![CDATA[<h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服务更新的部署方式,我们这时候就会用到<code>touch reload</code>的命令来完成.<br>更重要的是,我习惯性地打<code>ls -al</code>的命令来查看文件的最后修改时间,来查看是否有小朋友乱动了线上的文件.</p>
@@ -489,16 +489,16 @@ save to test.json
     <![CDATA[<h3 id="Touch"><a href="#Touch" class="headerlink" title="Touch"></a>Touch</h3><p>touch这个命令,对于一个技术而言,应该是十分熟悉的.<br>像uwsgi这种就可以使用监听一个文件的方式来触发服]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[dmesg]]></title>
-    <link href="http://catlittlechen.com/2017/04/06/dmesg/"/>
-    <id>http://catlittlechen.com/2017/04/06/dmesg/</id>
+    <link href="https://catlittlechen.com/2017/04/06/dmesg/"/>
+    <id>https://catlittlechen.com/2017/04/06/dmesg/</id>
     <published>2017-04-06T12:09:19.000Z</published>
     <updated>2017-04-08T08:26:00.000Z</updated>
     <content type="html"><![CDATA[<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><p>dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面，现在就写在这里吧。</p>
@@ -508,16 +508,16 @@ save to test.json
     <![CDATA[<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><p>dmesg显示内核环缓冲区内容，一般我都是来查看比如oom之类的问题。之前我同事问我时间怎么算。我也是一直没记录这个公式，只放在印象笔记里面]]>
     </summary>
     
-      <category term="学习" scheme="http://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/tags/%E5%AD%A6%E4%B9%A0/"/>
     
-      <category term="学习" scheme="http://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
+      <category term="学习" scheme="https://catlittlechen.com/categories/%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[pyrobuf]]></title>
-    <link href="http://catlittlechen.com/2017/04/02/pyrobuf/"/>
-    <id>http://catlittlechen.com/2017/04/02/pyrobuf/</id>
+    <link href="https://catlittlechen.com/2017/04/02/pyrobuf/"/>
+    <id>https://catlittlechen.com/2017/04/02/pyrobuf/</id>
     <published>2017-04-02T14:03:44.000Z</published>
     <updated>2017-04-02T14:30:07.000Z</updated>
     <content type="html"><![CDATA[<h2 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h2><p>Protocol Buffers 是一种轻便高效的结构化数据存储格式。我也是重度使用者。最近需要大量的实时处理Tb级别的数据，因此找到了protobuf的代替库 —- <a href="https://github.com/appnexus/pyrobuf" target="_blank" rel="noopener">pyrobuf</a></p>
@@ -532,18 +532,18 @@ save to test.json
     <![CDATA[<h2 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h2><p>Protocol Buffers 是一种轻便高效的结构化数据存储格式。我也是重度使用者。最近]]>
     </summary>
     
-      <category term="python" scheme="http://catlittlechen.com/tags/python/"/>
+      <category term="python" scheme="https://catlittlechen.com/tags/python/"/>
     
-      <category term="pyrobuf" scheme="http://catlittlechen.com/tags/pyrobuf/"/>
+      <category term="pyrobuf" scheme="https://catlittlechen.com/tags/pyrobuf/"/>
     
-      <category term="python" scheme="http://catlittlechen.com/categories/python/"/>
+      <category term="python" scheme="https://catlittlechen.com/categories/python/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[那些年不懂的spark(2)]]></title>
-    <link href="http://catlittlechen.com/2017/03/30/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-2/"/>
-    <id>http://catlittlechen.com/2017/03/30/那些年不懂的spark-2/</id>
+    <link href="https://catlittlechen.com/2017/03/30/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark-2/"/>
+    <id>https://catlittlechen.com/2017/03/30/那些年不懂的spark-2/</id>
     <published>2017-03-30T11:38:28.000Z</published>
     <updated>2017-04-02T14:01:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="partitionBy-amp-amp-s3"><a href="#partitionBy-amp-amp-s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;&amp; s3</h2><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df<span class="selector-class">.write</span><span class="selector-class">.partitionBy</span>(<span class="string">'date'</span>, <span class="string">'index1'</span>, <span class="string">'index2'</span>, <span class="string">'index3'</span>).parquet(<span class="string">'some/path/'</span>)</span><br></pre></td></tr></table></figure>
@@ -556,18 +556,18 @@ save to test.json
     <![CDATA[<h2 id="partitionBy-amp-amp-s3"><a href="#partitionBy-amp-amp-s3" class="headerlink" title="partitionBy &amp;&amp; s3"></a>partitionBy &amp;]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/tags/spark/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/categories/spark/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[那些年不懂的spark]]></title>
-    <link href="http://catlittlechen.com/2017/03/19/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark/"/>
-    <id>http://catlittlechen.com/2017/03/19/那些年不懂的spark/</id>
+    <link href="https://catlittlechen.com/2017/03/19/%E9%82%A3%E4%BA%9B%E5%B9%B4%E4%B8%8D%E6%87%82%E7%9A%84spark/"/>
+    <id>https://catlittlechen.com/2017/03/19/那些年不懂的spark/</id>
     <published>2017-03-19T02:31:34.000Z</published>
     <updated>2017-03-26T01:30:34.000Z</updated>
     <content type="html"><![CDATA[<h2 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h2><p>spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，不是难，而是不知道。</p>
@@ -600,11 +600,11 @@ save to test.json
     <![CDATA[<h2 id="感悟"><a href="#感悟" class="headerlink" title="感悟"></a>感悟</h2><p>spark是一个好东西。流式处理数据，扩容方便，较大程度上的利用机器，学习还是很有必要的。这几个星期的使用，也踩了不少坑。世界上的很多东西，]]>
     </summary>
     
-      <category term="踩坑日记" scheme="http://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
+      <category term="踩坑日记" scheme="https://catlittlechen.com/tags/%E8%B8%A9%E5%9D%91%E6%97%A5%E8%AE%B0/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/tags/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/tags/spark/"/>
     
-      <category term="spark" scheme="http://catlittlechen.com/categories/spark/"/>
+      <category term="spark" scheme="https://catlittlechen.com/categories/spark/"/>
     
   </entry>
   
