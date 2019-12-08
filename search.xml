@@ -914,6 +914,105 @@ int((primary + number_of_replicas) / 2) + 1
     </entry>
     
     <entry>
+      <title><![CDATA[垃圾回收的算法与实现(2)]]></title>
+      <url>/2016/06/09/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0-2/</url>
+      <content type="html"><![CDATA[<h2 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h2><h3 id="分配"><a href="#分配" class="headerlink" title="分配"></a>分配</h3><p>新分配的对象 ref 为1<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">newObj</span><span class="params">(size)</span>:</span></span><br><span class="line">    obj = malloc(size)</span><br><span class="line">    obj.ref = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> obj</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">assign</span><span class="params">(obj)</span>:</span></span><br><span class="line">    obj.ref ++</span><br></pre></td></tr></table></figure>
+<h3 id="回收"><a href="#回收" class="headerlink" title="回收"></a>回收</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(obj)</span>:</span></span><br><span class="line">    obj.ref --</span><br><span class="line">    <span class="keyword">if</span> obj.ref == <span class="number">0</span>:</span><br><span class="line">        freeObj(obj)</span><br></pre></td></tr></table></figure>
+<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><ul>
+<li>垃圾回收快。</li>
+<li>最大暂停时间短。</li>
+<li>引用计数增减有一定消耗，占用一定的大小。</li>
+<li>循环引用无法释放。</li>
+</ul>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><ol>
+<li><p>延迟引用计数法  </p>
+<p> 说白了，就是分配释放的时候，使用数据结构来保存下来，之后一并回收。</p>
+</li>
+<li><p>Sticky引用计数</p>
+<ol>
+<li>固定的计数位长度。  </li>
+<li>如果计数超过了最大，则该对象的引用计数不再改变。  </li>
+<li>用标记-清除算法管理对象。  <ul>
+<li>将所有对象的ref清零。  </li>
+<li>扫描所有对象，增加ref。  </li>
+<li>清除ref为0的数据。</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>1位引用计数法</p>
+<p> 计数位为1的Sticky引用计数法。<br> 0 代表引用数为1，1 代表引用数多于1。</p>
+</li>
+<li><p>部分标记-清除算法</p>
+<p> 用两位bit位来标记存在的状态，可以不用扫全部的对象</p>
+</li>
+</ol>
+<h3 id="部分标记-清除算法"><a href="#部分标记-清除算法" class="headerlink" title="部分标记-清除算法"></a>部分标记-清除算法</h3><h4 id="标记位"><a href="#标记位" class="headerlink" title="标记位"></a>标记位</h4><pre><code>2位标记位
+1. black（绝对不是垃圾的对象） 
+2. white（绝对是垃圾的对象）
+3. gray（搜索完毕的对象）
+4. hatch（可能是循环垃圾的对象）
+</code></pre><h4 id="回收-1"><a href="#回收-1" class="headerlink" title="回收"></a>回收</h4><p>曾经没减引用的对象，都被认为是可能为循环对象，染色为<code>灰色</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">free</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> obj.ref == <span class="number">0</span>:</span><br><span class="line">        delete(obj)</span><br><span class="line">    <span class="keyword">elif</span> obj.color != HATCH:</span><br><span class="line">        obj.color = HATCH</span><br><span class="line">        hatch_queue.push(obj)</span><br></pre></td></tr></table></figure></p>
+<h4 id="分配-1"><a href="#分配-1" class="headerlink" title="分配"></a>分配</h4><p>所有分配的对象，标记为都为<code>黑色</code><br>不足以分配的时候，会尝试回收内存<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new_obj</span><span class="params">(size)</span>:</span></span><br><span class="line">    obj = pickup_chunk(size)</span><br><span class="line">    <span class="keyword">if</span> obj <span class="keyword">is</span> NULL:</span><br><span class="line">        obj.color = BLACK</span><br><span class="line">        obj.ref = <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> obj</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> hatch_queue.empty():</span><br><span class="line">        scan_hatch_queue()</span><br><span class="line">        <span class="keyword">return</span> new_obj(size)</span><br><span class="line">    <span class="keyword">return</span> NULL</span><br></pre></td></tr></table></figure></p>
+<p>遍历<code>灰色</code>的对象，尝试开始收集对象。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_hatch_queue</span><span class="params">()</span>:</span></span><br><span class="line">    obj = hatch.pop()</span><br><span class="line">    <span class="keyword">if</span> obj.color == HATCH:</span><br><span class="line">        paint_gray(obj)</span><br><span class="line">        scan_gray(obj)</span><br><span class="line">        collect_white(obj)</span><br><span class="line">    <span class="keyword">elif</span> <span class="keyword">not</span> hatch_queue.empty():</span><br><span class="line">        scan_hatch_queue()</span><br></pre></td></tr></table></figure></p>
+<p>将对象自身所引用的对象的引用计数-1，循环所有子对象，如果有循环引用，则该对象的引用计数将会被减为1.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">paint_pray</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> obj.color <span class="keyword">in</span> [BLACK, HATCH]:</span><br><span class="line">        obj.color = GRAY</span><br><span class="line">        <span class="keyword">for</span> child <span class="keyword">in</span> obj.childs:</span><br><span class="line">            child.ref --</span><br><span class="line">            paint_gray(child)</span><br></pre></td></tr></table></figure></p>
+<p>遍历对象，将引用计数不为0的，即非循环引用的对象还原为<code>黑色</code>，否则，设置为<code>白色</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_gray</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> obj.color == GRAY:</span><br><span class="line">        <span class="keyword">if</span> obj.ref &gt; <span class="number">0</span>:</span><br><span class="line">            print_black(obj)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            obj.color = WHITE</span><br><span class="line">            <span class="keyword">for</span> child <span class="keyword">in</span> obj.childs:</span><br><span class="line">                scan_gray(child)</span><br></pre></td></tr></table></figure></p>
+<p>还原为<code>黑色</code>的过程中，增加对引用对象的计数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">paint_black</span><span class="params">(obj)</span>:</span></span><br><span class="line">    obj.color = BLACK</span><br><span class="line">    <span class="keyword">for</span> child <span class="keyword">in</span> obj.childs:</span><br><span class="line">        child.ref ++</span><br><span class="line">        <span class="keyword">if</span> child.color != BLACK:</span><br><span class="line">            paint_black(child)</span><br></pre></td></tr></table></figure></p>
+<p>将<code>白色</code>对象进行回收，并回收其子对象<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">collect_white</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> obj.color == WHITE:</span><br><span class="line">        obj.color = BLACK</span><br><span class="line">        <span class="keyword">for</span> child <span class="keyword">in</span> obj.childs:</span><br><span class="line">            collect_white(child)</span><br><span class="line">    delete(obj)</span><br></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> 读书笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> GC </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[垃圾回收的算法与实现(1)]]></title>
+      <url>/2016/06/07/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%9A%84%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0-1/</url>
+      <content type="html"><![CDATA[<h2 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h2><h3 id="标记阶段"><a href="#标记阶段" class="headerlink" title="标记阶段"></a>标记阶段</h3><p>深度优先搜索 or 广度优先搜索，从 stack 上利遍历有对象，标记为1.<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def <span class="keyword">make</span>(obj)</span><br><span class="line">    <span class="keyword">if</span> obj.<span class="keyword">mark</span> <span class="keyword">is</span> False:</span><br><span class="line">        obj.<span class="keyword">mark</span> = True</span><br><span class="line">        <span class="keyword">for</span> child in obj.child<span class="variable">s:</span></span><br><span class="line">            <span class="keyword">make</span>(child)</span><br></pre></td></tr></table></figure></p>
+<h3 id="清除阶段"><a href="#清除阶段" class="headerlink" title="清除阶段"></a>清除阶段</h3><p>里面堆内的所有对象，将标记为0的对象，全部回收到 freeList 中。<br><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def clear():<span class="type"></span></span><br><span class="line"><span class="type">    newHeap </span>= []</span><br><span class="line">    <span class="keyword">for</span> obj <span class="keyword">in</span> heap:<span class="type"></span></span><br><span class="line"><span class="type">        if obj</span>.mark is True</span><br><span class="line">            <span class="keyword">new</span><span class="type">Heap</span>.append(obj)</span><br><span class="line">        <span class="keyword">else</span>:<span class="type"></span></span><br><span class="line"><span class="type">            freeList</span>.append(obj)</span><br><span class="line">    heap = <span class="keyword">new</span><span class="type">Heap</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="分配对象"><a href="#分配对象" class="headerlink" title="分配对象"></a>分配对象</h3><p>优先遍历 freeList,知道找到 obj.size 满足所需分配的内存，则返回。<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">def malloc(<span class="built_in">size</span>):</span><br><span class="line">    <span class="built_in">for</span> obj in freeList:</span><br><span class="line">        <span class="built_in">if</span> obj.<span class="built_in">size</span> &gt; <span class="built_in">size</span>:</span><br><span class="line">            freeList.<span class="built_in">remove</span>(obj)</span><br><span class="line">            <span class="built_in">return</span> obj</span><br><span class="line">    <span class="built_in">return</span> newObj(<span class="built_in">size</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h3><ul>
+<li>实现简单</li>
+<li><code>碎片化</code>严重</li>
+<li>分配 <code>O(n)</code></li>
+<li>与<code>写时复制技术</code>不兼容</li>
+</ul>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><ol>
+<li>多个 freeList<br> 将回收的对象根据<code>size</code>回到不同的 freeList 中，分配内存对象时，则可直接找到对象的 freeList。</li>
+<li>BiBOP<br> 将内存切分为固定的大小，如2个字节的，3个字节。<br> 每次分配 足够<code>满足 size 的 n 个连续块</code>。</li>
+<li>位图标记<br> 从 obj 中<code>分离标记</code>d，用其他数据结构管理。<br> 如：整数数组、树、散列表。</li>
+<li>延迟清除法<br> 4.1 只是标记，需要<code>分配时</code>才从堆中清除。<br> 4.2 清除一轮后，<code>重新标记清除</code>。<br> 4.3 还是没能从清除的对象中找到合适的，那就重新<code>系统分配</code>吧。</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> 读书笔记 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> GC </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[multinet]]></title>
       <url>/2016/05/20/multinet/</url>
       <content type="html"><![CDATA[<h4 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h4><p>之前一段时间发现自己用go开发程序的过程中，大部分的时间都是用了标准的HTTP库，而没用到其他方式，比如单纯的TCP。在查看了go的标准库后，发现这个TCP库并没有想象中的好用，因此，我自己开始着手写一个好用点的。</p>
@@ -1265,9 +1364,9 @@ F**k
         
         <tags>
             
-            <tag> 踩坑日记 </tag>
-            
             <tag> c++ </tag>
+            
+            <tag> 踩坑日记 </tag>
             
         </tags>
         

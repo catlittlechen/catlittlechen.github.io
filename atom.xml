@@ -4,7 +4,7 @@
   <subtitle><![CDATA[我的王国，我一定会让你永垂不朽的]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://catlittlechen.com/"/>
-  <updated>2019-11-16T07:05:43.581Z</updated>
+  <updated>2019-11-16T07:08:36.089Z</updated>
   <id>http://catlittlechen.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://catlittlechen.com/2018/08/13/tmux/"/>
     <id>http://catlittlechen.com/2018/08/13/tmux/</id>
     <published>2018-08-13T05:57:03.000Z</published>
-    <updated>2019-11-16T07:05:43.581Z</updated>
+    <updated>2019-11-16T07:08:36.089Z</updated>
     <content type="html"><![CDATA[<h2 id="tmux"><a href="#tmux" class="headerlink" title="tmux"></a>tmux</h2><p>新的公司，开发需要远程到另外一台开发机器上，所以开始使用 tmux，虽然还是喜欢 ubuntu 的 terminal 多一些点。</p>
 <h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/tmux/tmux.git /tmp/tmux</span><br><span class="line">$ <span class="built_in">cd</span> /tmp/tmux</span><br><span class="line">$ git checkout 2.8</span><br><span class="line">$ sh autogen.sh</span><br><span class="line">$ ./configure &amp;&amp; make</span><br></pre></td></tr></table></figure>
 <h3 id="conf"><a href="#conf" class="headerlink" title="conf"></a>conf</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span></span><br><span class="line">$ git <span class="built_in">clone</span> https://github.com/gpakosz/.tmux.git</span><br><span class="line">$ ln -s -f .tmux/.tmux.conf</span><br><span class="line">$ cp .tmux/.tmux.conf.local .</span><br></pre></td></tr></table></figure>
